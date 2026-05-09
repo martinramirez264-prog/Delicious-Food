@@ -1,1 +1,87 @@
-window.location.href = "home.html";
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+
+  <style>
+    body{
+      font-family: Arial;
+      background: #f5f5f5;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      height:100vh;
+    }
+
+    .container{
+      background:white;
+      padding:30px;
+      border-radius:10px;
+      width:300px;
+      text-align:center;
+    }
+
+    input{
+      width:100%;
+      padding:10px;
+      margin:10px 0;
+    }
+
+    button{
+      width:100%;
+      padding:10px;
+      margin-top:10px;
+      cursor:pointer;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <h2>Iniciar sesión</h2>
+
+  <input type="text" id="usuario" placeholder="Usuario">
+  <input type="password" id="clave" placeholder="Contraseña">
+
+  <button onclick="registrar()">Registrarse</button>
+  <button onclick="login()">Entrar</button>
+
+</div>
+
+<script>
+
+function registrar(){
+
+  let usuario = document.getElementById("usuario").value;
+  let clave = document.getElementById("clave").value;
+
+  localStorage.setItem(usuario, clave);
+
+  alert("Usuario registrado");
+}
+
+function login(){
+
+  let usuario = document.getElementById("usuario").value;
+  let clave = document.getElementById("clave").value;
+
+  let claveGuardada = localStorage.getItem(usuario);
+
+  if(clave == claveGuardada){
+
+    window.location.href = "home.html";
+
+  } else {
+
+    alert("Contraseña incorrecta");
+
+  }
+}
+
+</script>
+
+</body>
+</html>
