@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sabores del Mundo</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      color: #333;
+    }
+
+    header {
+      background: url('./imgs/Comidas.jpg') center/cover no-repeat;
+      height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+    }
+
+    header div {
+      background: rgba(0,0,0,0.6);
+      padding: 25px;
+      border-radius: 15px;
+    }
+
+    header h1 { font-size: 3rem; }
+
+    nav {
+      background: #111;
+      padding: 15px;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    nav a {
+      color: white;
+      margin: 0 20px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    nav a:hover { color: #f39c12; }
+
+    section {
+      padding: 40px 20px;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .card {
+      background: white;
+      border-radius: 15px;
+      padding: 25px;
+      margin-bottom: 25px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      transition: transform 0.3s;
+    }
+
+    .card:hover { transform: translateY(-5px); }
+
+    h2 { margin-bottom: 15px; color: #2a5298; }
+
+    .menu-grid, .team-grid, .review-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 15px;
+    }
+
+    .menu-item, .team-member, .review {
+      background: #f9f9f9;
+      padding: 15px;
+      border-radius: 10px;
+      text-align: center;
+      transition: 0.3s;
+    }
+
+    .menu-item:hover { background: #f39c12; color: white; }
+
+    .cta { text-align: center; margin-top: 20px; }
+
+    .cta button {
+      background: #f39c12;
+      border: none;
+      padding: 15px 25px;
+      font-size: 1rem;
+      border-radius: 10px;
+      cursor: pointer;
+      color: white;
+      transition: 0.3s;
+    }
+
+    .cta button:hover { background: #d35400; }
+
+    footer {
+      background: #111;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>🌍 Sabores del Mundo</h1>
+    <p>Viví un viaje gastronómico sin salir de tu ciudad</p>
+
+  </div>
+</header>
+
+<nav>
+  <a href="#inicio">Inicio</a>
+  <a href="#proyecto">Proyecto</a>
+  <a href="#menu">Menú</a>
+  <a href="#experiencia">Experiencia</a>
+  <a href="#equipo">Equipo</a>
+  <a href="#reseñas">Reseñas</a>
+  <a href="#contacto">Contacto</a>
+</nav>
+
+<section id="inicio">
+  <div class="card">
+    <h2>✨ Bienvenidos</h2>
+    <p>Descubrí sabores de todo el mundo en un solo lugar. Cada semana viajamos a un nuevo país a través de su gastronomía, música y decoración temática.</p>
+    <p>Nuestro objetivo es brindarte una experiencia única que combine cultura, sabor y diversión.</p>
+    <div class="cta">
+      <button onclick="alert('¡Reserva próximamente disponible!')">Reservar ahora</button>
+    </div>
+  </div>
+</section>
+
+<section id="proyecto">
+  <div class="card">
+    <h2>🌎 Nuestro Proyecto</h2>
+    <p>Este restaurante temático busca acercar a las personas a diferentes culturas del mundo mediante la gastronomía.</p>
+    <p>Cada semana se selecciona un país, se adapta la decoración del lugar y se prepara un menú especial representativo.</p>
+    <p>Además, el negocio se promociona a través de redes sociales como Instagram, TikTok y Facebook, mostrando platos, eventos y experiencias de los clientes.</p>
+    <p>También se organizan noches culturales con música típica y actividades relacionadas con cada país.</p>
+  </div>
+</section>
+
+<section id="menu">
+  <div class="card">
+    <h2>🍽️ Menú Internacional</h2>
+    <div class="menu-grid">
+      <div class="menu-item">🍝 Italia<br>Pasta, Pizza, Lasaña</div>
+      <div class="menu-item">🌮 México<br>Tacos, Burritos, Nachos</div>
+      <div class="menu-item">🍣 Japón<br>Sushi, Ramen, Tempura</div>
+      <div class="menu-item">🥐 Francia<br>Croissants, Quiche</div>
+      <div class="menu-item">🍔 EE.UU.<br>Hamburguesas, BBQ</div>
+      <div class="menu-item">🥘 España<br>Paella, Tapas</div>
+      <div class="menu-item">🍁 Canadá<br>Jarabe de Arce</div>
+      <div class="menu-item">🥟 Reino Unido<br>Cornish Pasty</div>
+    </div>
+  </div>
+</section>
+
+<section id="experiencia">
+  <div class="card">
+    <h2>🎉 Experiencia Cultural</h2>
+    <p>No solo ofrecemos comida, sino una experiencia completa. Nuestro restaurante cambia su ambientación cada semana para representar un país diferente.</p>
+    <p>Podrás disfrutar de música típica, decoración auténtica y eventos temáticos que te harán sentir como si estuvieras viajando.</p>
+  </div>
+</section>
+
+<section id="equipo">
+  <div class="card">
+    <h2>👨‍🍳 Nuestro Equipo</h2>
+    <div class="team-grid">
+      <div class="team-member">Chef Principal<br>Especialista en cocina internacional</div>
+      <div class="team-member">Chef Asistente<br>Experto en gastronomía asiática</div>
+      <div class="team-member">Encargado de Eventos<br>Organiza noches temáticas</div>
+    </div>
+  </div>
+</section>
+
+<section id="reseñas">
+  <div class="card">
+    <h2>⭐ Opiniones de Clientes</h2>
+    <div class="review-grid">
+      <div class="review">"Una experiencia increíble, la comida y el ambiente son únicos."</div>
+      <div class="review">"Viajar por el mundo comiendo, simplemente genial."</div>
+      <div class="review">"Cada semana algo nuevo, nunca te aburrís."</div>
+    </div>
+  </div>
+</section>
+
+<section id="contacto">
+  <div class="card">
+    <h2>📱 Contacto</h2>
+    <p>Email: contacto@saboresdelmundo.com</p>
+    <p>Instagram: @saboresdelmundo</p>
+    <p>Ubicación: Buenos Aires, Argentina</p>
+    <p>Horarios: Lunes a Domingo de 7:00 a 22:00</p>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Sabores del Mundo - Proyecto educativo</p>
+</footer>
+
+<section>
+  <div class="card">
+    <h2>🌍 País de la Semana</h2>
+    <p><strong>Japón 🇯🇵</strong></p>
+    <p>Esta semana te invitamos a descubrir la cultura japonesa con platos tradicionales como sushi, ramen y tempura. Disfrutá de una ambientación única con música y decoración típica.</p>
+  </div>
+</section>
+
+<section>
+  <div class="card">
+    <h2>📊 Datos del Restaurante</h2>
+    <ul>
+      <li>✔ +500 clientes satisfechos</li>
+      <li>✔ +20 países explorados</li>
+      <li>✔ Eventos culturales todas las semanas</li>
+      <li>✔ Ingredientes frescos y de calidad</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="card">
+    <h2>🖼️ Galería</h2>
+    <p>Imágenes representativas de nuestros platos y ambiente:</p>
+    <div class="menu-grid">
+      <div class="menu-item">🍝 Pasta italiana</div>
+      <div class="menu-item">🍣 Sushi japonés</div>
+      <div class="menu-item">🌮 Tacos mexicanos</div>
+      <div class="menu-item">🥘 Paella española</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="card">
+    <h2>📅 Reservas</h2>
+    <p>Completá el siguiente formulario para reservar tu mesa:</p>
+    <form>
+      <input type="text" placeholder="Nombre" required style="width:100%;padding:10px;margin:5px 0;">
+      <input type="email" placeholder="Email" required style="width:100%;padding:10px;margin:5px 0;">
+      <input type="date" required style="width:100%;padding:10px;margin:5px 0;">
+      <input type="number" placeholder="Cantidad de personas" required style="width:100%;padding:10px;margin:5px 0;">
+      <button type="submit" style="margin-top:10px;">Reservar</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Sabores del Mundo - Proyecto educativo</p>
+  <p>Seguinos en redes: Instagram | Facebook | TikTok</p>
+</footer>
+
+</body>
+</html>
