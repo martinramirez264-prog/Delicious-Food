@@ -1,0 +1,10 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Abrir GitHub Page",
+      "type": "shell",
+      "command": "start https://martinramirez264-prog.github.io/Delicious-Food/"
+    }
+  ]
+}
