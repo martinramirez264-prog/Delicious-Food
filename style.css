@@ -90,3 +90,29 @@
 .crear-cuenta:hover{
    text-decoration:underline;
 }
+
+.foto-container{
+   position:relative;
+   width:120px;
+   margin:auto;
+}
+
+.icono-camara{
+   position:absolute;
+   bottom:0;
+   right:0;
+   background:white;
+   border-radius:50%;
+   padding:8px;
+   cursor:pointer;
+   box-shadow:0px 0px 10px rgba(0,0,0,0.3);
+   font-size:18px;
+}
+
+#fotoPerfil{
+   width:120px;
+   height:120px;
+   border-radius:50%;
+   object-fit:cover;
+   background:#ddd;
+}

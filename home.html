@@ -15,7 +15,25 @@
 
    <h2>Mi Perfil</h2>
 
-   <img id="fotoPerfil" src="imgs/Logo.png">
+   <div class="foto-container">
+
+   <img id="fotoPerfil" src="">
+
+   <label for="inputFoto" class="icono-camara">
+      📷
+   </label>
+
+</div>
+
+<input type="file" id="inputFoto" onchange="cambiarFoto(event)" hidden>
+
+<button onclick="document.getElementById('inputFoto').click()">
+   Cambiar foto
+</button>
+
+<button onclick="eliminarFoto()">
+   Eliminar foto
+</button>
 
    <br><br>
 

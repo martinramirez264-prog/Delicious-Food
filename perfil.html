@@ -63,7 +63,17 @@ body{
 
    <h2>Mi Perfil</h2>
 
-   <img id="fotoPerfil" src="imgs/Logo.png">
+   <div class="foto-container">
+
+   <img id="fotoPerfil" src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
+
+   <label for="inputFoto" class="icono-camara">
+      📷
+   </label>
+
+</div>
+
+<input type="file" id="inputFoto" onchange="cambiarFoto(event)" hidden>
 
    <br><br>
 
@@ -137,8 +147,21 @@ window.onload = function(){
 
       document.getElementById("fotoPerfil").src = fotoGuardada;
    }
+
+   function eliminarFoto(){
+
+   localStorage.removeItem("fotoPerfil");
+
+   document.getElementById("fotoPerfil").src = "";
+}
 }
 
+function eliminarFoto(){
+
+   localStorage.removeItem("fotoPerfil");
+
+   document.getElementById("fotoPerfil").src = "";
+}
 
 </script>
 
