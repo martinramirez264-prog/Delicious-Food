@@ -1,0 +1,70 @@
+.perfil-icono{
+   position: fixed;
+   top: 20px;
+   right: 20px;
+   width: 60px;
+   height: 60px;
+   background: white;
+   border-radius: 50%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   font-size: 30px;
+   cursor: pointer;
+   box-shadow: 0px 0px 10px rgba(0,0,0,0.3);
+   z-index: 1000;
+}
+
+.perfil-icono:hover{
+   transform: scale(1.1);
+}
+
+.menu-perfil{
+   display:none;
+   position:fixed;
+   top:90px;
+   right:20px;
+   background:white;
+   border-radius:10px;
+   box-shadow:0px 0px 10px rgba(0,0,0,0.3);
+   overflow:hidden;
+   z-index:1000;
+}
+
+.menu-perfil p{
+   padding:15px 25px;
+   margin:0;
+   cursor:pointer;
+}
+
+.menu-perfil p:hover{
+   background:#f5f5f5;
+}
+
+.perfil-panel{
+   display:none;
+   position:fixed;
+   top:50%;
+   left:50%;
+   transform:translate(-50%, -50%);
+   background:white;
+   padding:30px;
+   border-radius:15px;
+   width:350px;
+   text-align:center;
+   box-shadow:0px 0px 20px rgba(0,0,0,0.4);
+   z-index:2000;
+}
+
+.perfil-panel img{
+   width:120px;
+   height:120px;
+   border-radius:50%;
+   object-fit:cover;
+}
+
+.perfil-panel input{
+   width:100%;
+   padding:10px;
+   margin:10px 0;
+}

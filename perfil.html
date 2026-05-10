@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Mi Perfil</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+body{
+   font-family: Arial, sans-serif;
+   background: linear-gradient(135deg, #1e3c72, #2a5298);
+   display:flex;
+   justify-content:center;
+   align-items:center;
+   height:100vh;
+}
+
+
+.perfil{
+   background:white;
+   padding:30px;
+   border-radius:15px;
+   width:350px;
+   text-align:center;
+   box-shadow:0px 0px 15px rgba(0,0,0,0.3);
+}
+
+.perfil img{
+   width:120px;
+   height:120px;
+   border-radius:50%;
+   object-fit:cover;
+}
+
+.perfil input{
+   width:100%;
+   padding:10px;
+   margin:10px 0;
+   border-radius:8px;
+   border:1px solid #ccc;
+}
+
+.perfil button{
+   width:100%;
+   padding:10px;
+   margin-top:10px;
+   border:none;
+   border-radius:8px;
+   cursor:pointer;
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="perfil">
+
+   <h2>Mi Perfil</h2>
+
+   <img id="fotoPerfil" src="imgs/Logo.png">
+
+   <br><br>
+
+   <input type="file" onchange="cambiarFoto(event)">
+
+   <input type="text" placeholder="Nombre de usuario">
+
+   <input type="email" placeholder="Correo electrónico">
+
+   <input type="password" placeholder="Nueva contraseña">
+
+   <button onclick="guardar()">
+      Guardar cambios
+   </button>
+
+   <button onclick="window.location.href='home.html'">
+      Volver
+   </button>
+
+   <button onclick="cerrarSesion()">
+      Cerrar sesión
+   </button>
+
+</div>
+
+<script>
+
+if(localStorage.getItem("logueado") != "si"){
+
+   window.location.href = "index.html";
+}
+
+function guardar(){
+
+   alert("Perfil actualizado");
+}
+
+function cerrarSesion(){
+
+   localStorage.removeItem("logueado");
+
+   window.location.href = "index.html";
+}
+
+function cambiarFoto(event){
+
+   let archivo = event.target.files[0];
+
+   if(archivo){
+
+      let lector = new FileReader();
+
+      lector.onload = function(e){
+
+         let imagen = e.target.result;
+
+         document.getElementById("fotoPerfil").src = imagen;
+
+         localStorage.setItem("fotoPerfil", imagen);
+      }
+
+      lector.readAsDataURL(archivo);
+   }
+}
+
+window.onload = function(){
+
+   let fotoGuardada = localStorage.getItem("fotoPerfil");
+
+   if(fotoGuardada){
+
+      document.getElementById("fotoPerfil").src = fotoGuardada;
+   }
+}
+
+
+</script>
+
+</body>
+</html>

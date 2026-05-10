@@ -3,6 +3,45 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css">
+  <div class="perfil-icono" onclick="abrirPerfil()">
+   👤
+</div>
+<div class="perfil-icono" onclick="toggleMenu()">
+   👤
+</div>
+<div id="menuPerfil" class="menu-perfil">
+  <div id="perfil" class="perfil-panel">
+
+   <h2>Mi Perfil</h2>
+
+   <img id="fotoPerfil" src="imgs/Logo.png">
+
+   <br><br>
+
+   <input type="file" onchange="cambiarFoto(event)">
+
+   <br><br>
+
+   <input type="text" placeholder="Nombre de usuario">
+
+   <input type="email" placeholder="Correo electrónico">
+
+   <input type="password" placeholder="Nueva contraseña">
+
+   <br><br>
+
+   <button onclick="guardarPerfil()">Guardar cambios</button>
+
+   <button onclick="cerrarPerfil()">Cerrar</button>
+
+</div>
+
+   <p onclick="window.location.href='perfil.html'">Mi Perfil</p>
+
+   <p onclick="cerrarSesion()">Cerrar sesión</p>
+
+</div>
   <title>Sabores del Mundo</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -260,6 +299,90 @@
   <p>© 2026 Sabores del Mundo - Proyecto educativo</p>
   <p>Seguinos en redes: Instagram | Facebook | TikTok</p>
 </footer>
+
+<div id="perfil" style="display:none; background:white; padding:20px; border-radius:10px; position:fixed; top:20%; left:35%; width:300px; box-shadow:0px 0px 10px black;">
+
+<h2>Mi Perfil</h2>
+
+<img id="foto" src="imgs/Logo.png" width="100">
+
+<br><br>
+
+<input type="file" onchange="cambiarFoto(event)">
+
+<br><br>
+
+<p>Email: usuario@gmail.com</p>
+
+<input type="password" placeholder="Nueva contraseña">
+
+<br><br>
+
+<button onclick="cerrarSesion()">Cerrar sesión</button>
+
+<button onclick="cerrarPerfil()">Cerrar</button>
+
+</div>
+
+<script>
+
+function toggleMenu(){
+
+   let menu = document.getElementById("menuPerfil");
+
+   if(menu.style.display == "block"){
+
+      menu.style.display = "none";
+
+   }else{
+
+      menu.style.display = "block";
+   }
+}
+
+function abrirPerfil(){
+
+   alert("Mi Perfil");
+}
+
+function cerrarSesion(){
+
+   localStorage.removeItem("logueado");
+
+   window.location.href = "index.html";
+}
+function abrirPerfil(){
+
+   document.getElementById("perfil").style.display = "block";
+}
+
+function cerrarPerfil(){
+
+   document.getElementById("perfil").style.display = "none";
+}
+
+function guardarPerfil(){
+
+   alert("Perfil actualizado");
+}
+
+function cambiarFoto(event){
+
+   let archivo = event.target.files[0];
+
+   if(archivo){
+
+      let lector = new FileReader();
+
+      lector.onload = function(e){
+
+         document.getElementById("fotoPerfil").src = e.target.result;
+      }
+
+      lector.readAsDataURL(archivo);
+   }
+}
+</script>
 
 </body>
 </html>

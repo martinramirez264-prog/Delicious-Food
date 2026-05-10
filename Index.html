@@ -4,11 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
-
+  <link rel="stylesheet" href="style.css">
   <style>
+
     body{
-      font-family: Arial;
-      background: #f5f5f5;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
       display:flex;
       justify-content:center;
       align-items:center;
@@ -18,35 +19,63 @@
     .container{
       background:white;
       padding:30px;
-      border-radius:10px;
-      width:300px;
+      border-radius:15px;
+      width:320px;
       text-align:center;
+      box-shadow:0px 0px 15px rgba(0,0,0,0.3);
+    }
+
+    img{
+      width:100px;
+      margin-bottom:15px;
+    }
+
+    h2{
+      margin-bottom:20px;
+      color:#1e3c72;
     }
 
     input{
       width:100%;
       padding:10px;
       margin:10px 0;
+      border-radius:8px;
+      border:1px solid #ccc;
     }
 
     button{
       width:100%;
       padding:10px;
       margin-top:10px;
+      border:none;
+      border-radius:8px;
+      background:#f39c12;
+      color:white;
+      font-size:16px;
       cursor:pointer;
     }
+
+    button:hover{
+      background:#d35400;
+    }
+
   </style>
+
 </head>
 <body>
 
 <div class="container">
 
-  <h2>Iniciar sesión</h2>
+  <img src="imgs/Logo.png" alt="Logo">
+
+  <h2>Iniciar Sesión</h2>
 
   <input type="text" id="usuario" placeholder="Usuario">
+
   <input type="password" id="clave" placeholder="Contraseña">
 
   <button onclick="registrar()">Registrarse</button>
+
   <button onclick="login()">Entrar</button>
 
 </div>
@@ -55,30 +84,37 @@
 
 function registrar(){
 
-  let usuario = document.getElementById("usuario").value;
-  let clave = document.getElementById("clave").value;
+   let usuario = document.getElementById("usuario").value;
+   let clave = document.getElementById("clave").value;
 
-  localStorage.setItem(usuario, clave);
+   if(usuario == "" || clave == ""){
 
-  alert("Usuario registrado");
+      alert("Completa todos los campos");
+      return;
+   }
+
+   localStorage.setItem(usuario, clave);
+
+   alert("Usuario registrado correctamente");
 }
 
 function login(){
 
-  let usuario = document.getElementById("usuario").value;
-  let clave = document.getElementById("clave").value;
+   let usuario = document.getElementById("usuario").value;
+   let clave = document.getElementById("clave").value;
 
-  let claveGuardada = localStorage.getItem(usuario);
+   let claveGuardada = localStorage.getItem(usuario);
 
-  if(clave == claveGuardada){
+   if(clave == claveGuardada){
 
-    window.location.href = "home.html";
+      localStorage.setItem("logueado", "si");
 
-  } else {
+      window.location.href = "home.html";
 
-    alert("Contraseña incorrecta");
+   }else{
 
-  }
+      alert("Usuario o contraseña incorrectos");
+   }
 }
 
 </script>
