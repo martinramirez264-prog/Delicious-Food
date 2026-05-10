@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Crear Cuenta</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+body{
+   font-family: Arial, sans-serif;
+   background: linear-gradient(135deg, #1e3c72, #2a5298);
+   display:flex;
+   justify-content:center;
+   align-items:center;
+   height:100vh;
+}
+
+.container{
+   background:white;
+   padding:30px;
+   border-radius:15px;
+   width:350px;
+   text-align:center;
+   box-shadow:0px 0px 15px rgba(0,0,0,0.3);
+}
+
+.container img{
+   width:100px;
+   margin-bottom:15px;
+}
+
+.container input{
+   width:100%;
+   padding:10px;
+   margin:10px 0;
+   border-radius:8px;
+   border:1px solid #ccc;
+}
+
+.container button{
+   width:100%;
+   padding:10px;
+   margin-top:10px;
+   border:none;
+   border-radius:8px;
+   background:#f39c12;
+   color:white;
+   font-size:16px;
+   cursor:pointer;
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+   <img src="imgs/Logo.png">
+
+   <h2>Crear Cuenta</h2>
+
+   <input type="text" id="usuario" placeholder="Usuario">
+
+   <input type="email" id="correo" placeholder="Correo electrónico">
+
+   <input type="password" id="clave" placeholder="Contraseña">
+
+   <button onclick="registrar()">
+      Crear Cuenta
+   </button>
+
+   <button onclick="window.location.href='index.html'">
+      Volver al Login
+   </button>
+
+</div>
+
+<script>
+
+function registrar(){
+
+   let usuario = document.getElementById("usuario").value;
+   let clave = document.getElementById("clave").value;
+
+   if(usuario == "" || clave == ""){
+
+      alert("Completa todos los campos");
+      return;
+   }
+
+   localStorage.setItem(usuario, clave);
+
+   alert("Cuenta creada correctamente");
+
+   window.location.href = "index.html";
+}
+
+</script>
+
+</body>
+</html>
