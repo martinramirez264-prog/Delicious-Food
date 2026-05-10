@@ -68,3 +68,25 @@
    padding:10px;
    margin:10px 0;
 }
+
+.crear-cuenta{
+   margin-top:15px;
+   color:#1e3c72;
+   cursor:pointer;
+   font-weight:bold;
+}
+
+.crear-cuenta:hover{
+   text-decoration:underline;
+}
+
+.crear-cuenta{
+   margin-top:15px;
+   color:#1e3c72;
+   cursor:pointer;
+   font-weight:bold;
+}
+
+.crear-cuenta:hover{
+   text-decoration:underline;
+}
