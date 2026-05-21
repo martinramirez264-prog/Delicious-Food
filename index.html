@@ -415,9 +415,32 @@ function cambiarFoto(event){
    alert("Completá usuario y contraseña y tocá Registrarse");
 }
 }
+
+if(localStorage.getItem("logueado") !== "si"){
+   window.location.href = "home.html";
+}
+
+function abrirPerfil(){
+   document.getElementById("perfil").style.display = "block";
+}
+
+function cambiarFoto(event){
+
+   let archivo = event.target.files[0];
+
+   if(archivo){
+
+      let lector = new FileReader();
+
+      lector.onload = function(e){
+         document.getElementById("fotoPerfil").src = e.target.result;
+      }
+
+      lector.readAsDataURL(archivo);
+   }
+}
+
 </script>
-<button onclick="window.location.href='index.html'">
-  Entrar
-</button>
+
 </body>
 </html>
