@@ -442,236 +442,32 @@ function cambiarFoto(event){
 
 </script>
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Iniciar Sesión | Delicious Food</title>
-
-    <link rel="stylesheet" href="style.css">
-
-    <!-- Iconos -->
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-</head>
-
-<body>
-
-    <main class="login-container">
-
-        <section class="login-card">
-
-            <!-- LOGO -->
-            <div class="logo-container">
-                <img src="img/logo-delicious.png"
-                     alt="Delicious Food"
-                     class="logo">
-            </div>
-
-            <!-- TÍTULO -->
-            <div class="title-container">
-                <span></span>
-
-                <h1>Iniciar Sesión</h1>
-
-                <span></span>
-            </div>
-
-
-            <!-- FORMULARIO -->
-            <form id="loginForm">
-
-                <!-- USUARIO -->
-                <div class="input-group">
-
-                    <label for="usuario">
-                        Usuario
-                    </label>
-
-                    <div class="input-container">
-
-                        <i class="fa-regular fa-user"></i>
-
-                        <input
-                            type="text"
-                            id="usuario"
-                            placeholder="Ingresa tu usuario o correo"
-                            required
-                        >
-
-                    </div>
-
-                </div>
-
-
-                <!-- CONTRASEÑA -->
-                <div class="input-group">
-
-                    <label for="password">
-                        Contraseña
-                    </label>
-
-                    <div class="input-container">
-
-                        <i class="fa-solid fa-lock"></i>
-
-                        <input
-                            type="password"
-                            id="password"
-                            placeholder="Ingresa tu contraseña"
-                            required
-                        >
-
-                        <button
-                            type="button"
-                            class="show-password"
-                            onclick="mostrarPassword()">
-
-                            <i class="fa-regular fa-eye" id="eyeIcon"></i>
-
-                        </button>
-
-                    </div>
-
-                    <div class="forgot-password">
-                        <a href="#">
-                            ¿Olvidaste tu contraseña?
-                        </a>
-                    </div>
-
-                </div>
-
-
-                <!-- BOTÓN PRINCIPAL -->
-                <button
-                    type="submit"
-                    class="login-button">
-
-                    Iniciar Sesión
-
-                </button>
-
-            </form>
-
-
-            <!-- SEPARADOR -->
-            <div class="separator">
-
-                <span></span>
-
-                <p>o</p>
-
-                <span></span>
-
-            </div>
-
-
-            <!-- GOOGLE -->
-            <button class="social-button">
-
-                <span class="google-icon">G</span>
-
-                Continuar con Google
-
-            </button>
-
-
-            <!-- APPLE -->
-            <button class="social-button">
-
-                <i class="fa-brands fa-apple apple-icon"></i>
-
-                Continuar con Apple
-
-            </button>
-
-
-            <!-- REGISTRO -->
-            <p class="register-text">
-
-                ¿No tienes cuenta?
-
-                <a href="#">
-                    Crear cuenta
-                </a>
-
-            </p>
-
-
-            <!-- PASSKEY -->
-            <a href="#" class="passkey">
-                Iniciar sesión con una clave de acceso
-            </a>
-
-        </section>
-
-    </main>
-
-
-    <script src="script.js"></script>
-
-</body>
-</html>
-
-<script>
-  function mostrarPassword() {
-
-    const password = document.getElementById("password");
-    const eyeIcon = document.getElementById("eyeIcon");
-
-    if (password.type === "password") {
-
-        password.type = "text";
-
-        eyeIcon.classList.remove("fa-eye");
-
-        eyeIcon.classList.add("fa-eye-slash");
-
-    } else {
-
-        password.type = "password";
-
-        eyeIcon.classList.remove("fa-eye-slash");
-
-        eyeIcon.classList.add("fa-eye");
-    }
+function login(){
+  let usuario = document.getElementById("usuario").value.trim();
+  let clave = document.getElementById("clave").value;
+
+  let claveGuardada = localStorage.getItem(usuario); // busca la clave guardada
+
+  if(clave === claveGuardada){
+    localStorage.setItem("logueado", "si");
+    window.location.href = "home.html";  // 👈 acá te redirige a home
+  }else{
+    alert("Usuario o contraseña incorrectos");
+  }
 }
 
 
-/* =========================
-   LOGIN
-========================= */
+<div class="container">
 
-document.getElementById("loginForm").addEventListener("submit", function(event) {
+  <img class="logo" src="imgs/Logo.png" alt="Delicious Food">   ← ACÁ está, ya puesta
 
-    event.preventDefault();
+  <div class="titulo-separador">
+    <span class="linea"></span>
+    <h2>Iniciar Sesión</h2>
+    <span class="linea der"></span>
+  </div>
 
-    const usuario =
-        document.getElementById("usuario").value;
-
-    const password =
-        document.getElementById("password").value;
-
-
-    if (usuario === "" || password === "") {
-
-        alert("Por favor completá todos los campos.");
-
-        return;
-    }
-
-
-    /*
-       ACÁ DESPUÉS PODEMOS CONECTAR
-       EL LOGIN CON LA BASE DE DATOS.
-    */
-
-    alert("Inicio de sesión correcto.");
-
-});
-</script>
-
+  <div class="campo">
+    
 </body>
 </html>
