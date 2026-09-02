@@ -303,32 +303,5 @@
      data-logo_alignment="left">
 </div>
 
-function login(){
-  let usuario = document.getElementById("usuario").value.trim();
-  let clave = document.getElementById("clave").value;
-
-  let claveGuardada = localStorage.getItem(usuario); // busca la clave guardada
-
-  if(clave === claveGuardada){
-    localStorage.setItem("logueado", "si");
-    window.location.href = "home.html";  // 👈 acá te redirige a home
-  }else{
-    alert("Usuario o contraseña incorrectos");
-  }
-}
-
-
-<div class="container">
-
-  <img class="logo" src="imgs/Logo.png" alt="Delicious Food">   ← ACÁ está, ya puesta
-
-  <div class="titulo-separador">
-    <span class="linea"></span>
-    <h2>Iniciar Sesión</h2>
-    <span class="linea der"></span>
-  </div>
-
-  <div class="campo">
-    
 </body>
 </html>
