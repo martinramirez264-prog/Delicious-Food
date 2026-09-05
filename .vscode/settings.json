@@ -1,3 +1,12 @@
 {
-  "open-in-browser.default": "Chrome"
+    "open-in-browser.default": "Chrome",
+
+    "VsCodeTaskButtons.tasks": [
+        {
+            "label": "💾 Guardar en GitHub",
+            "task": "💾 Guardar en GitHub",
+            "alignment": "left",
+            "tooltip": "Guardar cambios en GitHub"
+        }
+    ]
 }
