@@ -2,6 +2,11 @@
   "version": "2.0.0",
   "tasks": [
     {
+      "label": "💾 Guardar en GitHub",
+      "type": "shell",
+      "command": "git add .; git commit -m 'Actualización del proyecto'; git push origin main"
+    },
+    {
       "label": "Abrir GitHub Page",
       "type": "shell",
       "command": "start https://martinramirez264-prog.github.io/Delicious-Food/"
