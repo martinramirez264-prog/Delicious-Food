@@ -1,0 +1,30 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sándwich Especial - Delicious Food</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
+body{background:#f5f5f5;color:#193965}.layout{min-height:100vh}
+.sidebar{position:fixed;left:0;top:0;bottom:0;width:250px;background:#193965;padding:24px 18px;color:white}
+.logo{text-align:center;margin-bottom:28px}.logo h1{font-size:24px}.logo p{color:#f28a00;font-size:11px;font-weight:bold;margin-top:5px}
+nav a{display:block;color:white;text-decoration:none;padding:13px 15px;border-radius:8px;margin:5px 0}nav a:hover,nav a.active{background:#f28a00}
+main{margin-left:250px;padding:30px;min-height:100vh}h2{font-size:28px;margin-bottom:7px}.sub{color:#666;margin-bottom:25px}
+.panel{background:white;border-radius:12px;padding:22px;margin-bottom:20px;box-shadow:0 3px 12px #0001}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px}
+.card{background:white;border-radius:12px;padding:18px;box-shadow:0 3px 12px #0001}
+.badge{display:inline-block;padding:6px 10px;border-radius:15px;font-size:12px;font-weight:bold;background:#fff0d9;color:#d97900}
+.blue{background:#e8f0ff;color:#245da8}.green{background:#e6f7eb;color:#23833d}.red{background:#ffe7e7;color:#b42318}
+table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:13px;border-bottom:1px solid #eee}
+.foodgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:18px}.food{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 3px 12px #0001;text-decoration:none;color:#193965}.food img{width:100%;height:130px;object-fit:cover}.food div{padding:13px}.price{color:#f28a00;font-weight:bold;margin-top:6px}
+.notice{padding:15px;border-radius:9px;background:#fafafa;margin:8px 0;border-left:5px solid #f28a00}.notice strong{display:block;margin-bottom:4px}
+@media(max-width:700px){.sidebar{width:195px}main{margin-left:195px;padding:18px}}
+</style>
+</head><body><div class="layout">
+<aside class="sidebar">
+<div class="logo"><h1>🍔 Delicious Food</h1><p>PANEL DE JEFES</p></div>
+<nav>
+<a href="jefe.html">📊 Inicio</a>
+<a href="pedidos.html">📦 Pedidos</a>
+<a href="comidas.html">🍔 Comidas</a>
+<a href="menu.html">📋 Menú</a>
+<a href="imagenes.html">🖼️ Imágenes</a>
+<a href="#">👥 Empleados</a><a href="#">🏪 Local</a><a href="#">⚙️ Configuración</a>
+</nav></aside>
+<main><a href="imagenes.html" style="color:#193965;font-weight:bold;text-decoration:none">← Volver a Imágenes</a><section class="panel" style="margin-top:18px"><img src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=600&q=80" style="width:100%;max-width:700px;height:340px;object-fit:cover;border-radius:12px"><h2 style="margin-top:20px">Sándwich Especial</h2><p style="margin-top:12px;line-height:1.6;color:#555">Sándwich preparado con pan fresco, relleno abundante y vegetales seleccionados.</p><p class="price" style="font-size:22px">$10.000</p></section></main></div></body></html>
