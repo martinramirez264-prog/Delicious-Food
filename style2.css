@@ -1,0 +1,24 @@
+.weekly-badge {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.18);
+    text-align: center;
+}
+
+.weekly-badge span {
+    font-size: 55px;
+    line-height: 1;
+    margin-bottom: 8px;
+}
+
+.weekly-badge strong {
+    font-size: 20px;
+    color: #222;
+}

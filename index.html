@@ -602,10 +602,43 @@
             }
 
 
-            /* BUSCAR CUENTA */
+            /* ==========================================
+               CUENTA DE JEFE
+               Se reconoce por correo + contraseña.
+               Esto también permite entrar aunque la cuenta
+               de jefe haya sido creada con una versión anterior
+               de registro.html que no guardaba el correo.
+            ========================================== */
+
+            const correoJefe = "jefedeliciousfood2106@gmail.com";
+            const contraseñaJefe = "Jefe2106";
+
+            const esJefe =
+                dato.toLowerCase() === correoJefe.toLowerCase() &&
+                clave === contraseñaJefe;
+
+            if (esJefe) {
+
+                mensaje.textContent =
+                    "✅ Inicio de sesión correcto.";
+
+                mensaje.style.color = "#29945a";
+
+                localStorage.setItem("usuarioActivo", "jefe");
+                localStorage.setItem("rolActivo", "jefe");
+                localStorage.setItem("logueado", "si");
+
+                setTimeout(function () {
+                    window.location.href = "jefe.html";
+                }, 700);
+
+                return;
+            }
+
+
+            /* BUSCAR CUENTA NORMAL */
 
             const cuenta = buscarUsuario(dato);
-
 
             if (cuenta === null) {
 
@@ -618,7 +651,7 @@
             }
 
 
-            /* COMPROBAR CONTRASEÑA */
+            /* COMPROBAR CONTRASEÑA DEL CLIENTE */
 
             if (clave !== cuenta.contraseña) {
 
@@ -645,13 +678,15 @@
                 "usuarioActivo",
                 cuenta.usuario
             );
+            localStorage.setItem("rolActivo", "cliente");
+            localStorage.setItem("logueado", "si");
 
 
-            /* IR AL HOME */
+            /* IR AL HOME DEL CLIENTE */
 
             setTimeout(function () {
 
-                window.location.href = "home.html";
+                window.location.href = "home_mejorado.html";
 
             }, 700);
 
