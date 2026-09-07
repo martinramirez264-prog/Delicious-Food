@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Delicious Food | Sabores del Mundo</title>
+
+  <style>
+    :root{
+      --azul:#173f7a;
+      --azul-2:#24589d;
+      --azul-claro:#eef5ff;
+      --naranja:#f39a12;
+      --naranja-oscuro:#d97900;
+      --texto:#263238;
+      --gris:#667085;
+      --blanco:#fff;
+      --fondo:#f5f7fb;
+      --borde:#e7ebf2;
+      --sombra:0 18px 45px rgba(18,45,82,.12);
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+
+    html{scroll-behavior:smooth}
+
+    body{
+      font-family:Arial, Helvetica, sans-serif;
+      background:var(--fondo);
+      color:var(--texto);
+      line-height:1.55;
+    }
+
+    /* ---------- ENCABEZADO ---------- */
+    .hero{
+      min-height:560px;
+      position:relative;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      color:white;
+      background:
+        linear-gradient(90deg,rgba(6,20,38,.76),rgba(6,20,38,.30)),
+        url("imgs/Comidas.jpg") center/cover no-repeat;
+      overflow:hidden;
+    }
+
+    .hero::after{
+      content:"";
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:-1px;
+      height:85px;
+      background:linear-gradient(to top, var(--fondo), transparent);
+    }
+
+    .hero-content{
+      position:relative;
+      z-index:2;
+      width:min(850px,92%);
+      padding:35px 25px;
+    }
+
+    .logo-mini{
+      width:82px;
+      height:82px;
+      object-fit:contain;
+      background:white;
+      border-radius:50%;
+      padding:7px;
+      box-shadow:0 12px 30px rgba(0,0,0,.25);
+      margin-bottom:18px;
+    }
+
+    .hero-kicker{
+      display:inline-block;
+      padding:7px 15px;
+      border-radius:999px;
+      background:rgba(243,154,18,.95);
+      font-size:.82rem;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      margin-bottom:15px;
+    }
+
+    .hero h1{
+      font-size:clamp(2.5rem,6vw,4.8rem);
+      line-height:1.05;
+      margin-bottom:15px;
+      text-shadow:0 4px 18px rgba(0,0,0,.35);
+    }
+
+    .hero p{
+      font-size:clamp(1rem,2vw,1.2rem);
+      max-width:680px;
+      margin:0 auto 28px;
+      color:#f4f7fb;
+    }
+
+    .hero-buttons{
+      display:flex;
+      justify-content:center;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      border:0;
+      border-radius:12px;
+      padding:13px 22px;
+      font-size:.98rem;
+      font-weight:700;
+      cursor:pointer;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      transition:.25s ease;
+    }
+
+    .btn-primary{
+      background:var(--naranja);
+      color:white;
+      box-shadow:0 10px 22px rgba(243,154,18,.28);
+    }
+
+    .btn-primary:hover{
+      background:var(--naranja-oscuro);
+      transform:translateY(-2px);
+    }
+
+    .btn-light{
+      background:white;
+      color:var(--azul);
+    }
+
+    .btn-light:hover{
+      transform:translateY(-2px);
+      box-shadow:0 10px 25px rgba(0,0,0,.18);
+    }
+
+    /* ---------- NAV ---------- */
+    .nav{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      background:rgba(12,24,42,.96);
+      backdrop-filter:blur(12px);
+      box-shadow:0 5px 18px rgba(0,0,0,.12);
+    }
+
+    .nav-inner{
+      width:min(1180px,94%);
+      margin:auto;
+      min-height:64px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:15px;
+    }
+
+    .brand{
+      color:white;
+      text-decoration:none;
+      font-weight:800;
+      white-space:nowrap;
+    }
+
+    .brand span{color:var(--naranja)}
+
+    .nav-links{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:4px;
+      flex-wrap:wrap;
+    }
+
+    .nav-links a{
+      color:#e9eef7;
+      text-decoration:none;
+      font-size:.88rem;
+      font-weight:700;
+      padding:9px 11px;
+      border-radius:8px;
+      transition:.2s;
+    }
+
+    .nav-links a:hover{
+      background:rgba(255,255,255,.10);
+      color:#fff;
+    }
+
+    .perfil-btn{
+      width:42px;
+      height:42px;
+      flex:0 0 42px;
+      border-radius:50%;
+      border:2px solid white;
+      background:#fff;
+      overflow:hidden;
+      cursor:pointer;
+      box-shadow:0 5px 15px rgba(0,0,0,.18);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .perfil-btn img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    .avatar-default{
+      width:100%;
+      height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:#d5d7da;
+      color:#6b6f74;
+      font-size:22px;
+    }
+
+    /* ---------- CONTENIDO ---------- */
+    main{
+      width:min(1180px,92%);
+      margin:auto;
+    }
+
+    section{
+      padding:54px 0;
+      scroll-margin-top:78px;
+    }
+
+    .section-title{
+      text-align:center;
+      margin-bottom:30px;
+    }
+
+    .section-title .tag{
+      display:inline-block;
+      color:var(--naranja-oscuro);
+      font-size:.78rem;
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:.12em;
+      margin-bottom:6px;
+    }
+
+    .section-title h2{
+      color:var(--azul);
+      font-size:clamp(1.65rem,3vw,2.35rem);
+      margin-bottom:8px;
+    }
+
+    .section-title p{
+      color:var(--gris);
+      max-width:700px;
+      margin:auto;
+    }
+
+    .welcome{
+      margin-top:-10px;
+      position:relative;
+      z-index:5;
+      display:grid;
+      grid-template-columns:1.4fr .8fr;
+      gap:20px;
+      align-items:stretch;
+    }
+
+    .panel{
+      background:white;
+      border:1px solid var(--borde);
+      border-radius:22px;
+      padding:30px;
+      box-shadow:var(--sombra);
+    }
+
+    .panel h3{
+      color:var(--azul);
+      margin-bottom:10px;
+      font-size:1.35rem;
+    }
+
+    .panel p{color:#53606e}
+
+    .highlight{
+      background:linear-gradient(135deg,var(--azul),var(--azul-2));
+      color:white;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
+
+    .highlight h3{color:white}
+    .highlight p{color:#e8f0fb}
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:12px;
+      margin-top:20px;
+    }
+
+    .stat{
+      padding:15px;
+      border-radius:14px;
+      background:rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.15);
+    }
+
+    .stat strong{
+      display:block;
+      font-size:1.45rem;
+      color:#fff;
+    }
+
+    .stat span{
+      font-size:.82rem;
+      color:#dce8f7;
+    }
+
+    /* ---------- CARDS ---------- */
+    .country-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:16px;
+    }
+
+    .country{
+      background:white;
+      border:1px solid var(--borde);
+      border-radius:18px;
+      padding:23px 17px;
+      text-align:center;
+      box-shadow:0 8px 25px rgba(18,45,82,.07);
+      transition:.25s;
+    }
+
+    .country:hover{
+      transform:translateY(-5px);
+      box-shadow:0 15px 30px rgba(18,45,82,.13);
+      border-color:#d6e1f1;
+    }
+
+    .country .emoji{
+      font-size:2rem;
+      display:block;
+      margin-bottom:8px;
+    }
+
+    .country h3{
+      color:var(--azul);
+      font-size:1rem;
+      margin-bottom:5px;
+    }
+
+    .country p{
+      color:var(--gris);
+      font-size:.88rem;
+    }
+
+    .experience{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:18px;
+    }
+
+    .experience-card{
+      background:white;
+      border-radius:18px;
+      padding:25px;
+      border:1px solid var(--borde);
+      box-shadow:0 8px 25px rgba(18,45,82,.07);
+    }
+
+    .experience-card .icon{
+      width:48px;
+      height:48px;
+      border-radius:14px;
+      background:#fff3df;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:1.5rem;
+      margin-bottom:15px;
+    }
+
+    .experience-card h3{
+      color:var(--azul);
+      margin-bottom:7px;
+    }
+
+    .experience-card p{color:var(--gris)}
+
+    /* ---------- PAÍS DE LA SEMANA ---------- */
+    .weekly{
+      background:linear-gradient(135deg,#173f7a,#2a67ae);
+      color:white;
+      border-radius:25px;
+      padding:38px;
+      display:grid;
+      grid-template-columns:1fr 1.7fr;
+      gap:30px;
+      align-items:center;
+      box-shadow:0 18px 45px rgba(23,63,122,.22);
+    }
+
+    .weekly-badge{
+      width:150px;
+      height:150px;
+      margin:auto;
+      border-radius:50%;
+      background:white;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:5rem;
+      box-shadow:0 15px 30px rgba(0,0,0,.18);
+    }
+
+    .weekly h2{
+      font-size:2rem;
+      margin-bottom:10px;
+    }
+
+    .weekly p{color:#e4edf9}
+
+    /* ---------- EQUIPO / RESEÑAS ---------- */
+    .team-grid,.review-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:18px;
+    }
+
+    .person,.review{
+      background:white;
+      border:1px solid var(--borde);
+      border-radius:18px;
+      padding:24px;
+      text-align:center;
+      box-shadow:0 8px 25px rgba(18,45,82,.07);
+    }
+
+    .person-avatar{
+      width:64px;
+      height:64px;
+      margin:0 auto 12px;
+      border-radius:50%;
+      background:#eaf1fb;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:1.9rem;
+    }
+
+    .person h3{
+      color:var(--azul);
+      font-size:1rem;
+      margin-bottom:5px;
+    }
+
+    .person p{color:var(--gris);font-size:.9rem}
+
+    .stars{
+      color:#f39a12;
+      letter-spacing:2px;
+      margin-bottom:10px;
+    }
+
+    .review p{
+      color:#596675;
+      font-style:italic;
+    }
+
+    /* ---------- CONTACTO / RESERVA ---------- */
+    .contact-grid{
+      display:grid;
+      grid-template-columns:.9fr 1.1fr;
+      gap:20px;
+    }
+
+    .contact-list{
+      list-style:none;
+      margin-top:18px;
+    }
+
+    .contact-list li{
+      padding:11px 0;
+      border-bottom:1px solid var(--borde);
+      color:#52606e;
+    }
+
+    .contact-list strong{color:var(--azul)}
+
+    form{
+      display:grid;
+      gap:12px;
+      margin-top:15px;
+    }
+
+    .form-row{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+
+    input,textarea,select{
+      width:100%;
+      border:1px solid #d9e0ea;
+      border-radius:11px;
+      padding:12px 13px;
+      font:inherit;
+      outline:none;
+      background:#fbfcfe;
+    }
+
+    input:focus,textarea:focus,select:focus{
+      border-color:#6f99cf;
+      box-shadow:0 0 0 3px rgba(36,88,157,.10);
+    }
+
+    textarea{min-height:100px;resize:vertical}
+
+    .form-message{
+      min-height:22px;
+      font-weight:700;
+      color:#268653;
+      text-align:center;
+    }
+
+    .map{
+      width:100%;
+      height:310px;
+      border:0;
+      border-radius:18px;
+      margin-top:20px;
+      box-shadow:var(--sombra);
+    }
+
+    /* ---------- GALERÍA ---------- */
+    .gallery{
+      display:grid;
+      grid-template-columns:2fr 1fr 1fr;
+      grid-auto-rows:180px;
+      gap:12px;
+    }
+
+    .gallery-item{
+      position:relative;
+      overflow:hidden;
+      border-radius:18px;
+      background:
+        linear-gradient(135deg,rgba(23,63,122,.78),rgba(243,154,18,.35)),
+        url("imgs/Comidas.jpg") center/cover;
+      display:flex;
+      align-items:flex-end;
+      padding:18px;
+      color:white;
+      font-weight:800;
+      box-shadow:0 8px 25px rgba(18,45,82,.10);
+    }
+
+    .gallery-item:first-child{grid-row:span 2}
+
+    .gallery-item span{
+      position:relative;
+      z-index:1;
+      text-shadow:0 2px 7px rgba(0,0,0,.35);
+    }
+
+    /* ---------- FOOTER ---------- */
+    footer{
+      margin-top:25px;
+      background:#0d1c31;
+      color:#dce5f0;
+      padding:35px 20px;
+    }
+
+    .footer-inner{
+      width:min(1180px,92%);
+      margin:auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+      flex-wrap:wrap;
+    }
+
+    footer strong{color:white}
+    footer p{font-size:.88rem}
+
+    /* ---------- RESPONSIVE ---------- */
+    @media(max-width:900px){
+      .nav-inner{justify-content:center}
+      .brand{display:none}
+      .welcome,.contact-grid,.weekly{grid-template-columns:1fr}
+      .country-grid{grid-template-columns:repeat(2,1fr)}
+      .experience,.team-grid,.review-grid{grid-template-columns:1fr}
+      .gallery{grid-template-columns:1fr 1fr}
+      .gallery-item:first-child{grid-row:span 1}
+    }
+
+    @media(max-width:620px){
+      .hero{min-height:510px}
+      .nav{position:relative}
+      .nav-links{display:none}
+      .nav-inner{justify-content:flex-end}
+      main{width:94%}
+      section{padding:40px 0}
+      .panel,.weekly{padding:23px}
+      .country-grid{grid-template-columns:1fr 1fr}
+      .gallery{grid-template-columns:1fr;grid-auto-rows:150px}
+      .form-row{grid-template-columns:1fr}
+      .footer-inner{justify-content:center;text-align:center}
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- PORTADA -->
+  <header class="hero">
+    <div class="hero-content">
+      <img class="logo-mini" src="imgs/Logo.png" alt="Logo de Delicious Food">
+      <span class="hero-kicker">Delicious Food</span>
+      <h1>Sabores del Mundo</h1>
+      <p>Viví un viaje gastronómico sin salir de tu ciudad: comida, cultura, música y experiencias de distintos países en un solo lugar.</p>
+
+      <div class="hero-buttons">
+        <a class="btn btn-primary" href="#reservas">📅 Reservar una mesa</a>
+        <a class="btn btn-light" href="#menu">🍽️ Explorar el menú</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- NAVEGACIÓN -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="#inicio">Delicious <span>Food</span></a>
+
+      <div class="nav-links">
+        <a href="#inicio">Inicio</a>
+        <a href="#proyecto">Proyecto</a>
+        <a href="#menu">Menú</a>
+        <a href="#experiencia">Experiencia</a>
+        <a href="#equipo">Equipo</a>
+        <a href="#reseñas">Reseñas</a>
+        <a href="#contacto">Contacto</a>
+      </div>
+
+      <button class="perfil-btn" type="button" onclick="window.location.href='perfil.html'" title="Mi perfil" aria-label="Mi perfil">
+        <div id="avatarDefault" class="avatar-default">👤</div>
+        <img id="avatarPerfil" src="" alt="Foto de perfil" style="display:none">
+      </button>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- INICIO -->
+    <section id="inicio">
+      <div class="welcome">
+        <article class="panel">
+          <h3>✨ Bienvenidos a Delicious Food</h3>
+          <p>
+            Descubrí sabores de todo el mundo en un solo lugar. Cada semana viajamos a un nuevo país a través de su gastronomía, música y decoración temática.
+          </p>
+          <br>
+          <p>
+            Nuestro objetivo es brindarte una experiencia diferente, combinando cultura, sabor y diversión.
+          </p>
+        </article>
+
+        <article class="panel highlight">
+          <h3>🌎 Un restaurante, muchos destinos</h3>
+          <p>Elegí un país y preparate para conocer sus sabores.</p>
+
+          <div class="stats">
+            <div class="stat"><strong>+20</strong><span>países explorados</span></div>
+            <div class="stat"><strong>+500</strong><span>clientes satisfechos</span></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- PROYECTO -->
+    <section id="proyecto">
+      <div class="section-title">
+        <span class="tag">Nuestra propuesta</span>
+        <h2>Un viaje gastronómico</h2>
+        <p>Acercamos diferentes culturas a través de sus platos, ambientación y tradiciones.</p>
+      </div>
+
+      <div class="panel">
+        <p>
+          Este restaurante temático busca acercar a las personas a diferentes culturas del mundo mediante la gastronomía. Cada semana se selecciona un país, se adapta la decoración del lugar y se prepara un menú especial representativo.
+        </p>
+        <br>
+        <p>
+          Además, el negocio se promociona a través de redes sociales como Instagram, TikTok y Facebook, mostrando platos, eventos y experiencias de los clientes. También se organizan noches culturales con música típica y actividades relacionadas con cada país.
+        </p>
+      </div>
+    </section>
+
+    <!-- MENÚ -->
+    <section id="menu">
+      <div class="section-title">
+        <span class="tag">Para todos los gustos</span>
+        <h2>🍽️ Menú Internacional</h2>
+        <p>Una selección de platos representativos de distintas partes del mundo.</p>
+      </div>
+
+      <div class="country-grid">
+        <article class="country"><span class="emoji">🍝</span><h3>Italia 🇮🇹</h3><p>Pasta, pizza y lasaña</p></article>
+        <article class="country"><span class="emoji">🌮</span><h3>México 🇲🇽</h3><p>Tacos, burritos y nachos</p></article>
+        <article class="country"><span class="emoji">🍣</span><h3>Japón 🇯🇵</h3><p>Sushi, ramen y tempura</p></article>
+        <article class="country"><span class="emoji">🥐</span><h3>Francia 🇫🇷</h3><p>Croissants y quiche</p></article>
+        <article class="country"><span class="emoji">🍔</span><h3>EE.UU. 🇺🇸</h3><p>Hamburguesas y BBQ</p></article>
+        <article class="country"><span class="emoji">🥘</span><h3>España 🇪🇸</h3><p>Paella y tapas</p></article>
+        <article class="country"><span class="emoji">🍁</span><h3>Canadá 🇨🇦</h3><p>Jarabe de arce</p></article>
+        <article class="country"><span class="emoji">🥟</span><h3>Reino Unido 🇬🇧</h3><p>Cornish pasty</p></article>
+      </div>
+    </section>
+
+    <!-- EXPERIENCIA -->
+    <section id="experiencia">
+      <div class="section-title">
+        <span class="tag">Más que comida</span>
+        <h2>🎉 Experiencia Cultural</h2>
+        <p>La idea es que cada visita se sienta como un pequeño viaje.</p>
+      </div>
+
+      <div class="experience">
+        <article class="experience-card">
+          <div class="icon">🎵</div>
+          <h3>Música típica</h3>
+          <p>Disfrutá de sonidos representativos del país elegido durante la semana.</p>
+        </article>
+
+        <article class="experience-card">
+          <div class="icon">🏮</div>
+          <h3>Ambientación</h3>
+          <p>El restaurante cambia su decoración para acompañar la cultura de cada destino.</p>
+        </article>
+
+        <article class="experience-card">
+          <div class="icon">🎊</div>
+          <h3>Noches temáticas</h3>
+          <p>Participá de eventos y actividades relacionadas con cada país.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- PAÍS DE LA SEMANA -->
+    <section>
+      <div class="weekly">
+        <div class="weekly-badge">🇯🇵</div>
+        <div>
+          <span class="hero-kicker">País de la semana</span>
+          <h2>Japón</h2>
+          <p>
+            Esta semana te invitamos a descubrir la cultura japonesa con platos tradicionales como sushi, ramen y tempura. Disfrutá de una ambientación única con música y decoración típica.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- EQUIPO -->
+    <section id="equipo">
+      <div class="section-title">
+        <span class="tag">Quiénes lo hacen posible</span>
+        <h2>👨‍🍳 Nuestro Equipo</h2>
+      </div>
+
+      <div class="team-grid">
+        <article class="person">
+          <div class="person-avatar">👨‍🍳</div>
+          <h3>Chef Principal</h3>
+          <p>Especialista en cocina internacional</p>
+        </article>
+
+        <article class="person">
+          <div class="person-avatar">👩‍🍳</div>
+          <h3>Chef Asistente</h3>
+          <p>Experta en gastronomía asiática</p>
+        </article>
+
+        <article class="person">
+          <div class="person-avatar">🎪</div>
+          <h3>Encargado de Eventos</h3>
+          <p>Organiza noches culturales y temáticas</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- RESEÑAS -->
+    <section id="reseñas">
+      <div class="section-title">
+        <span class="tag">Lo que dicen nuestros clientes</span>
+        <h2>⭐ Opiniones</h2>
+      </div>
+
+      <div class="review-grid">
+        <article class="review">
+          <div class="stars">★★★★★</div>
+          <p>“Una experiencia increíble, la comida y el ambiente son únicos.”</p>
+        </article>
+
+        <article class="review">
+          <div class="stars">★★★★★</div>
+          <p>“Viajar por el mundo comiendo, simplemente genial.”</p>
+        </article>
+
+        <article class="review">
+          <div class="stars">★★★★★</div>
+          <p>“Cada semana algo nuevo, nunca te aburrís.”</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- GALERÍA -->
+    <section>
+      <div class="section-title">
+        <span class="tag">Una mirada a nuestra propuesta</span>
+        <h2>🖼️ Galería</h2>
+        <p>Platos y experiencias inspiradas en distintos destinos.</p>
+      </div>
+
+      <div class="gallery">
+        <div class="gallery-item"><span>🍝 Pasta italiana</span></div>
+        <div class="gallery-item"><span>🍣 Sushi japonés</span></div>
+        <div class="gallery-item"><span>🌮 Tacos mexicanos</span></div>
+        <div class="gallery-item"><span>🥘 Paella española</span></div>
+        <div class="gallery-item"><span>🌎 Sabores del mundo</span></div>
+      </div>
+    </section>
+
+    <!-- CONTACTO Y RESERVA -->
+    <section id="contacto">
+      <div class="section-title">
+        <span class="tag">Estamos para ayudarte</span>
+        <h2>📱 Contacto</h2>
+      </div>
+
+      <div class="contact-grid">
+        <article class="panel">
+          <h3>Encontranos</h3>
+          <p>Vení a disfrutar una experiencia gastronómica diferente.</p>
+
+          <ul class="contact-list">
+            <li><strong>📧 Email:</strong> DeliciousFood@gmail.com</li>
+            <li><strong>📸 Instagram:</strong> @saboresdelmundo</li>
+            <li><strong>📍 Ubicación:</strong> Av. 9 de Julio, Buenos Aires, Argentina</li>
+            <li><strong>🕐 Horarios:</strong> Lunes a Domingo de 7:00 a 22:00</li>
+          </ul>
+        </article>
+
+        <article class="panel" id="reservas">
+          <h3>📅 Reservá tu mesa</h3>
+          <p>Completá tus datos y te contactaremos para confirmar.</p>
+
+          <form id="reservaForm">
+            <div class="form-row">
+              <input type="text" id="nombreReserva" placeholder="Nombre" required>
+              <input type="email" id="emailReserva" placeholder="Email" required>
+            </div>
+
+            <div class="form-row">
+              <input type="date" id="fechaReserva" required>
+              <input type="number" id="personasReserva" min="1" max="20" placeholder="Cantidad de personas" required>
+            </div>
+
+            <textarea id="mensajeReserva" placeholder="Mensaje adicional (opcional)"></textarea>
+
+            <button class="btn btn-primary" type="submit">Confirmar solicitud</button>
+            <div id="reservaMensaje" class="form-message"></div>
+          </form>
+        </article>
+      </div>
+
+      <iframe
+        class="map"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3283.874617972123!2d-58.38162519999999!3d-34.6073319!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bccacfdd1fa037%3A0xf1b1f26b0eab3053!2sAv.%209%20de%20Julio%2C%20Cdad.%20Aut%C3%B3noma%20de%20Buenos%20Aires!5e0!3m2!1ses-419!2sar!4v1778433228558!5m2!1ses-419!2sar"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Mapa de ubicación de Delicious Food">
+      </iframe>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <p><strong>Delicious Food</strong> · Sabores del Mundo</p>
+      <p>© 2026 · Proyecto educativo</p>
+    </div>
+  </footer>
+
+  <script>
+    // Mostrar automáticamente la foto de perfil guardada.
+    window.addEventListener("DOMContentLoaded", function () {
+      const fotoGuardada = localStorage.getItem("fotoPerfil_" + localStorage.getItem("usuarioActivo"));
+
+      if (fotoGuardada) {
+        const avatar = document.getElementById("avatarPerfil");
+        const defecto = document.getElementById("avatarDefault");
+
+        avatar.src = fotoGuardada;
+        avatar.style.display = "block";
+        defecto.style.display = "none";
+      }
+    });
+
+    // Reserva de demostración.
+    document.getElementById("reservaForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const mensaje = document.getElementById("reservaMensaje");
+      mensaje.textContent = "✅ Solicitud enviada. ¡Gracias!";
+
+      this.reset();
+    });
+  </script>
+
+</body>
+</html>

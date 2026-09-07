@@ -1,107 +1,450 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear cuenta | Delicious Food</title>
 
-<title>Crear Cuenta</title>
+    <link rel="stylesheet" href="style.css">
 
-<link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
 
-<style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background:
+                linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.65)),
+                url("imgs/Comidas.jpg") center/cover no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px 15px;
+        }
 
-body{
-   font-family: Arial, sans-serif;
-   background: linear-gradient(135deg, #1e3c72, #2a5298);
-   display:flex;
-   justify-content:center;
-   align-items:center;
-   height:100vh;
+        .registro-container {
+            width: 100%;
+            max-width: 430px;
+            background: rgba(255, 255, 255, 0.97);
+            border-radius: 22px;
+            padding: 35px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+            animation: none;
+        }
+
+        @keyframes aparecer {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .logo-container img {
+            width: 110px;
+            height: 110px;
+            object-fit: contain;
+        }
+
+        .titulo {
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .titulo h1 {
+            margin: 0;
+            color: #222;
+            font-size: 30px;
+        }
+
+        .titulo p {
+            margin: 10px 0 25px;
+            color: #777;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        .campo {
+            margin-bottom: 18px;
+        }
+
+        .campo label {
+            display: block;
+            margin-bottom: 7px;
+            color: #333;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .input-box {
+            position: relative;
+        }
+
+        .input-box input {
+            width: 100%;
+            padding: 14px 15px;
+            border: 1px solid #d5d5d5;
+            border-radius: 10px;
+            font-size: 15px;
+            outline: none;
+            transition: 0.3s;
+            background: #fafafa;
+        }
+
+        .input-box input:focus {
+            border-color: #f39c12;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(243, 156, 18, 0.12);
+        }
+
+        .mostrar-clave {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 5px;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.container{
-   background:white;
-   padding:30px;
-   border-radius:15px;
-   width:350px;
-   text-align:center;
-   box-shadow:0px 0px 15px rgba(0,0,0,0.3);
+.ojo {
+    position: relative;
+    font-size: 20px;
+    line-height: 1;
 }
 
-.container img{
-   width:100px;
-   margin-bottom:15px;
+/* Línea sobre el ojo */
+.ojo.tachado::after {
+    content: "";
+    position: absolute;
+    width: 27px;
+    height: 2px;
+    background: #777;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+    border-radius: 2px;
 }
 
-.container input{
-   width:100%;
-   padding:10px;
-   margin:10px 0;
-   border-radius:8px;
-   border:1px solid #ccc;
+.mostrar-clave:hover .ojo {
+    transform: scale(1.1);
 }
 
-.container button{
-   width:100%;
-   padding:10px;
-   margin-top:10px;
-   border:none;
-   border-radius:8px;
-   background:#f39c12;
-   color:white;
-   font-size:16px;
-   cursor:pointer;
-}
+        .mostrar-clave:hover {
+            color: #f39c12;
+        }
 
-</style>
+        .requisitos {
+            margin-top: 7px;
+            font-size: 12px;
+            color: #888;
+        }
 
+        .terminos {
+            display: flex;
+            align-items: flex-start;
+            gap: 9px;
+            margin: 5px 0 20px;
+            font-size: 13px;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        .terminos input {
+            margin-top: 3px;
+            accent-color: #f39c12;
+            cursor: pointer;
+        }
+
+        .terminos a {
+            color: #f39c12;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .terminos a:hover {
+            text-decoration: underline;
+        }
+
+        .btn-registrar {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(230, 126, 34, 0.3);
+        }
+
+        .btn-registrar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(230, 126, 34, 0.4);
+        }
+
+        .btn-registrar:active {
+            transform: translateY(0);
+        }
+
+        .mensaje {
+            min-height: 20px;
+            text-align: center;
+            margin-top: 15px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .seguridad {
+            margin-top: 25px;
+            padding-top: 18px;
+            border-top: 1px solid #eee;
+            text-align: center;
+            color: #999;
+            font-size: 12px;
+        }
+
+        .seguridad span {
+            color: #27ae60;
+            font-weight: bold;
+        }
+
+        @media (max-width: 480px) {
+            .registro-container {
+                padding: 25px 20px;
+            }
+
+            .titulo h1 {
+                font-size: 26px;
+            }
+        }
+    </style>
 </head>
+
 <body>
 
-<div class="container">
+    <div class="registro-container">
 
-   <img src="imgs/Logo.png">
+        <div class="logo-container">
+            <img src="imgs/Logo.png" alt="Logo de Delicious Food">
+        </div>
 
-   <h2>Crear Cuenta</h2>
+        <div class="titulo">
+            <h1>Crear tu cuenta</h1>
 
-   <input type="text" id="usuario" placeholder="Usuario">
+            <p>
+                Únete a Delicious Food y descubrí nuevos sabores,
+                recetas y experiencias gastronómicas.
+            </p>
+        </div>
 
-   <input type="email" id="correo" placeholder="Correo electrónico">
+        <form onsubmit="registrar(event)">
 
-   <input type="password" id="clave" placeholder="Contraseña">
+            <div class="campo">
+                <label for="usuario">👤 Nombre de usuario</label>
 
-   <button onclick="registrar()">
-      Crear Cuenta
-   </button>
+                <div class="input-box">
+                    <input
+                        type="text"
+                        id="usuario"
+                        placeholder="Ingresa tu nombre de usuario"
+                        autocomplete="username"
+                        maxlength="30"
+                    >
+                </div>
+            </div>
 
-   <button onclick="window.location.href='index.html'">
-      Volver al Login
-   </button>
+            <div class="campo">
+                <label for="correo">📧 Correo electrónico</label>
 
-</div>
+                <div class="input-box">
+                    <input
+                        type="email"
+                        id="correo"
+                        placeholder="ejemplo@correo.com"
+                        autocomplete="email"
+                    >
+                </div>
+            </div>
 
-<script>
+            <div class="campo">
+                <label for="clave">🔒 Contraseña</label>
 
-function registrar(){
+                <div class="input-box password-box">
+                    <input
+                        type="password"
+                        id="clave"
+                        placeholder="Crea una contraseña segura"
+                        autocomplete="new-password"
+                    >
 
-   let usuario = document.getElementById("usuario").value;
-   let clave = document.getElementById("clave").value;
+                   <button
+                   type="button"
+                   class="mostrar-clave"
+                   onclick="mostrarContraseña()"
+                   aria-label="Mostrar u ocultar contraseña"
+                   >
+                   <span class="ojo">👁</span>
+                  </button>
+                </div>
 
-   if(usuario == "" || clave == ""){
+                <div class="requisitos">
+                    Mínimo 6 caracteres.
+                </div>
+            </div>
 
-      alert("Completa todos los campos");
-      return;
-   }
+            <div class="terminos">
+                <input type="checkbox" id="terminos">
 
-   localStorage.setItem(usuario, clave);
+                <label for="terminos">
+                    Acepto los términos y condiciones de Delicious Food.
+                </label>
+            </div>
 
-   alert("Cuenta creada correctamente");
+            <button type="submit" class="btn-registrar">
+                Crear mi cuenta 🍽️
+            </button>
 
-   window.location.href = "index.html";
+            <div id="mensaje" class="mensaje"></div>
+
+        </form>
+
+        <div class="seguridad">
+            🔐 <span>Registro seguro</span><br>
+            Tus datos se guardan de forma local en este proyecto.
+        </div>
+
+    </div>
+
+
+    <script>
+
+        function registrar(event) {
+
+            event.preventDefault();
+
+            let usuario = document.getElementById("usuario").value.trim();
+            let correo = document.getElementById("correo").value.trim();
+            let clave = document.getElementById("clave").value;
+            let terminos = document.getElementById("terminos").checked;
+            let mensaje = document.getElementById("mensaje");
+
+
+            // Limpiar mensaje anterior
+            mensaje.textContent = "";
+            mensaje.style.color = "#e74c3c";
+
+
+            // Comprobar usuario
+            if (usuario === "") {
+
+                mensaje.textContent = "⚠️ Ingresa un nombre de usuario.";
+                document.getElementById("usuario").focus();
+                return;
+            }
+
+
+            // Comprobar correo
+            if (correo === "") {
+
+                mensaje.textContent = "⚠️ Ingresa tu correo electrónico.";
+                document.getElementById("correo").focus();
+                return;
+            }
+
+
+            // Comprobar contraseña
+            if (clave === "") {
+
+                mensaje.textContent = "⚠️ Ingresa una contraseña.";
+                document.getElementById("clave").focus();
+                return;
+            }
+
+
+            // Comprobar longitud de contraseña
+            if (clave.length < 6) {
+
+                mensaje.textContent =
+                    "⚠️ La contraseña debe tener al menos 6 caracteres.";
+
+                document.getElementById("clave").focus();
+                return;
+            }
+
+
+            // Comprobar términos
+            if (!terminos) {
+
+                mensaje.textContent =
+                    "⚠️ Debes aceptar los términos y condiciones.";
+
+                return;
+            }
+
+
+            // Guardar los datos
+            localStorage.setItem(usuario, clave);
+            localStorage.setItem("correo_" + usuario, correo);
+
+
+            // Mostrar mensaje de éxito
+            mensaje.style.color = "#27ae60";
+            mensaje.textContent =
+                "✅ ¡Cuenta creada correctamente!";
+
+
+            // Redireccionar al Login
+            setTimeout(function () {
+
+                window.location.href = "index.html";
+
+            }, 1200);
+
+        }
+
+
+   function mostrarContraseña() {
+
+    let clave = document.getElementById("clave");
+    let ojo = document.querySelector(".ojo");
+
+    if (clave.type === "password") {
+
+        clave.type = "text";
+        ojo.classList.remove("tachado");
+
+    } else {
+
+        clave.type = "password";
+        ojo.classList.add("tachado");
+
+    }
 }
-
-</script>
+    </script>
 
 </body>
+
 </html>

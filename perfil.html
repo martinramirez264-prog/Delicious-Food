@@ -1,169 +1,1134 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Mi Perfil</title>
+    <title>Delicious Food | Mi Perfil</title>
 
-<link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
 
-<style>
+    <style>
 
-body{
-   font-family: Arial, sans-serif;
-   background: linear-gradient(135deg, #1e3c72, #2a5298);
-   display:flex;
-   justify-content:center;
-   align-items:center;
-   height:100vh;
-}
+        :root {
+            --azul: #17365f;
+            --azul-oscuro: #102744;
+            --naranja: #e9820c;
+            --naranja-hover: #cc6f06;
+            --blanco: #ffffff;
+            --crema: #fffdf9;
+            --gris: #6f7785;
+            --borde: #dfe3e8;
+            --rojo: #d64545;
+            --rojo-hover: #b93434;
+            --verde: #29945a;
+        }
 
+        * {
+            box-sizing: border-box;
+        }
 
-.perfil{
-   background:white;
-   padding:30px;
-   border-radius:15px;
-   width:350px;
-   text-align:center;
-   box-shadow:0px 0px 15px rgba(0,0,0,0.3);
-}
+        body {
+            margin: 0;
+            min-height: 100vh;
 
-.perfil img{
-   width:120px;
-   height:120px;
-   border-radius:50%;
-   object-fit:cover;
-}
+            display: flex;
+            justify-content: center;
+            align-items: center;
 
-.perfil input{
-   width:100%;
-   padding:10px;
-   margin:10px 0;
-   border-radius:8px;
-   border:1px solid #ccc;
-}
+            padding: 25px;
 
-.perfil button{
-   width:100%;
-   padding:10px;
-   margin-top:10px;
-   border:none;
-   border-radius:8px;
-   cursor:pointer;
-}
+            font-family: "Segoe UI", Arial, sans-serif;
 
-</style>
+            background: url("imgs/Comidas.jpg") center/cover no-repeat;
+
+            color: var(--azul);
+        }
+
+        /* CAPA SUAVE PARA QUE LA TARJETA RESALTE */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+
+            background: rgba(0, 0, 0, 0.12);
+
+            pointer-events: none;
+        }
+
+        /* TARJETA */
+
+        .perfil {
+            position: relative;
+            z-index: 1;
+
+            width: 430px;
+            max-width: 100%;
+
+            padding: 32px;
+
+            background: var(--crema);
+
+            border-radius: 24px;
+
+            text-align: center;
+
+            box-shadow:
+                0 25px 60px rgba(0, 0, 0, 0.35);
+
+            animation: aparecer 0.35s ease;
+        }
+
+        @keyframes aparecer {
+
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        }
+
+        /* ENCABEZADO */
+
+        .encabezado {
+            margin-bottom: 24px;
+        }
+
+        .encabezado h1 {
+            margin: 0;
+
+            font-size: 27px;
+            font-weight: 800;
+
+            color: var(--azul);
+        }
+
+        .encabezado p {
+            margin: 7px 0 0;
+
+            font-size: 14px;
+
+            color: var(--gris);
+        }
+
+        .decoracion {
+            width: 55px;
+            height: 4px;
+
+            margin: 12px auto 0;
+
+            border-radius: 20px;
+
+            background: var(--naranja);
+        }
+
+        /* FOTO */
+
+        .foto-container {
+            position: relative;
+
+            width: 130px;
+            height: 130px;
+
+            margin: 0 auto 25px;
+        }
+
+        #fotoPerfil {
+            width: 130px;
+            height: 130px;
+
+            display: block;
+
+            border-radius: 50%;
+
+            object-fit: cover;
+
+            border: 4px solid white;
+
+            box-shadow:
+                0 8px 22px rgba(0, 0, 0, 0.20);
+
+            background: #eef1f5;
+        }
+
+        .foto-placeholder {
+            width: 130px;
+            height: 130px;
+            display: block;
+            overflow: hidden;
+            border-radius: 50%;
+            border: 4px solid white;
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.20);
+            background: #d0d0d0;
+        }
+
+        .foto-placeholder img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        /* BOTÓN CÁMARA */
+
+        .icono-camara {
+            position: absolute;
+
+            right: 0;
+            bottom: 2px;
+
+            width: 40px;
+            height: 40px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            border-radius: 50%;
+
+            background: var(--naranja);
+
+            color: white;
+
+            font-size: 19px;
+
+            cursor: pointer;
+
+            border: 3px solid var(--crema);
+
+            box-shadow:
+                0 4px 10px rgba(0, 0, 0, 0.20);
+
+            transition: 0.2s ease;
+        }
+
+        .icono-camara:hover {
+            background: var(--naranja-hover);
+
+            transform: scale(1.08);
+        }
+
+        /* BOTÓN ELIMINAR FOTO */
+
+        .eliminar-foto {
+            margin-top: 8px;
+
+            border: none;
+
+            background: transparent;
+
+            color: var(--rojo);
+
+            font-size: 12px;
+            font-weight: 700;
+
+            cursor: pointer;
+        }
+
+        .eliminar-foto:hover {
+            text-decoration: underline;
+        }
+
+        /* CAMPOS */
+
+        .campo {
+            margin-bottom: 17px;
+
+            text-align: left;
+        }
+
+        .campo label {
+            display: block;
+
+            margin-bottom: 7px;
+
+            font-size: 13px;
+            font-weight: 700;
+
+            color: var(--azul);
+        }
+
+        .input-contenedor {
+            position: relative;
+        }
+
+        .campo input {
+            width: 100%;
+
+            height: 48px;
+
+            padding: 0 14px;
+
+            border: 1px solid var(--borde);
+
+            border-radius: 12px;
+
+            outline: none;
+
+            background: white;
+
+            color: var(--azul);
+
+            font-size: 14px;
+
+            transition:
+                border-color 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .campo input:focus {
+            border-color: var(--naranja);
+
+            box-shadow:
+                0 0 0 3px rgba(233, 130, 12, 0.12);
+        }
+
+        .campo input::placeholder {
+            color: #a1a8b3;
+        }
+
+        /* OJO CONTRASEÑA */
+
+        .boton-ojo {
+            position: absolute;
+
+            right: 7px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            width: 36px;
+            height: 36px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background: transparent;
+
+            cursor: pointer;
+
+            font-size: 17px;
+        }
+
+        .boton-ojo:hover {
+            background: #f1f3f6;
+        }
+
+        .ojo {
+            position: relative;
+
+            display: inline-block;
+
+            line-height: 1;
+        }
+
+        /* BARRA SOBRE EL OJO */
+
+        .ojo.tachado::after {
+            content: "";
+
+            position: absolute;
+
+            width: 25px;
+            height: 2px;
+
+            background: #6f7785;
+
+            left: 50%;
+            top: 50%;
+
+            transform:
+                translate(-50%, -50%)
+                rotate(-45deg);
+
+            border-radius: 2px;
+
+            pointer-events: none;
+        }
+
+        /* INFORMACIÓN */
+
+        .info {
+            margin: 3px 0 20px;
+
+            padding: 11px 13px;
+
+            border-radius: 10px;
+
+            background: #f3f6f9;
+
+            color: var(--gris);
+
+            font-size: 12px;
+
+            text-align: left;
+        }
+
+        /* MENSAJE */
+
+        #mensaje {
+            min-height: 20px;
+
+            margin: 8px 0 12px;
+
+            text-align: center;
+
+            font-size: 13px;
+
+            font-weight: 700;
+        }
+
+        /* BOTONES */
+
+        .boton {
+            width: 100%;
+
+            height: 48px;
+
+            margin-top: 10px;
+
+            border: none;
+
+            border-radius: 12px;
+
+            font-size: 14px;
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.15s ease,
+                background 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .boton:hover {
+            transform: translateY(-1px);
+        }
+
+        .guardar {
+            background: var(--naranja);
+
+            color: white;
+        }
+
+        .guardar:hover {
+            background: var(--naranja-hover);
+
+            box-shadow:
+                0 8px 18px rgba(233, 130, 12, 0.25);
+        }
+
+        .volver {
+            background: #edf1f5;
+
+            color: var(--azul);
+        }
+
+        .volver:hover {
+            background: #e1e6eb;
+        }
+
+        .cerrar {
+            background: #fff0f0;
+
+            color: var(--rojo);
+        }
+
+        .cerrar:hover {
+            background: #ffe2e2;
+        }
+
+        /* PIE */
+
+        .pie {
+            margin-top: 20px;
+
+            color: #9aa1ac;
+
+            font-size: 11px;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 480px) {
+
+            body {
+                padding: 15px;
+            }
+
+            .perfil {
+                padding: 27px 22px 24px;
+
+                border-radius: 20px;
+            }
+
+            .encabezado h1 {
+                font-size: 23px;
+            }
+
+        }
+
+    </style>
 
 </head>
+
+
 <body>
 
-<div class="perfil">
 
-   <h2>Mi Perfil</h2>
+    <main class="perfil">
 
-   <div class="foto-container">
 
-   <img id="fotoPerfil" src="https://cdn-icons-png.flaticon.com/512/149/149071.png">
+        <!-- ENCABEZADO -->
 
-   <label for="inputFoto" class="icono-camara">
-      📷
-   </label>
+        <div class="encabezado">
 
-</div>
+            <h1>Mi Perfil</h1>
 
-<input type="file" id="inputFoto" onchange="cambiarFoto(event)" hidden>
+            <p>Administrá tu información de Delicious Food</p>
 
-   <br><br>
+            <div class="decoracion"></div>
 
-   <input type="file" onchange="cambiarFoto(event)">
+        </div>
 
-   <input type="text" placeholder="Nombre de usuario">
 
-   <input type="email" placeholder="Correo electrónico">
+        <!-- FOTO DE PERFIL -->
 
-   <input type="password" placeholder="Nueva contraseña">
+        <div class="foto-container">
 
-   <button onclick="guardar()">
-      Guardar cambios
-   </button>
+            <div id="fotoPerfil" class="foto-placeholder"><img src="data:image/jpeg;base64,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" alt="Sin foto de perfil"></div>
 
-   <button onclick="window.location.href='home.html'">
-      Volver
-   </button>
+            <label
+                for="inputFoto"
+                class="icono-camara"
+                title="Cambiar foto"
+            >
+                📷
+            </label>
 
-   <button onclick="cerrarSesion()">
-      Cerrar sesión
-   </button>
+        </div>
 
-</div>
+
+        <input
+            type="file"
+            id="inputFoto"
+            accept="image/*"
+            onchange="cambiarFoto(event)"
+            hidden
+        >
+
+
+        <button
+            class="eliminar-foto"
+            type="button"
+            onclick="eliminarFoto()"
+        >
+            Eliminar foto
+        </button>
+
+
+        <br><br>
+
+
+        <!-- USUARIO -->
+
+        <div class="campo">
+
+            <label for="usuario">
+                Nombre de usuario
+            </label>
+
+            <input
+                type="text"
+                id="usuario"
+                placeholder="Tu nombre de usuario"
+                autocomplete="username"
+            >
+
+        </div>
+
+
+        <!-- CORREO -->
+
+        <div class="campo">
+
+            <label for="correo">
+                Correo electrónico
+            </label>
+
+            <input
+                type="email"
+                id="correo"
+                placeholder="Tu correo electrónico"
+                autocomplete="email"
+            >
+
+        </div>
+
+
+        <!-- CONTRASEÑA -->
+
+        <div class="campo">
+
+            <label for="password">
+                Nueva contraseña
+            </label>
+
+            <div class="input-contenedor">
+
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Dejá vacío si no querés cambiarla"
+                    autocomplete="new-password"
+                >
+
+                <button
+                    class="boton-ojo"
+                    type="button"
+                    onclick="togglePassword()"
+                    aria-label="Mostrar u ocultar contraseña"
+                >
+                    <span class="ojo">👁</span>
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- INFORMACIÓN -->
+
+        <div class="info">
+
+            💡 Si no querés cambiar tu contraseña,
+            simplemente dejá este campo vacío.
+
+        </div>
+
+
+        <!-- MENSAJE -->
+
+        <p id="mensaje"></p>
+
+
+        <!-- GUARDAR -->
+
+        <button
+            class="boton guardar"
+            type="button"
+            onclick="guardar()"
+        >
+            Guardar cambios
+        </button>
+
+
+        <!-- VOLVER -->
+
+        <button
+            class="boton volver"
+            type="button"
+            onclick="window.location.href='home.html'"
+        >
+            ← Volver al inicio
+        </button>
+
+
+        <!-- CERRAR SESIÓN -->
+
+        <button
+            class="boton cerrar"
+            type="button"
+            onclick="cerrarSesion()"
+        >
+            Cerrar sesión
+        </button>
+
+
+        <div class="pie">
+            © 2026 Delicious Food
+        </div>
+
+
+    </main>
+
 
 <script>
 
-if(localStorage.getItem("logueado") != "si"){
 
-   window.location.href = "index.html";
+/* ==========================================
+   COMPROBAR SESIÓN
+========================================== */
+
+const usuarioActivo = localStorage.getItem("usuarioActivo");
+
+/* ==========================================
+   CARGAR PERFIL
+========================================== */
+
+window.addEventListener("load", function () {
+
+    const usuario = localStorage.getItem("usuarioActivo");
+
+    /* Cargar usuario solo si existe una sesión activa. */
+    if (usuario) {
+        document.getElementById("usuario").value = usuario;
+    }
+
+
+    /* Cargar correo */
+
+    if (usuario) {
+        const correo = localStorage.getItem("correo_" + usuario);
+        if (correo) {
+            document.getElementById("correo").value = correo;
+        }
+    }
+
+    /* Cargar foto guardada */
+    // Primero busca la foto del usuario y, si no existe, la foto general.
+    // De esta manera la foto NO desaparece al recargar perfil.html.
+    const foto = usuario
+        ? (localStorage.getItem("fotoPerfil_" + usuario) || localStorage.getItem("fotoPerfil"))
+        : localStorage.getItem("fotoPerfil");
+
+    if (foto) {
+        mostrarFotoGuardada(foto);
+    }
+
+});
+
+
+/* ==========================================
+   MOSTRAR / OCULTAR CONTRASEÑA
+========================================== */
+
+function togglePassword() {
+
+    const password =
+        document.getElementById("password");
+
+    const ojo =
+        document.querySelector(".ojo");
+
+
+    if (password.type === "password") {
+
+        password.type = "text";
+
+        ojo.classList.remove("tachado");
+
+    } else {
+
+        password.type = "password";
+
+        ojo.classList.add("tachado");
+
+    }
+
 }
 
-function guardar(){
 
-   alert("Perfil actualizado");
+/* ==========================================
+   MOSTRAR FOTO / PLACEHOLDER
+========================================== */
+
+function mostrarFotoGuardada(imagen) {
+    const contenedor = document.getElementById("fotoPerfil");
+    if (!contenedor) return;
+
+    contenedor.innerHTML = "";
+
+    const img = document.createElement("img");
+    img.src = imagen;
+    img.alt = "Foto de perfil";
+    img.style.width = "100%";
+    img.style.height = "100%";
+    img.style.display = "block";
+    img.style.objectFit = "cover";
+    img.style.borderRadius = "50%";
+
+    contenedor.appendChild(img);
 }
 
-function cerrarSesion(){
+function mostrarPlaceholderFoto() {
+    const contenedor = document.getElementById("fotoPerfil");
+    if (!contenedor) return;
 
-   localStorage.removeItem("logueado");
-
-   window.location.href = "index.html";
+    // El avatar vuelve INMEDIATAMENTE a la pantalla, sin recargar.
+    contenedor.innerHTML = '<img src="data:image/jpeg;base64,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" alt="Sin foto de perfil">';
 }
 
-function cambiarFoto(event){
 
-   let archivo = event.target.files[0];
+/* ==========================================
+   CAMBIAR FOTO
+========================================== */
 
-   if(archivo){
+function cambiarFoto(event) {
 
-      let lector = new FileReader();
+    const archivo = event.target.files[0];
+    if (!archivo) return;
 
-      lector.onload = function(e){
+    if (!archivo.type.startsWith("image/")) {
+        mostrarMensaje("⚠️ Elegí un archivo de imagen.", "#d64545");
+        event.target.value = "";
+        return;
+    }
 
-         let imagen = e.target.result;
+    /*
+       Reducimos la imagen antes de guardarla.
+       Esto evita que localStorage se quede sin espacio cuando
+       el usuario selecciona una foto grande del celular/PC.
+    */
+    const lector = new FileReader();
 
-         document.getElementById("fotoPerfil").src = imagen;
+    lector.onload = function (e) {
+        const imagenOriginal = new Image();
 
-         localStorage.setItem("fotoPerfil", imagen);
-      }
+        imagenOriginal.onload = function () {
+            const maximo = 900;
+            let ancho = imagenOriginal.naturalWidth;
+            let alto = imagenOriginal.naturalHeight;
 
-      lector.readAsDataURL(archivo);
-   }
+            if (ancho > maximo || alto > maximo) {
+                const escala = Math.min(maximo / ancho, maximo / alto);
+                ancho = Math.round(ancho * escala);
+                alto = Math.round(alto * escala);
+            }
+
+            const canvas = document.createElement("canvas");
+            canvas.width = ancho;
+            canvas.height = alto;
+
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(imagenOriginal, 0, 0, ancho, alto);
+
+            const imagen = canvas.toDataURL("image/jpeg", 0.82);
+            const usuario = localStorage.getItem("usuarioActivo");
+
+            try {
+                /* Guardar en pantalla inmediatamente. */
+                mostrarFotoGuardada(imagen);
+
+                /* Guardar para el usuario y también como respaldo general. */
+                if (usuario) {
+                    localStorage.setItem("fotoPerfil_" + usuario, imagen);
+                }
+                localStorage.setItem("fotoPerfil", imagen);
+
+                /* Comprobar que realmente quedó guardada. */
+                const comprobacion = usuario
+                    ? localStorage.getItem("fotoPerfil_" + usuario)
+                    : localStorage.getItem("fotoPerfil");
+
+                if (!comprobacion) {
+                    throw new Error("No se pudo guardar la foto");
+                }
+
+                event.target.value = "";
+                mostrarMensaje("✅ Foto guardada correctamente. Al recargar seguirá ahí.", "#29945a");
+            } catch (error) {
+                console.error(error);
+                mostrarMensaje("⚠️ La foto es demasiado grande. Probá con otra imagen.", "#d64545");
+            }
+        };
+
+        imagenOriginal.onerror = function () {
+            mostrarMensaje("⚠️ No se pudo cargar la imagen.", "#d64545");
+        };
+
+        imagenOriginal.src = e.target.result;
+    };
+
+    lector.readAsDataURL(archivo);
+
 }
 
-window.onload = function(){
+/* ==========================================
+   ELIMINAR FOTO
+========================================== */
 
-   let fotoGuardada = localStorage.getItem("fotoPerfil");
+function eliminarFoto() {
 
-   if(fotoGuardada){
+    const usuario =
+        localStorage.getItem("usuarioActivo");
 
-      document.getElementById("fotoPerfil").src = fotoGuardada;
-   }
+    // Borrar la foto guardada para que desaparezca de forma permanente.
+    if (usuario) {
+        localStorage.removeItem(
+            "fotoPerfil_" + usuario
+        );
+    }
+    localStorage.removeItem("fotoPerfil");
 
-   function eliminarFoto(){
+    // Borrar la foto de la pantalla INMEDIATAMENTE.
+    mostrarPlaceholderFoto();
 
-   localStorage.removeItem("fotoPerfil");
+    // Permitir volver a seleccionar la misma foto.
+    const input =
+        document.getElementById("inputFoto");
 
-   document.getElementById("fotoPerfil").src = "";
+    if (input) {
+        input.value = "";
+    }
+
+    mostrarMensaje(
+        "✅ Foto eliminada.",
+        "#29945a"
+    );
+
 }
+
+/* ==========================================
+   GUARDAR CAMBIOS
+========================================== */
+
+function guardar() {
+
+    const usuarioAnterior =
+        localStorage.getItem("usuarioActivo");
+
+
+    const nuevoUsuario =
+        document.getElementById("usuario").value.trim();
+
+
+    const nuevoCorreo =
+        document.getElementById("correo").value.trim();
+
+
+    const nuevaPassword =
+        document.getElementById("password").value;
+
+
+    /* Validaciones */
+
+    if (nuevoUsuario === "") {
+
+        mostrarMensaje(
+            "⚠️ Ingresá un nombre de usuario.",
+            "#d64545"
+        );
+
+        return;
+
+    }
+
+
+    if (nuevoCorreo === "") {
+
+        mostrarMensaje(
+            "⚠️ Ingresá un correo electrónico.",
+            "#d64545"
+        );
+
+        return;
+
+    }
+
+
+    if (
+        nuevaPassword !== "" &&
+        nuevaPassword.length < 6
+    ) {
+
+        mostrarMensaje(
+            "⚠️ La contraseña debe tener al menos 6 caracteres.",
+            "#d64545"
+        );
+
+        return;
+
+    }
+
+
+    /* Obtener datos anteriores */
+
+    const contraseñaAnterior =
+        localStorage.getItem(usuarioAnterior);
+
+
+    const correoAnterior =
+        localStorage.getItem(
+            "correo_" + usuarioAnterior
+        );
+
+
+    /* Si cambió el usuario */
+
+    if (
+        nuevoUsuario !== usuarioAnterior &&
+        localStorage.getItem(nuevoUsuario)
+    ) {
+
+        mostrarMensaje(
+            "⚠️ Ese nombre de usuario ya existe.",
+            "#d64545"
+        );
+
+        return;
+
+    }
+
+
+    /* Guardar usuario */
+
+    if (nuevoUsuario !== usuarioAnterior) {
+
+        if (contraseñaAnterior !== null) {
+
+            localStorage.setItem(
+                nuevoUsuario,
+                nuevaPassword !== ""
+                    ? nuevaPassword
+                    : contraseñaAnterior
+            );
+
+        }
+
+
+        if (correoAnterior !== null) {
+
+            localStorage.setItem(
+                "correo_" + nuevoUsuario,
+                nuevoCorreo
+            );
+
+        }
+
+
+        localStorage.removeItem(
+            usuarioAnterior
+        );
+
+
+        localStorage.removeItem(
+            "correo_" + usuarioAnterior
+        );
+
+
+        /* Mantener la foto de perfil al cambiar el usuario */
+        const fotoAnterior =
+            localStorage.getItem("fotoPerfil_" + usuarioAnterior);
+
+        if (fotoAnterior) {
+            localStorage.setItem(
+                "fotoPerfil_" + nuevoUsuario,
+                fotoAnterior
+            );
+
+            localStorage.removeItem(
+                "fotoPerfil_" + usuarioAnterior
+            );
+        }
+
+
+        /* Actualizar usuario activo */
+
+        localStorage.setItem(
+            "usuarioActivo",
+            nuevoUsuario
+        );
+
+    } else {
+
+        /* Guardar correo */
+
+        localStorage.setItem(
+            "correo_" + nuevoUsuario,
+            nuevoCorreo
+        );
+
+
+        /* Cambiar contraseña solamente si se escribió */
+
+        if (nuevaPassword !== "") {
+
+            localStorage.setItem(
+                nuevoUsuario,
+                nuevaPassword
+            );
+
+        }
+
+    }
+
+
+    /* Limpiar contraseña */
+
+    document.getElementById("password").value =
+        "";
+
+
+    mostrarMensaje(
+        "✅ Perfil actualizado correctamente.",
+        "#29945a"
+    );
+
 }
 
-function eliminarFoto(){
 
-   localStorage.removeItem("fotoPerfil");
+/* ==========================================
+   MENSAJES
+========================================== */
 
-   document.getElementById("fotoPerfil").src = "";
+function mostrarMensaje(texto, color) {
+
+    const mensaje =
+        document.getElementById("mensaje");
+
+
+    mensaje.textContent =
+        texto;
+
+
+    mensaje.style.color =
+        color;
+
+
+    setTimeout(function () {
+
+        mensaje.textContent = "";
+
+    }, 3000);
+
 }
+
+
+/* ==========================================
+   CERRAR SESIÓN
+========================================== */
+
+function cerrarSesion() {
+
+    localStorage.removeItem(
+        "usuarioActivo"
+    );
+
+
+    localStorage.removeItem(
+        "logueado"
+    );
+
+}
+
 
 </script>
+
 
 </body>
 </html>

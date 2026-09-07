@@ -1,292 +1,664 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Delicious Food - Iniciar Sesión</title>
-<style>
-  :root{
-    --crema: #fdfbf7;
-    --naranja: #e8820c;
-    --naranja-osc: #cf7208;
-    --azul-texto: #1b3a6b;
-    --gris-borde: #dfe3e8;
-    --gris-place: #9aa2b1;
-    --gris-icono: #6b7280;
-    --azul-link: #2e6bd6;
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  *{ box-sizing: border-box; }
+    <title>Delicious Food | Iniciar sesión</title>
 
-  body{
-    margin:0;
-    min-height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-family: 'Segoe UI', Arial, sans-serif;
-    background: linear-gradient(135deg, #1b3a6b 0%, #14294d 100%);
-    padding: 24px;
-  }
+    <style>
+        :root {
+            --azul: #17365f;
+            --azul-oscuro: #102744;
+            --naranja: #e9820c;
+            --naranja-hover: #cc6f06;
+            --blanco: #ffffff;
+            --crema: #fffdf9;
+            --gris: #6f7785;
+            --borde: #dfe3e8;
+            --rojo: #d64545;
+            --verde: #29945a;
+        }
 
-  .card{
-    width: 380px;
-    max-width: 100%;
-    background: var(--crema);
-    border-radius: 22px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.35);
-    padding: 26px 26px 22px;
-    text-align:center;
-  }
+        * {
+            box-sizing: border-box;
+        }
 
-  .logo{
-    width: 170px;
-    display:block;
-    margin: 0 auto 6px;
-  }
-
-  .titulo-wrap{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap: 10px;
-    margin: 10px 0 20px;
-  }
-
-  .titulo-wrap .linea{
-    flex:1;
-    max-width: 60px;
-    height: 2px;
-    background: var(--naranja);
-    position: relative;
-  }
-  .titulo-wrap .linea::after{
-    content:'';
-    position:absolute;
-    top:-3px;
-    width:8px;
-    height:8px;
-    border-radius:50%;
-    background: var(--naranja);
-  }
-  .titulo-wrap .linea.izq::after{ right:-2px; }
-  .titulo-wrap .linea.der::after{ left:-2px; }
-
-  h1{
-    font-size: 22px;
-    color: var(--azul-texto);
+        body {
     margin: 0;
-    font-weight: 800;
-    white-space: nowrap;
-  }
+    min-height: 100vh;
 
-  .campo{
-    text-align:left;
-    margin-bottom: 14px;
-  }
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-  label{
-    display:block;
-    font-size: 13px;
-    color: var(--azul-texto);
-    font-weight: 700;
-    margin: 0 0 6px;
-  }
+    padding: 25px;
 
-  .input-wrap{
-    position:relative;
-    display:flex;
-    align-items:center;
-  }
+    font-family: "Segoe UI", Arial, sans-serif;
 
-  .input-wrap svg{
-    position:absolute;
-    left: 12px;
-    width: 18px;
-    height: 18px;
-    color: var(--gris-icono);
-    stroke: var(--gris-icono);
-    pointer-events:none;
-  }
+    background: url("imgs/Comidas.jpg") center/cover no-repeat;
 
-  .input-wrap svg.eye{
-    left:auto;
-    right:12px;
-    pointer-events:auto;
-    cursor:pointer;
-  }
+    color: var(--azul);
+}
 
-  input[type="text"],
-  input[type="password"]{
-    width: 100%;
-    padding: 11px 12px 11px 38px;
-    border: 1px solid var(--gris-borde);
-    border-radius: 10px;
-    font-size: 13.5px;
-    color: var(--azul-texto);
-    outline: none;
-    background: #fff;
-    transition: border-color .15s ease;
-  }
+        /* TARJETA */
 
-  input#pass{
-    padding-right: 38px;
-  }
+        .login-card {
+            width: 410px;
+            max-width: 100%;
 
-  input::placeholder{
-    color: var(--gris-place);
-  }
+            padding: 34px 32px 30px;
 
-  input:focus{
-    border-color: var(--naranja);
-  }
+            background: var(--crema);
 
-  .olvidaste{
-    text-align:right;
-    margin: -4px 0 16px;
-  }
-  .olvidaste a{
-    font-size: 12.5px;
-    color: var(--azul-link);
-    text-decoration:none;
-  }
-  .olvidaste a:hover{ text-decoration: underline; }
+            border-radius: 24px;
 
-  .btn{
-    width:100%;
-    padding: 13px;
-    border:none;
-    border-radius: 10px;
-    font-size: 15px;
-    font-weight: 700;
-    color:#fff;
-    background: var(--naranja);
-    cursor:pointer;
-    transition: background .15s ease;
-  }
-  .btn:hover{ background: var(--naranja-osc); }
+            box-shadow:
+                0 25px 60px rgba(0, 0, 0, 0.35);
 
-  .divisor{
-    display:flex;
-    align-items:center;
-    gap: 10px;
-    margin: 18px 0 14px;
-    color: #9aa2b1;
-    font-size: 13px;
-  }
-  .divisor::before,
-  .divisor::after{
-    content:'';
-    flex:1;
-    height:1px;
-    background: var(--gris-borde);
-  }
+            animation: aparecer 0.35s ease;
+        }
 
-  .btn-social{
-    width:100%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap: 10px;
-    padding: 11px;
-    border-radius: 10px;
-    border: 1px solid var(--gris-borde);
-    background:#fff;
-    color: var(--azul-texto);
-    font-size: 13.5px;
-    font-weight: 600;
-    cursor:pointer;
-    margin-bottom: 10px;
-    transition: background .15s ease;
-  }
-  .btn-social:hover{ background:#f7f8fa; }
-  .btn-social svg, .btn-social img{ width:18px; height:18px; }
+        @keyframes aparecer {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
 
-  .pie{
-    margin-top: 12px;
-    font-size: 13px;
-    color: #3a3f4b;
-  }
-  .pie a{
-    color: var(--azul-link);
-    text-decoration:none;
-    font-weight:600;
-  }
-  .pie a:hover{ text-decoration: underline; }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-  .clave-acceso{
-    margin-top: 8px;
-  }
-  .clave-acceso a{
-    font-size: 13px;
-    color: var(--azul-link);
-    text-decoration:none;
-  }
-  .clave-acceso a:hover{ text-decoration: underline; }
-</style>
+        /* LOGO */
+
+        .logo {
+            width: 190px;
+            max-width: 80%;
+
+            display: block;
+
+            margin: 0 auto 12px;
+        }
+
+        /* TITULO */
+
+        .encabezado {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .encabezado h1 {
+            margin: 0;
+
+            font-size: 25px;
+            font-weight: 800;
+
+            color: var(--azul);
+        }
+
+        .encabezado p {
+            margin: 7px 0 0;
+
+            font-size: 14px;
+            color: var(--gris);
+        }
+
+        .decoracion {
+            width: 55px;
+            height: 4px;
+
+            margin: 12px auto 0;
+
+            border-radius: 20px;
+
+            background: var(--naranja);
+        }
+
+        /* CAMPOS */
+
+        .campo {
+            margin-bottom: 18px;
+        }
+
+        .campo label {
+            display: block;
+
+            margin-bottom: 7px;
+
+            font-size: 13px;
+            font-weight: 700;
+
+            color: var(--azul);
+        }
+
+        .input-contenedor {
+            position: relative;
+        }
+
+        .icono {
+            position: absolute;
+
+            left: 14px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            width: 18px;
+            height: 18px;
+
+            color: var(--gris);
+
+            pointer-events: none;
+        }
+
+        .input-contenedor input {
+            width: 100%;
+
+            height: 48px;
+
+            padding: 0 45px 0 43px;
+
+            border: 1px solid var(--borde);
+            border-radius: 12px;
+
+            outline: none;
+
+            background: var(--blanco);
+
+            color: var(--azul);
+
+            font-size: 14px;
+
+            transition:
+                border-color 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .input-contenedor input::placeholder {
+            color: #a1a8b3;
+        }
+
+        .input-contenedor input:focus {
+            border-color: var(--naranja);
+
+            box-shadow:
+                0 0 0 3px rgba(233, 130, 12, 0.12);
+        }
+
+        /* OJO */
+
+        .boton-ojo {
+            position: absolute;
+
+            right: 10px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            width: 36px;
+            height: 36px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: none;
+            border-radius: 8px;
+
+            background: transparent;
+
+            cursor: pointer;
+
+            color: var(--gris);
+
+            font-size: 18px;
+        }
+
+        .boton-ojo:hover {
+            background: #f1f3f6;
+        }
+
+        /* BOTON LOGIN */
+
+        .btn-login {
+            width: 100%;
+
+            height: 49px;
+
+            margin-top: 5px;
+
+            border: none;
+            border-radius: 12px;
+
+            background: var(--naranja);
+
+            color: white;
+
+            font-size: 15px;
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.15s ease,
+                background 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .btn-login:hover {
+            background: var(--naranja-hover);
+
+            transform: translateY(-1px);
+
+            box-shadow:
+                0 8px 18px rgba(233, 130, 12, 0.25);
+        }
+
+        .btn-login:active {
+            transform: translateY(0);
+        }
+
+        /* MENSAJE */
+
+        #mensaje-login {
+            min-height: 20px;
+
+            margin: 13px 0 0;
+
+            text-align: center;
+
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        /* REGISTRO */
+
+        .registro {
+            margin-top: 24px;
+
+            padding-top: 20px;
+
+            border-top: 1px solid var(--borde);
+
+            text-align: center;
+
+            font-size: 13.5px;
+
+            color: var(--gris);
+        }
+
+        .registro a {
+            color: #2868d3;
+
+            font-weight: 700;
+
+            text-decoration: none;
+        }
+
+        .registro a:hover {
+            text-decoration: underline;
+        }
+
+        /* PIE */
+
+        .pie {
+            margin-top: 18px;
+
+            text-align: center;
+
+            font-size: 11px;
+
+            color: #9aa1ac;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 480px) {
+
+            body {
+                padding: 15px;
+            }
+
+            .login-card {
+                padding: 28px 22px 25px;
+
+                border-radius: 20px;
+            }
+
+            .logo {
+                width: 170px;
+            }
+
+            .encabezado h1 {
+                font-size: 22px;
+            }
+        }
+
+        .ojo {
+    position: relative;
+    display: inline-block;
+    font-size: 17px;
+    line-height: 1;
+}
+
+.ojo.tachado::after {
+    content: "";
+
+    position: absolute;
+
+    width: 25px;
+    height: 2px;
+
+    background: #6f7785;
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(-50%, -50%)
+        rotate(-45deg);
+
+    border-radius: 2px;
+}
+
+    </style>
 </head>
+
+
 <body>
 
-  <div class="card">
-    <img class="Logo" src="imgs/Logo de Delicious Food sin fondo.png" alt="Logo de Delicious Food" width="200">
-  
-    <div class="titulo-wrap">
-      <span class="linea izq"></span>
-      <h1>Iniciar Sesión</h1>
-      <span class="linea der"></span>
-    </div>
+    <main class="login-card">
 
-    <div class="campo">
-      <label for="user">Usuario</label>
-      <div class="input-wrap">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        <input id="user" type="text" placeholder="Ingresa tu usuario o correo">
-      </div>
-    </div>
+        <!-- LOGO -->
+        <img
+            class="logo"
+            src="imgs/Logo de Delicious Food sin fondo.png"
+            alt="Logo de Delicious Food"
+        >
 
-    <div class="campo">
-      <label for="pass">Contraseña</label>
-      <div class="input-wrap">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        <input id="pass" type="password" placeholder="Ingresa tu contraseña">
-        <svg class="eye" onclick="togglePass()" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"/><circle cx="12" cy="12" r="3"/></svg>
-      </div>
-    </div>
 
-    <div class="olvidaste">
-      <a href="#">¿Olvidaste tu contraseña?</a>
-    </div>
+        <!-- ENCABEZADO -->
+        <div class="encabezado">
 
-    <button class="btn" type="button" onclick="window.location.href='home.html'">
-       Iniciar Sesión 
-    </button>
+            <h1>Iniciar sesión</h1>
 
-    <div class="divisor">o</div>
+            <p>Ingresá para continuar a Delicious Food</p>
 
-    <button class="btn-social" type="button">
-      <svg viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.9 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.5 6.1 29.5 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.7-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.5 16 18.9 13 24 13c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.5 6.1 29.5 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.1 35.4 26.7 36 24 36c-5.3 0-9.6-3.4-11.3-8.1l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.3 4.2-4.1 5.6l6.2 5.2C40.9 36.5 44 30.9 44 24c0-1.3-.1-2.7-.4-3.5z"/></svg>
-      Continuar con Google
-    </button>
+            <div class="decoracion"></div>
 
-    <button class="btn-social" type="button">
-      <svg viewBox="0 0 24 24" fill="#000"><path d="M16.365 1.43c0 1.14-.463 2.163-1.214 2.91-.83.83-2.15 1.47-3.28 1.38-.144-1.11.44-2.27 1.19-2.99.83-.82 2.24-1.42 3.3-1.3zM20.5 17.29c-.55 1.27-.82 1.84-1.53 2.96-.99 1.56-2.39 3.5-4.12 3.52-1.53.02-1.93-.99-4-.98-2.08.01-2.52.99-4.05.97-1.73-.02-3.06-1.77-4.05-3.33C-.34 16.9-.86 12.2 1.02 9.7c1.32-1.77 3.42-2.86 5.4-2.87 1.74-.02 2.55 1.14 4.05 1.14 1.5 0 2.26-1.14 4.05-1.02 1.53.1 3.15.8 4.14 2.14-3.6 2.05-3.01 7.32.84 8.2z"/></svg>
-      Continuar con Apple
-    </button>
+        </div>
 
-    <div class="pie">
-      ¿No tienes cuenta? <a href="#">Crear cuenta</a>
-    </div>
-    <div class="clave-acceso">
-      <a href="#">Iniciar sesión con una clave de acceso</a>
-    </div>
-  </div>
 
-  <script>
-    function togglePass(){
-      const p = document.getElementById('pass');
-      p.type = p.type === 'password' ? 'text' : 'password';
+        <!-- USUARIO -->
+        <div class="campo">
+
+            <label for="user">
+                Usuario o correo electrónico
+            </label>
+
+            <div class="input-contenedor">
+
+                <!-- Icono usuario -->
+                <svg
+                    class="icono"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                </svg>
+
+                <input
+                    id="user"
+                    type="text"
+                    placeholder="Ingresá tu usuario o correo"
+                    autocomplete="username"
+                >
+
+            </div>
+
+        </div>
+
+
+        <!-- CONTRASEÑA -->
+        <div class="campo">
+
+            <label for="pass">
+                Contraseña
+            </label>
+
+            <div class="input-contenedor">
+
+                <!-- Icono candado -->
+                <svg
+                    class="icono"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                >
+                    <rect x="3" y="11" width="18" height="10" rx="2"/>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+
+                <input
+                    id="pass"
+                    type="password"
+                    placeholder="Ingresá tu contraseña"
+                    autocomplete="current-password"
+                    onkeydown="if(event.key === 'Enter') iniciarSesion()"
+                >
+
+                <button
+                  class="boton-ojo"
+                  type="button"
+                  onclick="togglePass()"
+                  aria-label="Mostrar u ocultar contraseña"
+                > 
+                  <span class="ojo">👁</span>
+              
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- BOTON -->
+        <button
+            class="btn-login"
+            type="button"
+            onclick="iniciarSesion()"
+        >
+            Iniciar sesión
+        </button>
+
+
+        <!-- MENSAJE -->
+        <p id="mensaje-login"></p>
+
+
+        <!-- REGISTRO -->
+        <div class="registro">
+
+            ¿No tenés una cuenta?
+
+            <a href="registro.html">
+                Crear cuenta
+            </a>
+
+        </div>
+
+
+        <!-- PIE -->
+        <div class="pie">
+            © 2026 Delicious Food
+        </div>
+
+    </main>
+
+
+    <script>
+
+        /* MOSTRAR / OCULTAR CONTRASEÑA */
+
+        function togglePass() {
+    const password = document.getElementById("pass");
+    const ojo = document.querySelector(".ojo");
+
+    if (password.type === "password") {
+        password.type = "text";
+        ojo.classList.remove("tachado");
+    } else {
+        password.type = "password";
+        ojo.classList.add("tachado");
     }
-  </script>
+}
+
+
+        /* BUSCAR USUARIO */
+
+        function buscarUsuario(dato) {
+
+            // Primero intenta buscar directamente por usuario
+            const contraseña = localStorage.getItem(dato);
+
+            if (contraseña !== null) {
+
+                return {
+                    usuario: dato,
+                    contraseña: contraseña
+                };
+
+            }
+
+
+            // Si no encontró usuario,
+            // busca por correo electrónico
+
+            for (let i = 0; i < localStorage.length; i++) {
+
+                const clave = localStorage.key(i);
+
+                if (clave && clave.startsWith("correo_")) {
+
+                    const usuario = clave.substring(7);
+
+                    const correoGuardado =
+                        localStorage.getItem(clave);
+
+                    if (
+                        correoGuardado &&
+                        correoGuardado.toLowerCase() === dato.toLowerCase()
+                    ) {
+
+                        return {
+                            usuario: usuario,
+                            contraseña: localStorage.getItem(usuario)
+                        };
+
+                    }
+                }
+            }
+
+
+            return null;
+        }
+
+
+        /* INICIAR SESIÓN */
+
+        function iniciarSesion() {
+
+            const dato =
+                document.getElementById("user").value.trim();
+
+            const clave =
+                document.getElementById("pass").value;
+
+            const mensaje =
+                document.getElementById("mensaje-login");
+
+
+            /* CAMPOS VACÍOS */
+
+            if (dato === "" || clave === "") {
+
+                mensaje.textContent =
+                    "⚠️ Completá usuario y contraseña.";
+
+                mensaje.style.color = "#d64545";
+
+                return;
+            }
+
+
+            /* BUSCAR CUENTA */
+
+            const cuenta = buscarUsuario(dato);
+
+
+            if (cuenta === null) {
+
+                mensaje.textContent =
+                    "❌ Usuario o correo no encontrado.";
+
+                mensaje.style.color = "#d64545";
+
+                return;
+            }
+
+
+            /* COMPROBAR CONTRASEÑA */
+
+            if (clave !== cuenta.contraseña) {
+
+                mensaje.textContent =
+                    "❌ Contraseña incorrecta.";
+
+                mensaje.style.color = "#d64545";
+
+                return;
+            }
+
+
+            /* LOGIN CORRECTO */
+
+            mensaje.textContent =
+                "✅ Inicio de sesión correcto.";
+
+            mensaje.style.color = "#29945a";
+
+
+            /* GUARDAR USUARIO ACTIVO */
+
+            localStorage.setItem(
+                "usuarioActivo",
+                cuenta.usuario
+            );
+
+
+            /* IR AL HOME */
+
+            setTimeout(function () {
+
+                window.location.href = "home.html";
+
+            }, 700);
+
+        }
+
+    </script>
 
 </body>
+
 </html>
