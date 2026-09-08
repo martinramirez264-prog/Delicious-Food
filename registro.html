@@ -342,91 +342,98 @@
     <script>
 
         function registrar(event) {
-
             event.preventDefault();
 
-            let usuario = document.getElementById("usuario").value.trim();
-            let correo = document.getElementById("correo").value.trim();
-            let clave = document.getElementById("clave").value;
-            let terminos = document.getElementById("terminos").checked;
-            let mensaje = document.getElementById("mensaje");
+            const usuarioInput = document.getElementById("usuario");
+            const correoInput = document.getElementById("correo");
+            const claveInput = document.getElementById("clave");
+            const terminosInput = document.getElementById("terminos");
+            const mensaje = document.getElementById("mensaje");
 
+            const usuario = usuarioInput.value.trim();
+            const correo = correoInput.value.trim().toLowerCase();
+            const clave = claveInput.value;
 
-            // Limpiar mensaje anterior
             mensaje.textContent = "";
             mensaje.style.color = "#e74c3c";
 
-
-            // Comprobar usuario
             if (usuario === "") {
-
                 mensaje.textContent = "⚠️ Ingresa un nombre de usuario.";
-                document.getElementById("usuario").focus();
+                usuarioInput.focus();
                 return;
             }
 
+            if (!/^[a-zA-Z0-9._-]{3,30}$/.test(usuario)) {
+                mensaje.textContent =
+                    "⚠️ El usuario debe tener entre 3 y 30 caracteres y solo puede usar letras, números, punto, guion y guion bajo.";
+                usuarioInput.focus();
+                return;
+            }
 
-            // Comprobar correo
             if (correo === "") {
-
                 mensaje.textContent = "⚠️ Ingresa tu correo electrónico.";
-                document.getElementById("correo").focus();
+                correoInput.focus();
                 return;
             }
 
-
-            // Comprobar contraseña
             if (clave === "") {
-
                 mensaje.textContent = "⚠️ Ingresa una contraseña.";
-                document.getElementById("clave").focus();
+                claveInput.focus();
                 return;
             }
 
-
-            // Comprobar longitud de contraseña
             if (clave.length < 6) {
-
                 mensaje.textContent =
                     "⚠️ La contraseña debe tener al menos 6 caracteres.";
-
-                document.getElementById("clave").focus();
+                claveInput.focus();
                 return;
             }
 
-
-            // Comprobar términos
-            if (!terminos) {
-
+            if (!terminosInput.checked) {
                 mensaje.textContent =
                     "⚠️ Debes aceptar los términos y condiciones.";
-
                 return;
             }
 
+            if (localStorage.getItem(usuario) !== null) {
+                mensaje.textContent =
+                    "⚠️ Ese nombre de usuario ya está registrado.";
+                usuarioInput.focus();
+                return;
+            }
 
-            // Guardar los datos
+            for (let i = 0; i < localStorage.length; i++) {
+                const claveLocal = localStorage.key(i);
+
+                if (claveLocal && claveLocal.startsWith("correo_")) {
+                    const correoGuardado = localStorage.getItem(claveLocal);
+
+                    if (
+                        correoGuardado &&
+                        correoGuardado.toLowerCase() === correo
+                    ) {
+                        mensaje.textContent =
+                            "⚠️ Ese correo electrónico ya está registrado.";
+                        correoInput.focus();
+                        return;
+                    }
+                }
+            }
+
+            // Formato compatible con index.html.
             localStorage.setItem(usuario, clave);
             localStorage.setItem("correo_" + usuario, correo);
 
-
-            // Mostrar mensaje de éxito
             mensaje.style.color = "#27ae60";
-            mensaje.textContent =
-                "✅ ¡Cuenta creada correctamente!";
+            mensaje.textContent = "✅ ¡Cuenta creada correctamente!";
 
-
-            // Redireccionar al Login
             setTimeout(function () {
-
                 window.location.href = "index.html";
-
             }, 1200);
-
         }
 
 
-   function mostrarContraseña() {
+        function mostrarContraseña() {
 
     let clave = document.getElementById("clave");
     let ojo = document.querySelector(".ojo");

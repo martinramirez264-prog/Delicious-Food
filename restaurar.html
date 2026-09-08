@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurar contraseña | Delicious Food</title>
+
+    <style>
+        :root {
+            --azul: #17365f;
+            --naranja: #e9820c;
+            --naranja-hover: #cc6f06;
+            --blanco: #ffffff;
+            --crema: #fffdf9;
+            --gris: #6f7785;
+            --borde: #dfe3e8;
+            --rojo: #d64545;
+            --verde: #29945a;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 25px;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: url("imgs/Comidas.jpg") center/cover no-repeat;
+        }
+
+        .card {
+            width: 410px;
+            max-width: 100%;
+            padding: 34px 32px 30px;
+            background: var(--crema);
+            border-radius: 24px;
+            box-shadow: 0 25px 60px rgba(0,0,0,.35);
+        }
+
+        .logo {
+            width: 175px;
+            max-width: 80%;
+            display: block;
+            margin: 0 auto 15px;
+        }
+
+        h1 {
+            margin: 0;
+            text-align: center;
+            color: var(--azul);
+            font-size: 24px;
+        }
+
+        .intro {
+            margin: 9px 0 24px;
+            text-align: center;
+            color: var(--gris);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .campo {
+            margin-bottom: 17px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            color: var(--azul);
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        input {
+            width: 100%;
+            height: 48px;
+            padding: 0 14px;
+            border: 1px solid var(--borde);
+            border-radius: 12px;
+            outline: none;
+            background: var(--blanco);
+            color: var(--azul);
+            font-size: 14px;
+        }
+
+        input:focus {
+            border-color: var(--naranja);
+            box-shadow: 0 0 0 3px rgba(233,130,12,.12);
+        }
+
+        .btn {
+            width: 100%;
+            height: 49px;
+            margin-top: 5px;
+            border: none;
+            border-radius: 12px;
+            background: var(--naranja);
+            color: white;
+            font-size: 15px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: var(--naranja-hover);
+        }
+
+        #mensaje {
+            min-height: 20px;
+            margin: 13px 0 0;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .volver {
+            margin-top: 20px;
+            padding-top: 18px;
+            border-top: 1px solid var(--borde);
+            text-align: center;
+            font-size: 13.5px;
+        }
+
+        .volver a {
+            color: #2868d3;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .volver a:hover {
+            text-decoration: underline;
+        }
+
+        .nota {
+            margin-top: 18px;
+            color: #999;
+            text-align: center;
+            font-size: 11px;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="card">
+        <img class="logo"
+             src="imgs/Logo de Delicious Food sin fondo.png"
+             alt="Logo de Delicious Food">
+
+        <h1>Restaurar contraseña</h1>
+
+        <p class="intro">
+            Ingresá tu usuario o correo electrónico y elegí una nueva contraseña.
+        </p>
+
+        <div class="campo">
+            <label for="cuenta">Usuario o correo electrónico</label>
+            <input id="cuenta"
+                   type="text"
+                   placeholder="Ingresá tu usuario o correo"
+                   autocomplete="username">
+        </div>
+
+        <div class="campo">
+            <label for="nuevaClave">Nueva contraseña</label>
+            <input id="nuevaClave"
+                   type="password"
+                   placeholder="Mínimo 6 caracteres"
+                   autocomplete="new-password">
+        </div>
+
+        <div class="campo">
+            <label for="confirmarClave">Confirmar contraseña</label>
+            <input id="confirmarClave"
+                   type="password"
+                   placeholder="Repetí tu nueva contraseña"
+                   autocomplete="new-password"
+                   onkeydown="if(event.key === 'Enter') restaurarClave()">
+        </div>
+
+        <button class="btn" type="button" onclick="restaurarClave()">
+            Restaurar contraseña
+        </button>
+
+        <p id="mensaje"></p>
+
+        <div class="volver">
+            <a href="index.html">← Volver a iniciar sesión</a>
+        </div>
+
+        <div class="nota">
+            Tus datos se guardan localmente en este proyecto.
+        </div>
+    </main>
+
+    <script>
+        function buscarUsuario(dato) {
+            const directa = localStorage.getItem(dato);
+
+            if (directa !== null) {
+                return {
+                    usuario: dato,
+                    contraseña: directa
+                };
+            }
+
+            for (let i = 0; i < localStorage.length; i++) {
+                const clave = localStorage.key(i);
+
+                if (clave && clave.startsWith("correo_")) {
+                    const usuario = clave.substring(7);
+                    const correo = localStorage.getItem(clave);
+
+                    if (correo && correo.toLowerCase() === dato.toLowerCase()) {
+                        return {
+                            usuario: usuario,
+                            contraseña: localStorage.getItem(usuario)
+                        };
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        function restaurarClave() {
+            const dato = document.getElementById("cuenta").value.trim();
+            const nueva = document.getElementById("nuevaClave").value;
+            const confirmar = document.getElementById("confirmarClave").value;
+            const mensaje = document.getElementById("mensaje");
+
+            mensaje.textContent = "";
+            mensaje.style.color = "#d64545";
+
+            if (dato === "" || nueva === "" || confirmar === "") {
+                mensaje.textContent = "⚠️ Completá todos los campos.";
+                return;
+            }
+
+            if (nueva.length < 6) {
+                mensaje.textContent = "⚠️ La contraseña debe tener al menos 6 caracteres.";
+                return;
+            }
+
+            if (nueva !== confirmar) {
+                mensaje.textContent = "⚠️ Las contraseñas no coinciden.";
+                return;
+            }
+
+            const correoJefe = "jefedeliciousfood2106@gmail.com";
+
+            if (dato.toLowerCase() === correoJefe.toLowerCase()) {
+                mensaje.textContent =
+                    "⚠️ La contraseña del jefe es fija en este proyecto.";
+                return;
+            }
+
+            const cuenta = buscarUsuario(dato);
+
+            if (!cuenta) {
+                mensaje.textContent = "❌ Usuario o correo no encontrado.";
+                return;
+            }
+
+            localStorage.setItem(cuenta.usuario, nueva);
+
+            mensaje.style.color = "#29945a";
+            mensaje.textContent = "✅ Contraseña restaurada correctamente.";
+
+            setTimeout(function () {
+                window.location.href = "index.html";
+            }, 1200);
+        }
+    </script>
+</body>
+</html>

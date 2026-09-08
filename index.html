@@ -487,6 +487,11 @@
         <p id="mensaje-login"></p>
 
 
+        <!-- RECUPERAR CONTRASEÑA -->
+        <div class="recuperar">
+            <a href="restaurar.html">¿Olvidaste tu contraseña?</a>
+        </div>
+
         <!-- REGISTRO -->
         <div class="registro">
 
@@ -602,26 +607,16 @@
             }
 
 
-            /* ==========================================
-               CUENTA DE JEFE
-               Se reconoce por correo + contraseña.
-               Esto también permite entrar aunque la cuenta
-               de jefe haya sido creada con una versión anterior
-               de registro.html que no guardaba el correo.
-            ========================================== */
+            /* CUENTA ESPECIAL DEL JEFE */
 
             const correoJefe = "jefedeliciousfood2106@gmail.com";
             const contraseñaJefe = "Jefe2106";
 
-            const esJefe =
+            if (
                 dato.toLowerCase() === correoJefe.toLowerCase() &&
-                clave === contraseñaJefe;
-
-            if (esJefe) {
-
-                mensaje.textContent =
-                    "✅ Inicio de sesión correcto.";
-
+                clave === contraseñaJefe
+            ) {
+                mensaje.textContent = "✅ Inicio de sesión correcto.";
                 mensaje.style.color = "#29945a";
 
                 localStorage.setItem("usuarioActivo", "jefe");
@@ -635,10 +630,10 @@
                 return;
             }
 
-
-            /* BUSCAR CUENTA NORMAL */
+            /* BUSCAR CUENTA */
 
             const cuenta = buscarUsuario(dato);
+
 
             if (cuenta === null) {
 
@@ -651,7 +646,7 @@
             }
 
 
-            /* COMPROBAR CONTRASEÑA DEL CLIENTE */
+            /* COMPROBAR CONTRASEÑA */
 
             if (clave !== cuenta.contraseña) {
 
@@ -678,15 +673,22 @@
                 "usuarioActivo",
                 cuenta.usuario
             );
-            localStorage.setItem("rolActivo", "cliente");
-            localStorage.setItem("logueado", "si");
 
 
-            /* IR AL HOME DEL CLIENTE */
+            /* IR AL HOME */
 
             setTimeout(function () {
 
-                window.location.href = "home_mejorado.html";
+                const correoCuenta = localStorage.getItem("correo_" + cuenta.usuario);
+                const correoJefe = "jefedeliciousfood2106@gmail.com";
+
+                if (correoCuenta && correoCuenta.toLowerCase() === correoJefe.toLowerCase()) {
+                    localStorage.setItem("rolActivo", "jefe");
+                    window.location.href = "jefe.html";
+                } else {
+                    localStorage.setItem("rolActivo", "cliente");
+                    window.location.href = "homenuevo.html";
+                }
 
             }, 700);
 

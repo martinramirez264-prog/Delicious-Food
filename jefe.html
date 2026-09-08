@@ -386,8 +386,8 @@
                 👨‍💼 Jefe
                 <div class="menu-jefe" id="menuJefe">
                     <a href="cuenta-jefe.html">👤 Mi cuenta</a>
-              <a href="#">🔔 Notificaciones</a>
-              <a href="index.html">🚪 Cerrar sesión</a>
+              <a href="#" id="enlaceNotificaciones">🔔 Notificaciones</a>
+              <a href="index.html" id="enlaceCerrarSesion">🚪 Cerrar sesión</a>
             </div>
         </div>
         </header>
@@ -474,79 +474,70 @@
 </div>
 
 <script>
-const botonJefe = document.getElementById("botonJefe");
-const menuJefe = document.getElementById("menuJefe");
+    const botonJefe = document.getElementById("botonJefe");
+    const menuJefe = document.getElementById("menuJefe");
+    const enlaceNotificaciones = document.getElementById("enlaceNotificaciones");
+    const enlaceCerrarSesion = document.getElementById("enlaceCerrarSesion");
 
-botonJefe.addEventListener("click", function(event) {
-    event.stopPropagation();
-    menuJefe.style.display =
-        menuJefe.style.display === "block" ? "none" : "block";
-});
+    // Protección básica del panel.
+    const rolActivo = localStorage.getItem("rolActivo");
+    const usuarioActivo = localStorage.getItem("usuarioActivo");
 
-document.addEventListener("click", function() {
-    menuJefe.style.display = "none";
-});
-</script>
-<script>
+    if (rolActivo !== "jefe" || !usuarioActivo) {
+        window.location.href = "index.html";
+    }
 
-    const botónJefe = document.getElementById("botonJefe");
-    const menúJefe = document.getElementById("menuJefe");
-    const botonNotificaciones = document.getElementById("botonNotificaciones");
-    const contadorNotificaciones = document.getElementById("contadorNotificaciones");
-
-    // Abrir y cerrar el menú del jefe
-    botonJefe.addEventListener("click", function(event) {
-
+    // Menú del jefe.
+    botonJefe.addEventListener("click", function (event) {
         event.stopPropagation();
-
         menuJefe.classList.toggle("mostrar");
-
     });
 
-
-    // Evitar que tocar las opciones cierre inmediatamente el menú
-    menuJefe.addEventListener("click", function(event) {
-
+    menuJefe.addEventListener("click", function (event) {
         event.stopPropagation();
-
     });
 
-
-    // Cerrar al tocar fuera
-    document.addEventListener("click", function() {
-
+    document.addEventListener("click", function () {
         menuJefe.classList.remove("mostrar");
-
     });
 
+    // Cerrar sesión y volver al login.
+    enlaceCerrarSesion.addEventListener("click", function (event) {
+        event.preventDefault();
 
-    // Revisar si existe una notificación nueva
+        localStorage.removeItem("usuarioActivo");
+        localStorage.removeItem("rolActivo");
+        localStorage.removeItem("logueado");
+
+        window.location.href = "index.html";
+    });
+
+    // Notificaciones de pedidos.
     function revisarNotificaciones() {
-
         const notificacion = localStorage.getItem("notificacionPedido");
 
         if (notificacion) {
-
-            contadorNotificaciones.style.display = "inline-block";
-            contadorNotificaciones.textContent = "1";
-
-            botonNotificaciones.classList.add("notificacion-nueva");
-
-            // Parpadea durante 5 segundos
-            setTimeout(function() {
-
-                botonNotificaciones.classList.remove("notificacion-nueva");
-
-                contadorNotificaciones.style.display = "none";
-
-            }, 5000);
-
+            enlaceNotificaciones.textContent = "🔔 Notificaciones (1)";
+            enlaceNotificaciones.title = "Hay un pedido nuevo";
+        } else {
+            enlaceNotificaciones.textContent = "🔔 Notificaciones";
+            enlaceNotificaciones.title = "No hay notificaciones nuevas";
         }
-
     }
 
-    revisarNotificaciones();
+    enlaceNotificaciones.addEventListener("click", function (event) {
+        event.preventDefault();
 
+        if (localStorage.getItem("notificacionPedido")) {
+            alert("🔔 Hay un pedido nuevo pendiente de revisar.");
+        } else {
+            alert("🔔 No hay notificaciones nuevas.");
+        }
+
+        menuJefe.classList.remove("mostrar");
+    });
+
+    revisarNotificaciones();
 </script>
 </body>
 </html>

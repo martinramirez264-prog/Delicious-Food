@@ -1,1134 +1,1145 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Delicious Food | Mi Perfil</title>
-
-    <link rel="stylesheet" href="style.css">
-
-    <style>
-
-        :root {
-            --azul: #17365f;
-            --azul-oscuro: #102744;
-            --naranja: #e9820c;
-            --naranja-hover: #cc6f06;
-            --blanco: #ffffff;
-            --crema: #fffdf9;
-            --gris: #6f7785;
-            --borde: #dfe3e8;
-            --rojo: #d64545;
-            --rojo-hover: #b93434;
-            --verde: #29945a;
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            min-height: 100vh;
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            padding: 25px;
-
-            font-family: "Segoe UI", Arial, sans-serif;
-
-            background: url("imgs/Comidas.jpg") center/cover no-repeat;
-
-            color: var(--azul);
-        }
-
-        /* CAPA SUAVE PARA QUE LA TARJETA RESALTE */
-        body::before {
-            content: "";
-            position: fixed;
-            inset: 0;
-
-            background: rgba(0, 0, 0, 0.12);
-
-            pointer-events: none;
-        }
-
-        /* TARJETA */
-
-        .perfil {
-            position: relative;
-            z-index: 1;
-
-            width: 430px;
-            max-width: 100%;
-
-            padding: 32px;
-
-            background: var(--crema);
-
-            border-radius: 24px;
-
-            text-align: center;
-
-            box-shadow:
-                0 25px 60px rgba(0, 0, 0, 0.35);
-
-            animation: aparecer 0.35s ease;
-        }
-
-        @keyframes aparecer {
-
-            from {
-                opacity: 0;
-                transform: translateY(15px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-
-        }
-
-        /* ENCABEZADO */
-
-        .encabezado {
-            margin-bottom: 24px;
-        }
-
-        .encabezado h1 {
-            margin: 0;
-
-            font-size: 27px;
-            font-weight: 800;
-
-            color: var(--azul);
-        }
-
-        .encabezado p {
-            margin: 7px 0 0;
-
-            font-size: 14px;
-
-            color: var(--gris);
-        }
-
-        .decoracion {
-            width: 55px;
-            height: 4px;
-
-            margin: 12px auto 0;
-
-            border-radius: 20px;
-
-            background: var(--naranja);
-        }
-
-        /* FOTO */
-
-        .foto-container {
-            position: relative;
-
-            width: 130px;
-            height: 130px;
-
-            margin: 0 auto 25px;
-        }
-
-        #fotoPerfil {
-            width: 130px;
-            height: 130px;
-
-            display: block;
-
-            border-radius: 50%;
-
-            object-fit: cover;
-
-            border: 4px solid white;
-
-            box-shadow:
-                0 8px 22px rgba(0, 0, 0, 0.20);
-
-            background: #eef1f5;
-        }
-
-        .foto-placeholder {
-            width: 130px;
-            height: 130px;
-            display: block;
-            overflow: hidden;
-            border-radius: 50%;
-            border: 4px solid white;
-            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.20);
-            background: #d0d0d0;
-        }
-
-        .foto-placeholder img {
-            width: 100%;
-            height: 100%;
-            display: block;
-            object-fit: cover;
-            border-radius: 50%;
-        }
-
-        /* BOTÓN CÁMARA */
-
-        .icono-camara {
-            position: absolute;
-
-            right: 0;
-            bottom: 2px;
-
-            width: 40px;
-            height: 40px;
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            border-radius: 50%;
-
-            background: var(--naranja);
-
-            color: white;
-
-            font-size: 19px;
-
-            cursor: pointer;
-
-            border: 3px solid var(--crema);
-
-            box-shadow:
-                0 4px 10px rgba(0, 0, 0, 0.20);
-
-            transition: 0.2s ease;
-        }
-
-        .icono-camara:hover {
-            background: var(--naranja-hover);
-
-            transform: scale(1.08);
-        }
-
-        /* BOTÓN ELIMINAR FOTO */
-
-        .eliminar-foto {
-            margin-top: 8px;
-
-            border: none;
-
-            background: transparent;
-
-            color: var(--rojo);
-
-            font-size: 12px;
-            font-weight: 700;
-
-            cursor: pointer;
-        }
-
-        .eliminar-foto:hover {
-            text-decoration: underline;
-        }
-
-        /* CAMPOS */
-
-        .campo {
-            margin-bottom: 17px;
-
-            text-align: left;
-        }
-
-        .campo label {
-            display: block;
-
-            margin-bottom: 7px;
-
-            font-size: 13px;
-            font-weight: 700;
-
-            color: var(--azul);
-        }
-
-        .input-contenedor {
-            position: relative;
-        }
-
-        .campo input {
-            width: 100%;
-
-            height: 48px;
-
-            padding: 0 14px;
-
-            border: 1px solid var(--borde);
-
-            border-radius: 12px;
-
-            outline: none;
-
-            background: white;
-
-            color: var(--azul);
-
-            font-size: 14px;
-
-            transition:
-                border-color 0.2s ease,
-                box-shadow 0.2s ease;
-        }
-
-        .campo input:focus {
-            border-color: var(--naranja);
-
-            box-shadow:
-                0 0 0 3px rgba(233, 130, 12, 0.12);
-        }
-
-        .campo input::placeholder {
-            color: #a1a8b3;
-        }
-
-        /* OJO CONTRASEÑA */
-
-        .boton-ojo {
-            position: absolute;
-
-            right: 7px;
-            top: 50%;
-
-            transform: translateY(-50%);
-
-            width: 36px;
-            height: 36px;
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            border: none;
-
-            border-radius: 8px;
-
-            background: transparent;
-
-            cursor: pointer;
-
-            font-size: 17px;
-        }
-
-        .boton-ojo:hover {
-            background: #f1f3f6;
-        }
-
-        .ojo {
-            position: relative;
-
-            display: inline-block;
-
-            line-height: 1;
-        }
-
-        /* BARRA SOBRE EL OJO */
-
-        .ojo.tachado::after {
-            content: "";
-
-            position: absolute;
-
-            width: 25px;
-            height: 2px;
-
-            background: #6f7785;
-
-            left: 50%;
-            top: 50%;
-
-            transform:
-                translate(-50%, -50%)
-                rotate(-45deg);
-
-            border-radius: 2px;
-
-            pointer-events: none;
-        }
-
-        /* INFORMACIÓN */
-
-        .info {
-            margin: 3px 0 20px;
-
-            padding: 11px 13px;
-
-            border-radius: 10px;
-
-            background: #f3f6f9;
-
-            color: var(--gris);
-
-            font-size: 12px;
-
-            text-align: left;
-        }
-
-        /* MENSAJE */
-
-        #mensaje {
-            min-height: 20px;
-
-            margin: 8px 0 12px;
-
-            text-align: center;
-
-            font-size: 13px;
-
-            font-weight: 700;
-        }
-
-        /* BOTONES */
-
-        .boton {
-            width: 100%;
-
-            height: 48px;
-
-            margin-top: 10px;
-
-            border: none;
-
-            border-radius: 12px;
-
-            font-size: 14px;
-            font-weight: 800;
-
-            cursor: pointer;
-
-            transition:
-                transform 0.15s ease,
-                background 0.2s ease,
-                box-shadow 0.2s ease;
-        }
-
-        .boton:hover {
-            transform: translateY(-1px);
-        }
-
-        .guardar {
-            background: var(--naranja);
-
-            color: white;
-        }
-
-        .guardar:hover {
-            background: var(--naranja-hover);
-
-            box-shadow:
-                0 8px 18px rgba(233, 130, 12, 0.25);
-        }
-
-        .volver {
-            background: #edf1f5;
-
-            color: var(--azul);
-        }
-
-        .volver:hover {
-            background: #e1e6eb;
-        }
-
-        .cerrar {
-            background: #fff0f0;
-
-            color: var(--rojo);
-        }
-
-        .cerrar:hover {
-            background: #ffe2e2;
-        }
-
-        /* PIE */
-
-        .pie {
-            margin-top: 20px;
-
-            color: #9aa1ac;
-
-            font-size: 11px;
-        }
-
-        /* RESPONSIVE */
-
-        @media (max-width: 480px) {
-
-            body {
-                padding: 15px;
-            }
-
-            .perfil {
-                padding: 27px 22px 24px;
-
-                border-radius: 20px;
-            }
-
-            .encabezado h1 {
-                font-size: 23px;
-            }
-
-        }
-
-    </style>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Delicious Food | Sabores del Mundo</title>
+ 
+  <style>
+    :root{
+      --azul:#173f7a;
+      --azul-2:#24589d;
+      --azul-claro:#eef5ff;
+      --naranja:#f39a12;
+      --naranja-oscuro:#d97900;
+      --texto:#263238;
+      --gris:#667085;
+      --blanco:#fff;
+      --fondo:#f5f7fb;
+      --borde:#e7ebf2;
+      --sombra:0 18px 45px rgba(18,45,82,.12);
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+
+    html{scroll-behavior:smooth}
+
+    body{
+      font-family:Arial, Helvetica, sans-serif;
+      background:var(--fondo);
+      color:var(--texto);
+      line-height:1.55;
+    }
+
+    /* ---------- ENCABEZADO ---------- */
+    .hero{
+      min-height:560px;
+      position:relative;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      color:white;
+      background:
+        linear-gradient(90deg,rgba(6,20,38,.76),rgba(6,20,38,.30)),
+        url("imgs/Comidas.jpg") center/cover no-repeat;
+      overflow:hidden;
+    }
+
+    .hero::after{
+      content:"";
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:-1px;
+      height:85px;
+      background:linear-gradient(to top, var(--fondo), transparent);
+    }
+
+    .hero-content{
+      position:relative;
+      z-index:2;
+      width:min(850px,92%);
+      padding:35px 25px;
+    }
+    .hero-brand{
+      width:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:14px;
+      margin:0 0 18px;
+    }
+
+    .hero-brand .logo-mini{
+      width:82px;
+      height:82px;
+      flex:0 0 82px;
+      object-fit:contain;
+      background:#fff;
+      border-radius:50%;
+      padding:7px;
+      box-shadow:0 12px 30px rgba(0,0,0,.25);
+      margin:0;
+    }
+
+    .hero-brand .hero-kicker{
+      margin:0;
+      white-space:nowrap;
+    }
+
+    .hero-kicker{
+      display:inline-block;
+      padding:7px 15px;
+      border-radius:999px;
+      background:rgba(243,154,18,.95);
+      font-size:.82rem;
+      font-weight:700;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      margin-bottom:15px;
+    }
+
+    .hero h1{
+      font-size:clamp(2.5rem,6vw,4.8rem);
+      line-height:1.05;
+      margin-bottom:15px;
+      text-shadow:0 4px 18px rgba(0,0,0,.35);
+    }
+
+    .hero p{
+      font-size:clamp(1rem,2vw,1.2rem);
+      max-width:680px;
+      margin:0 auto 28px;
+      color:#f4f7fb;
+    }
+
+    .hero-buttons{
+      display:flex;
+      justify-content:center;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      border:0;
+      border-radius:12px;
+      padding:13px 22px;
+      font-size:.98rem;
+      font-weight:700;
+      cursor:pointer;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      transition:.25s ease;
+    }
+
+    .btn-primary{
+      background:var(--naranja);
+      color:white;
+      box-shadow:0 10px 22px rgba(243,154,18,.28);
+    }
+
+    .btn-primary:hover{
+      background:var(--naranja-oscuro);
+      transform:translateY(-2px);
+    }
+
+    .btn-light{
+      background:white;
+      color:var(--azul);
+    }
+
+    .btn-light:hover{
+      transform:translateY(-2px);
+      box-shadow:0 10px 25px rgba(0,0,0,.18);
+    }
+
+    /* ---------- NAV ---------- */
+    .nav{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      background:rgba(12,24,42,.96);
+      backdrop-filter:blur(12px);
+      box-shadow:0 5px 18px rgba(0,0,0,.12);
+    }
+
+    .nav-inner{
+      width:min(1180px,94%);
+      margin:auto;
+      min-height:64px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:15px;
+    }
+
+    .brand{
+      color:white;
+      text-decoration:none;
+      font-weight:800;
+      white-space:nowrap;
+    }
+
+    .brand span{color:var(--naranja)}
+
+    .nav-links{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:4px;
+      flex-wrap:wrap;
+    }
+
+    .nav-links a{
+      color:#e9eef7;
+      text-decoration:none;
+      font-size:.88rem;
+      font-weight:700;
+      padding:9px 11px;
+      border-radius:8px;
+      transition:.2s;
+    }
+
+    .nav-links a:hover{
+      background:rgba(255,255,255,.10);
+      color:#fff;
+    }
+
+    .perfil-btn{
+      width:42px;
+      height:42px;
+      flex:0 0 42px;
+      border-radius:50%;
+      border:2px solid white;
+      background:#fff;
+      overflow:hidden;
+      cursor:pointer;
+      box-shadow:0 5px 15px rgba(0,0,0,.18);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .perfil-btn img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    .avatar-default{
+      width:100%;
+      height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:#d5d7da;
+      color:#6b6f74;
+      font-size:22px;
+    }
+
+
+
+    /* ---------- MENÚ DE PERFIL ---------- */
+    .perfil-menu{
+      position:relative;
+      flex:0 0 42px;
+    }
+
+    .perfil-dropdown{
+      position:absolute;
+      top:52px;
+      right:0;
+      width:180px;
+      padding:7px;
+      background:white;
+      border:1px solid var(--borde);
+      border-radius:13px;
+      box-shadow:0 12px 28px rgba(0,0,0,.18);
+      display:none;
+      z-index:2000;
+    }
+
+    .perfil-dropdown.mostrar{
+      display:block;
+      animation:menuPerfil .16s ease;
+    }
+
+    @keyframes menuPerfil{
+      from{opacity:0;transform:translateY(-5px)}
+      to{opacity:1;transform:translateY(0)}
+    }
+
+    .perfil-dropdown a{
+      display:block;
+      padding:10px 11px;
+      border-radius:9px;
+      color:var(--azul);
+      text-decoration:none;
+      font-size:.88rem;
+      font-weight:700;
+      transition:.18s ease;
+    }
+
+    .perfil-dropdown a:hover{
+      background:#f2f5f9;
+    }
+
+    .perfil-dropdown .cerrar-sesion{
+      color:#d64545;
+    }
+
+    /* ---------- CONTENIDO ---------- */
+    main{
+      width:min(1180px,92%);
+      margin:auto;
+    }
+
+    section{
+      padding:54px 0;
+      scroll-margin-top:78px;
+    }
+
+    .section-title{
+      text-align:center;
+      margin-bottom:30px;
+    }
+
+    .section-title .tag{
+      display:inline-block;
+      color:var(--naranja-oscuro);
+      font-size:.78rem;
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:.12em;
+      margin-bottom:6px;
+    }
+
+    .section-title h2{
+      color:var(--azul);
+      font-size:clamp(1.65rem,3vw,2.35rem);
+      margin-bottom:8px;
+    }
+
+    .section-title p{
+      color:var(--gris);
+      max-width:700px;
+      margin:auto;
+    }
+
+    .welcome{
+      margin-top:-10px;
+      position:relative;
+      z-index:5;
+      display:grid;
+      grid-template-columns:1.4fr .8fr;
+      gap:20px;
+      align-items:stretch;
+    }
+
+    .panel{
+      background:white;
+      border:1px solid var(--borde);
+      border-radius:22px;
+      padding:30px;
+      box-shadow:var(--sombra);
+    }
+
+    .panel h3{
+      color:var(--azul);
+      margin-bottom:10px;
+      font-size:1.35rem;
+    }
+
+    .panel p{color:#53606e}
+
+    .highlight{
+      background:linear-gradient(135deg,var(--azul),var(--azul-2));
+      color:white;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
+
+    .highlight h3{color:white}
+    .highlight p{color:#e8f0fb}
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:12px;
+      margin-top:20px;
+    }
+
+    .stat{
+      padding:15px;
+      border-radius:14px;
+      background:rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.15);
+    }
+
+    .stat strong{
+      display:block;
+      font-size:1.45rem;
+      color:#fff;
+    }
+
+    .stat span{
+      font-size:.82rem;
+      color:#dce8f7;
+    }
+
+    /* ---------- CARDS ---------- */
+    .country-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:16px;
+    }
+
+    .country{
+      background:white;
+      border:1px solid var(--borde);
+      border-radius:18px;
+      padding:23px 17px;
+      text-align:center;
+      box-shadow:0 8px 25px rgba(18,45,82,.07);
+      transition:.25s;
+    }
+
+    .country:hover{
+      transform:translateY(-5px);
+      box-shadow:0 15px 30px rgba(18,45,82,.13);
+      border-color:#d6e1f1;
+    }
+
+    .country .emoji{
+      font-size:2rem;
+      display:block;
+      margin-bottom:8px;
+    }
+
+    .country h3{
+      color:var(--azul);
+      font-size:1rem;
+      margin-bottom:5px;
+    }
+
+    .country p{
+      color:var(--gris);
+      font-size:.88rem;
+    }
+
+    .experience{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:18px;
+    }
+
+    .experience-card{
+      background:white;
+      border-radius:18px;
+      padding:25px;
+      border:1px solid var(--borde);
+      box-shadow:0 8px 25px rgba(18,45,82,.07);
+    }
+
+    .experience-card .icon{
+      width:48px;
+      height:48px;
+      border-radius:14px;
+      background:#fff3df;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:1.5rem;
+      margin-bottom:15px;
+    }
+
+    .experience-card h3{
+      color:var(--azul);
+      margin-bottom:7px;
+    }
+
+    .experience-card p{color:var(--gris)}
+
+    /* ---------- PAÍS DE LA SEMANA ---------- */
+    .weekly{
+      background:linear-gradient(135deg,#173f7a,#2a67ae);
+      color:white;
+      border-radius:25px;
+      padding:38px;
+      display:grid;
+      grid-template-columns:1fr 1.7fr;
+      gap:30px;
+      align-items:center;
+      box-shadow:0 18px 45px rgba(23,63,122,.22);
+    }
+
+    .weekly-badge{
+      width:150px;
+      height:150px;
+      margin:auto;
+      border-radius:50%;
+      background:white;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:5rem;
+      box-shadow:0 15px 30px rgba(0,0,0,.18);
+    }
+
+    .weekly h2{
+      font-size:2rem;
+      margin-bottom:10px;
+    }
+
+    .weekly p{color:#e4edf9}
+
+    /* ---------- EQUIPO / RESEÑAS ---------- */
+    .team-grid,.review-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:18px;
+    }
+
+    .person,.review{
+      background:white;
+      border:1px solid var(--borde);
+      border-radius:18px;
+      padding:24px;
+      text-align:center;
+      box-shadow:0 8px 25px rgba(18,45,82,.07);
+    }
+
+    .person-avatar{
+      width:64px;
+      height:64px;
+      margin:0 auto 12px;
+      border-radius:50%;
+      background:#eaf1fb;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:1.9rem;
+    }
+
+    .person h3{
+      color:var(--azul);
+      font-size:1rem;
+      margin-bottom:5px;
+    }
+
+    .person p{color:var(--gris);font-size:.9rem}
+
+    .stars{
+      color:#f39a12;
+      letter-spacing:2px;
+      margin-bottom:10px;
+    }
+
+    .review p{
+      color:#596675;
+      font-style:italic;
+    }
+
+    /* ---------- CONTACTO / RESERVA ---------- */
+    .contact-grid{
+      display:grid;
+      grid-template-columns:.9fr 1.1fr;
+      gap:20px;
+    }
+
+    .contact-list{
+      list-style:none;
+      margin-top:18px;
+    }
+
+    .contact-list li{
+      padding:11px 0;
+      border-bottom:1px solid var(--borde);
+      color:#52606e;
+    }
+
+    .contact-list strong{color:var(--azul)}
+
+    form{
+      display:grid;
+      gap:12px;
+      margin-top:15px;
+    }
+
+    .form-row{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+
+    input,textarea,select{
+      width:100%;
+      border:1px solid #d9e0ea;
+      border-radius:11px;
+      padding:12px 13px;
+      font:inherit;
+      outline:none;
+      background:#fbfcfe;
+    }
+
+    input:focus,textarea:focus,select:focus{
+      border-color:#6f99cf;
+      box-shadow:0 0 0 3px rgba(36,88,157,.10);
+    }
+
+    textarea{min-height:100px;resize:vertical}
+
+    .form-message{
+      min-height:22px;
+      font-weight:700;
+      color:#268653;
+      text-align:center;
+    }
+
+    .map{
+      width:100%;
+      height:310px;
+      border:0;
+      border-radius:18px;
+      margin-top:20px;
+      box-shadow:var(--sombra);
+    }
+
+    /* ---------- GALERÍA ---------- */
+    .gallery{
+      display:grid;
+      grid-template-columns:2fr 1fr 1fr;
+      grid-auto-rows:180px;
+      gap:12px;
+    }
+
+    .gallery-item{
+      position:relative;
+      overflow:hidden;
+      border-radius:18px;
+      background:
+        linear-gradient(135deg,rgba(23,63,122,.78),rgba(243,154,18,.35)),
+        url("imgs/Comidas.jpg") center/cover;
+      display:flex;
+      align-items:flex-end;
+      padding:18px;
+      color:white;
+      font-weight:800;
+      box-shadow:0 8px 25px rgba(18,45,82,.10);
+    }
+
+    .gallery-item:first-child{grid-row:span 2}
+
+    .gallery-item span{
+      position:relative;
+      z-index:1;
+      text-shadow:0 2px 7px rgba(0,0,0,.35);
+    }
+
+    /* ---------- FOOTER ---------- */
+    footer{
+      margin-top:25px;
+      background:#0d1c31;
+      color:#dce5f0;
+      padding:35px 20px;
+    }
+
+    .footer-inner{
+      width:min(1180px,92%);
+      margin:auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+      flex-wrap:wrap;
+    }
+
+    footer strong{color:white}
+    footer p{font-size:.88rem}
+
+    /* ---------- RESPONSIVE ---------- */
+    @media(max-width:900px){
+      .nav-inner{justify-content:center}
+      .brand{display:none}
+      .welcome,.contact-grid,.weekly{grid-template-columns:1fr}
+      .country-grid{grid-template-columns:repeat(2,1fr)}
+      .experience,.team-grid,.review-grid{grid-template-columns:1fr}
+      .gallery{grid-template-columns:1fr 1fr}
+      .gallery-item:first-child{grid-row:span 1}
+    }
+
+    @media(max-width:620px){
+      .hero{min-height:510px}
+      .nav{position:relative}
+      .nav-links{display:none}
+      .nav-inner{justify-content:flex-end}
+      main{width:94%}
+      section{padding:40px 0}
+      .panel,.weekly{padding:23px}
+      .country-grid{grid-template-columns:1fr 1fr}
+      .gallery{grid-template-columns:1fr;grid-auto-rows:150px}
+      .form-row{grid-template-columns:1fr}
+      .footer-inner{justify-content:center;text-align:center}
+    }
+  
+
+/* ===== GALERÍA GASTRONÓMICA MEJORADA ===== */
+.food-gallery {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-auto-rows: 250px;
+  gap: 16px;
+  margin-top: 25px;
+}
+.food-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 250px;
+  border-radius: 20px;
+  background: #ddd;
+  box-shadow: 0 10px 30px rgba(18,45,82,.12);
+  cursor: pointer;
+  isolation: isolate;
+}
+.food-card-grande { grid-row: span 2; }
+.food-card img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  transition: transform .5s ease;
+}
+.food-overlay {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(to top, rgba(0,0,0,.80) 0%, rgba(0,0,0,.25) 48%, rgba(0,0,0,0) 78%);
+  transition: background .3s ease;
+}
+.food-info { position: absolute; left: 20px; right: 20px; bottom: 18px; z-index: 2; color: white; }
+.food-country {
+  display: inline-block; padding: 5px 10px; margin-bottom: 7px; border-radius: 999px;
+  background: rgba(243,154,18,.95); color: white; font-size: .72rem; font-weight: 800;
+}
+.food-info h3 { margin: 0 0 4px; color: white; font-size: 1.22rem; text-shadow: 0 2px 8px rgba(0,0,0,.45); }
+.food-info p { margin: 0; color: #f3f5f8; font-size: .82rem; }
+.food-card:hover img { transform: scale(1.08); }
+.food-card:hover .food-overlay { background: linear-gradient(to top, rgba(0,0,0,.88), rgba(0,0,0,.30)); }
+.food-card:hover { box-shadow: 0 18px 40px rgba(18,45,82,.22); }
+@media (max-width: 900px) {
+  .food-gallery { grid-template-columns: 1fr 1fr; grid-auto-rows: 230px; }
+  .food-card-grande { grid-row: span 1; }
+}
+@media (max-width: 620px) {
+  .food-gallery { grid-template-columns: 1fr; grid-auto-rows: 240px; }
+  .food-card-grande { grid-row: span 1; }
+  .food-info h3 { font-size: 1.08rem; }
+}
+
+</style>
 </head>
-
 
 <body>
 
+  <!-- PORTADA -->
+  <header class="hero">
+    <div class="hero-content">
+      <div class="hero-brand">
+        <img class="logo-mini"
+             src="imgs/Logo de Delicious Food sin fondo.png"
+             alt="Logo de Delicious Food">
+        <span class="hero-kicker">DELICIOUS FOOD</span>
+      </div>
+      <h1>Sabores del Mundo</h1>
+      <p>Viví un viaje gastronómico sin salir de tu ciudad: comida, cultura, música y experiencias de distintos países en un solo lugar.</p>
 
-    <main class="perfil">
+      <div class="hero-buttons">
+        <a class="btn btn-primary" href="#reservas">📅 Reservar una mesa</a>
+        <a class="btn btn-light" href="#menu">🍽️ Explorar el menú</a>
+      </div>
+    </div>
+  </header>
 
+  <!-- NAVEGACIÓN -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="#inicio">Delicious <span>Food</span></a>
 
-        <!-- ENCABEZADO -->
+      <div class="nav-links">
+        <a href="#inicio">Inicio</a>
+        <a href="#proyecto">Proyecto</a>
+        <a href="#menu">Menú</a>
+        <a href="#experiencia">Experiencia</a>
+        <a href="#equipo">Equipo</a>
+        <a href="#reseñas">Reseñas</a>
+        <a href="#galeria">Galería</a>
+        <a href="#contacto">Contacto</a>
+      </div>
 
-        <div class="encabezado">
-
-            <h1>Mi Perfil</h1>
-
-            <p>Administrá tu información de Delicious Food</p>
-
-            <div class="decoracion"></div>
-
-        </div>
-
-
-        <!-- FOTO DE PERFIL -->
-
-        <div class="foto-container">
-
-            <div id="fotoPerfil" class="foto-placeholder"><img src="data:image/jpeg;base64,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" alt="Sin foto de perfil"></div>
-
-            <label
-                for="inputFoto"
-                class="icono-camara"
-                title="Cambiar foto"
-            >
-                📷
-            </label>
-
-        </div>
-
-
-        <input
-            type="file"
-            id="inputFoto"
-            accept="image/*"
-            onchange="cambiarFoto(event)"
-            hidden
-        >
-
-
-        <button
-            class="eliminar-foto"
-            type="button"
-            onclick="eliminarFoto()"
-        >
-            Eliminar foto
+      <div class="perfil-menu" id="perfilMenu">
+        <button class="perfil-btn" id="perfilBtn" type="button" title="Mi perfil" aria-label="Abrir menú de usuario" aria-expanded="false" aria-controls="perfilDropdown">
+          <div id="avatarDefault" class="avatar-default">👤</div>
+          <img id="avatarPerfil" src="" alt="Foto de perfil" style="display:none">
         </button>
 
-
-        <br><br>
-
-
-        <!-- USUARIO -->
-
-        <div class="campo">
-
-            <label for="usuario">
-                Nombre de usuario
-            </label>
-
-            <input
-                type="text"
-                id="usuario"
-                placeholder="Tu nombre de usuario"
-                autocomplete="username"
-            >
-
+        <div id="perfilDropdown" class="perfil-dropdown" aria-hidden="true">
+          <a href="perfil.html">👤 Mi perfil</a>
+          <a href="index.html" class="cerrar-sesion">🚪 Cerrar sesión</a>
         </div>
+      </div>
+    </div>
+  </nav>
 
+  <main>
 
-        <!-- CORREO -->
+    <!-- INICIO -->
+    <section id="inicio">
+      <div class="welcome">
+        <article class="panel">
+          <h3>✨ Bienvenidos a Delicious Food</h3>
+          <p>
+            Descubrí sabores de todo el mundo en un solo lugar. Cada semana viajamos a un nuevo país a través de su gastronomía, música y decoración temática.
+          </p>
+          <br>
+          <p>
+            Nuestro objetivo es brindarte una experiencia diferente, combinando cultura, sabor y diversión.
+          </p>
+        </article>
 
-        <div class="campo">
+        <article class="panel highlight">
+          <h3>🌎 Un restaurante, muchos destinos</h3>
+          <p>Elegí un país y preparate para conocer sus sabores.</p>
 
-            <label for="correo">
-                Correo electrónico
-            </label>
+          <div class="stats">
+            <div class="stat"><strong>+20</strong><span>países explorados</span></div>
+            <div class="stat"><strong>+500</strong><span>clientes satisfechos</span></div>
+          </div>
+        </article>
+      </div>
+    </section>
 
-            <input
-                type="email"
-                id="correo"
-                placeholder="Tu correo electrónico"
-                autocomplete="email"
-            >
+    <!-- PROYECTO -->
+    <section id="proyecto">
+      <div class="section-title">
+        <span class="tag">Nuestra propuesta</span>
+        <h2>Un viaje gastronómico</h2>
+        <p>Acercamos diferentes culturas a través de sus platos, ambientación y tradiciones.</p>
+      </div>
 
+      <div class="panel">
+        <p>
+          Este restaurante temático busca acercar a las personas a diferentes culturas del mundo mediante la gastronomía. Cada semana se selecciona un país, se adapta la decoración del lugar y se prepara un menú especial representativo.
+        </p>
+        <br>
+        <p>
+          Además, el negocio se promociona a través de redes sociales como Instagram, TikTok y Facebook, mostrando platos, eventos y experiencias de los clientes. También se organizan noches culturales con música típica y actividades relacionadas con cada país.
+        </p>
+      </div>
+    </section>
+
+    <!-- MENÚ -->
+    <section id="menu">
+      <div class="section-title">
+        <span class="tag">Para todos los gustos</span>
+        <h2>🍽️ Menú Internacional</h2>
+        <p>Una selección de platos representativos de distintas partes del mundo.</p>
+      </div>
+
+      <div class="country-grid">
+        <article class="country"><span class="emoji">🍝</span><h3>Italia 🇮🇹</h3><p>Pasta, pizza y lasaña</p></article>
+        <article class="country"><span class="emoji">🌮</span><h3>México 🇲🇽</h3><p>Tacos, burritos y nachos</p></article>
+        <article class="country"><span class="emoji">🍣</span><h3>Japón 🇯🇵</h3><p>Sushi, ramen y tempura</p></article>
+        <article class="country"><span class="emoji">🥐</span><h3>Francia 🇫🇷</h3><p>Croissants y quiche</p></article>
+        <article class="country"><span class="emoji">🍔</span><h3>EE.UU. 🇺🇸</h3><p>Hamburguesas y BBQ</p></article>
+        <article class="country"><span class="emoji">🥘</span><h3>España 🇪🇸</h3><p>Paella y tapas</p></article>
+        <article class="country"><span class="emoji">🍁</span><h3>Canadá 🇨🇦</h3><p>Jarabe de arce</p></article>
+        <article class="country"><span class="emoji">🥟</span><h3>Reino Unido 🇬🇧</h3><p>Cornish pasty</p></article>
+      </div>
+    </section>
+
+    <!-- EXPERIENCIA -->
+    <section id="experiencia">
+      <div class="section-title">
+        <span class="tag">Más que comida</span>
+        <h2>🎉 Experiencia Cultural</h2>
+        <p>La idea es que cada visita se sienta como un pequeño viaje.</p>
+      </div>
+
+      <div class="experience">
+        <article class="experience-card">
+          <div class="icon">🎵</div>
+          <h3>Música típica</h3>
+          <p>Disfrutá de sonidos representativos del país elegido durante la semana.</p>
+        </article>
+
+        <article class="experience-card">
+          <div class="icon">🏮</div>
+          <h3>Ambientación</h3>
+          <p>El restaurante cambia su decoración para acompañar la cultura de cada destino.</p>
+        </article>
+
+        <article class="experience-card">
+          <div class="icon">🎊</div>
+          <h3>Noches temáticas</h3>
+          <p>Participá de eventos y actividades relacionadas con cada país.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- PAÍS DE LA SEMANA -->
+    <section>
+      <div class="weekly">
+        <div class="weekly-badge"><img src="imgs/logo de japon sin fondo.png" alt="Logo de Japón" width="220"></div>
+        <div>
+          <span class="hero-kicker">País de la semana</span>
+          <h2>Japón</h2>
+          <p>
+            Esta semana te invitamos a descubrir la cultura de japon con platos tradicionales como sushi, ramen y tempura. Disfrutá de una ambientación única con música y decoración típica.
+          </p>
         </div>
+      </div>
+    </section>
 
+    <!-- EQUIPO -->
+    <section id="equipo">
+      <div class="section-title">
+        <span class="tag">Quiénes lo hacen posible</span>
+        <h2>👨‍🍳 Nuestro Equipo</h2>
+      </div>
 
-        <!-- CONTRASEÑA -->
+      <div class="team-grid">
+        <article class="person">
+          <div class="person-avatar">👨‍🍳</div>
+          <h3>Chef Principal</h3>
+          <p>Especialista en cocina internacional</p>
+        </article>
 
-        <div class="campo">
+        <article class="person">
+          <div class="person-avatar">👩‍🍳</div>
+          <h3>Chef Asistente</h3>
+          <p>Experta en gastronomía asiática</p>
+        </article>
 
-            <label for="password">
-                Nueva contraseña
-            </label>
+        <article class="person">
+          <div class="person-avatar">🎪</div>
+          <h3>Encargado de Eventos</h3>
+          <p>Organiza noches culturales y temáticas</p>
+        </article>
+      </div>
+    </section>
 
-            <div class="input-contenedor">
+    <!-- RESEÑAS -->
+    <section id="reseñas">
+      <div class="section-title">
+        <span class="tag">Lo que dicen nuestros clientes</span>
+        <h2>⭐ Opiniones</h2>
+      </div>
 
-                <input
-                    type="password"
-                    id="password"
-                    placeholder="Dejá vacío si no querés cambiarla"
-                    autocomplete="new-password"
-                >
+      <div class="review-grid">
+        <article class="review">
+          <div class="stars">★★★★★</div>
+          <p>“Una experiencia increíble, la comida y el ambiente son únicos.”</p>
+        </article>
 
-                <button
-                    class="boton-ojo"
-                    type="button"
-                    onclick="togglePassword()"
-                    aria-label="Mostrar u ocultar contraseña"
-                >
-                    <span class="ojo">👁</span>
-                </button>
+        <article class="review">
+          <div class="stars">★★★★★</div>
+          <p>“Viajar por el mundo comiendo, simplemente genial.”</p>
+        </article>
 
+        <article class="review">
+          <div class="stars">★★★★★</div>
+          <p>“Cada semana algo nuevo, nunca te aburrís.”</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- GALERÍA -->
+    <section id="galeria">
+      <div class="section-title">
+        <span class="tag">Una mirada a nuestra propuesta</span>
+        <h2>🍽️ Galería gastronómica</h2>
+        <p>Descubrí algunos de los platos que forman parte de nuestro viaje por el mundo.</p>
+      </div>
+
+      <div class="food-gallery">
+        <article class="food-card food-card-grande">
+          <img src="imgs/Ensalada de Pasta Italiana.jpg" alt="Pasta italiana">
+          <div class="food-overlay"></div>
+          <div class="food-info">
+            <span class="food-country">🇮🇹 Italia</span>
+            <h3>🍝 Pasta italiana</h3>
+            <p>Sabores tradicionales de la cocina italiana.</p>
+          </div>
+        </article>
+
+        <article class="food-card">
+          <img src="imgs/Sushi Japones.jpg" alt="Sushi japonés">
+          <div class="food-overlay"></div>
+          <div class="food-info">
+            <span class="food-country">🇯🇵 Japón</span>
+            <h3>🍣 Sushi japonés</h3>
+            <p>Tradición, precisión y sabor.</p>
+          </div>
+        </article>
+
+        <article class="food-card">
+          <img src="imgs/Tacos Mexicanos.jpg" alt="Tacos mexicanos">
+          <div class="food-overlay"></div>
+          <div class="food-info">
+            <span class="food-country">🇲🇽 México</span>
+            <h3>🌮 Tacos mexicanos</h3>
+            <p>Color, tradición y mucho sabor.</p>
+          </div>
+        </article>
+
+        <article class="food-card">
+          <img src="imgs/Pizza.jpg" alt="Pizza artesanal">
+          <div class="food-overlay"></div>
+          <div class="food-info">
+            <span class="food-country">🇮🇹 Italia</span>
+            <h3>🍕 Pizza artesanal</h3>
+            <p>Un clásico de la gastronomía italiana.</p>
+          </div>
+        </article>
+
+        <article class="food-card">
+          <img src="imgs/Hamburguesa.jpg" alt="Hamburguesa">
+          <div class="food-overlay"></div>
+          <div class="food-info">
+            <span class="food-country">🇺🇸 Estados Unidos</span>
+            <h3>🍔 Hamburguesa</h3>
+            <p>Un clásico que nunca pasa de moda.</p>
+          </div>
+        </article>
+
+        <article class="food-card">
+          <img src="imgs/Paella española.jpg" alt="Paella española">
+          <div class="food-overlay"></div>
+          <div class="food-info">
+            <span class="food-country">🇪🇸 España</span>
+            <h3>🥘 Paella española</h3>
+            <p>Una tradición mediterránea llena de sabor.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- CONTACTO Y RESERVA -->
+    <section id="contacto">
+      <div class="section-title">
+        <span class="tag">Estamos para ayudarte</span>
+        <h2>📱 Contacto</h2>
+      </div>
+
+      <div class="contact-grid">
+        <article class="panel">
+          <h3>Encontranos</h3>
+          <p>Vení a disfrutar una experiencia gastronómica diferente.</p>
+
+          <ul class="contact-list">
+            <li><strong>📧 Email:</strong> DeliciousFood@gmail.com</li>
+            <li><strong>📸 Instagram:</strong> @saboresdelmundo</li>
+            <li><strong>📍 Ubicación:</strong> Av. 9 de Julio, Buenos Aires, Argentina</li>
+            <li><strong>🕐 Horarios:</strong> Lunes a Domingo de 7:00 a 22:00</li>
+          </ul>
+        </article>
+
+        <article class="panel" id="reservas">
+          <h3>📅 Reservá tu mesa</h3>
+          <p>Completá tus datos y te contactaremos para confirmar.</p>
+
+          <form id="reservaForm">
+            <div class="form-row">
+              <input type="text" id="nombreReserva" placeholder="Nombre" required>
+              <input type="email" id="emailReserva" placeholder="Email" required>
             </div>
 
-        </div>
+            <div class="form-row">
+              <input type="date" id="fechaReserva" required>
+              <input type="number" id="personasReserva" min="1" max="20" placeholder="Cantidad de personas" required>
+            </div>
+
+            <textarea id="mensajeReserva" placeholder="Mensaje adicional (opcional)"></textarea>
+
+            <button class="btn btn-primary" type="submit">Confirmar solicitud</button>
+            <div id="reservaMensaje" class="form-message"></div>
+          </form>
+        </article>
+      </div>
+
+      <iframe
+        class="map"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3283.874617972123!2d-58.38162519999999!3d-34.6073319!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bccacfdd1fa037%3A0xf1b1f26b0eab3053!2sAv.%209%20de%20Julio%2C%20Cdad.%20Aut%C3%B3noma%20de%20Buenos%20Aires!5e0!3m2!1ses-419!2sar!4v1778433228558!5m2!1ses-419!2sar"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Mapa de ubicación de Delicious Food">
+      </iframe>
+
+      <div class="map-actions">
+        <a class="btn btn-primary" href="https://maps.app.goo.gl/q7a7MhvSDy3tHMDk8" target="_blank" rel="noopener noreferrer">📍 Ver ubicación exacta en Google Maps</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <p><strong>Delicious Food</strong> · Sabores del Mundo</p>
+      <p>© 2026 · Proyecto educativo</p>
+    </div>
+  </footer>
+
+  <script>
 
 
-        <!-- INFORMACIÓN -->
+    // Menú desplegable del perfil.
+    document.addEventListener("DOMContentLoaded", function () {
+      const menu = document.getElementById("perfilMenu");
+      const boton = document.getElementById("perfilBtn");
+      const dropdown = document.getElementById("perfilDropdown");
 
-        <div class="info">
+      if (!menu || !boton || !dropdown) return;
 
-            💡 Si no querés cambiar tu contraseña,
-            simplemente dejá este campo vacío.
+      boton.addEventListener("click", function (event) {
+        event.stopPropagation();
+        const abierto = dropdown.classList.toggle("mostrar");
+        boton.setAttribute("aria-expanded", abierto ? "true" : "false");
+        dropdown.setAttribute("aria-hidden", abierto ? "false" : "true");
+      });
 
-        </div>
-
-
-        <!-- MENSAJE -->
-
-        <p id="mensaje"></p>
-
-
-        <!-- GUARDAR -->
-
-        <button
-            class="boton guardar"
-            type="button"
-            onclick="guardar()"
-        >
-            Guardar cambios
-        </button>
-
-
-        <!-- VOLVER -->
-
-        <button
-            class="boton volver"
-            type="button"
-            onclick="window.location.href='home.html'"
-        >
-            ← Volver al inicio
-        </button>
-
-
-        <!-- CERRAR SESIÓN -->
-
-        <button
-            class="boton cerrar"
-            type="button"
-            onclick="cerrarSesion()"
-        >
-            Cerrar sesión
-        </button>
-
-
-        <div class="pie">
-            © 2026 Delicious Food
-        </div>
-
-
-    </main>
-
-
-<script>
-
-
-/* ==========================================
-   COMPROBAR SESIÓN
-========================================== */
-
-const usuarioActivo = localStorage.getItem("usuarioActivo");
-
-/* ==========================================
-   CARGAR PERFIL
-========================================== */
-
-window.addEventListener("load", function () {
-
-    const usuario = localStorage.getItem("usuarioActivo");
-
-    /* Cargar usuario solo si existe una sesión activa. */
-    if (usuario) {
-        document.getElementById("usuario").value = usuario;
-    }
-
-
-    /* Cargar correo */
-
-    if (usuario) {
-        const correo = localStorage.getItem("correo_" + usuario);
-        if (correo) {
-            document.getElementById("correo").value = correo;
+      document.addEventListener("click", function (event) {
+        if (!menu.contains(event.target)) {
+          dropdown.classList.remove("mostrar");
+          boton.setAttribute("aria-expanded", "false");
+          dropdown.setAttribute("aria-hidden", "true");
         }
-    }
-
-    /* Cargar foto guardada */
-    // Primero busca la foto del usuario y, si no existe, la foto general.
-    // De esta manera la foto NO desaparece al recargar perfil.html.
-    const foto = usuario
-        ? (localStorage.getItem("fotoPerfil_" + usuario) || localStorage.getItem("fotoPerfil"))
-        : localStorage.getItem("fotoPerfil");
-
-    if (foto) {
-        mostrarFotoGuardada(foto);
-    }
-
-});
-
-
-/* ==========================================
-   MOSTRAR / OCULTAR CONTRASEÑA
-========================================== */
-
-function togglePassword() {
-
-    const password =
-        document.getElementById("password");
-
-    const ojo =
-        document.querySelector(".ojo");
-
-
-    if (password.type === "password") {
-
-        password.type = "text";
-
-        ojo.classList.remove("tachado");
-
-    } else {
-
-        password.type = "password";
-
-        ojo.classList.add("tachado");
-
-    }
-
-}
-
-
-/* ==========================================
-   MOSTRAR FOTO / PLACEHOLDER
-========================================== */
-
-function mostrarFotoGuardada(imagen) {
-    const contenedor = document.getElementById("fotoPerfil");
-    if (!contenedor) return;
-
-    contenedor.innerHTML = "";
-
-    const img = document.createElement("img");
-    img.src = imagen;
-    img.alt = "Foto de perfil";
-    img.style.width = "100%";
-    img.style.height = "100%";
-    img.style.display = "block";
-    img.style.objectFit = "cover";
-    img.style.borderRadius = "50%";
-
-    contenedor.appendChild(img);
-}
-
-function mostrarPlaceholderFoto() {
-    const contenedor = document.getElementById("fotoPerfil");
-    if (!contenedor) return;
-
-    // El avatar vuelve INMEDIATAMENTE a la pantalla, sin recargar.
-    contenedor.innerHTML = '<img src="data:image/jpeg;base64,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" alt="Sin foto de perfil">';
-}
-
-
-/* ==========================================
-   CAMBIAR FOTO
-========================================== */
-
-function cambiarFoto(event) {
-
-    const archivo = event.target.files[0];
-    if (!archivo) return;
-
-    if (!archivo.type.startsWith("image/")) {
-        mostrarMensaje("⚠️ Elegí un archivo de imagen.", "#d64545");
-        event.target.value = "";
-        return;
-    }
-
-    /*
-       Reducimos la imagen antes de guardarla.
-       Esto evita que localStorage se quede sin espacio cuando
-       el usuario selecciona una foto grande del celular/PC.
-    */
-    const lector = new FileReader();
-
-    lector.onload = function (e) {
-        const imagenOriginal = new Image();
-
-        imagenOriginal.onload = function () {
-            const maximo = 900;
-            let ancho = imagenOriginal.naturalWidth;
-            let alto = imagenOriginal.naturalHeight;
-
-            if (ancho > maximo || alto > maximo) {
-                const escala = Math.min(maximo / ancho, maximo / alto);
-                ancho = Math.round(ancho * escala);
-                alto = Math.round(alto * escala);
-            }
-
-            const canvas = document.createElement("canvas");
-            canvas.width = ancho;
-            canvas.height = alto;
-
-            const ctx = canvas.getContext("2d");
-            ctx.drawImage(imagenOriginal, 0, 0, ancho, alto);
-
-            const imagen = canvas.toDataURL("image/jpeg", 0.82);
-            const usuario = localStorage.getItem("usuarioActivo");
-
-            try {
-                /* Guardar en pantalla inmediatamente. */
-                mostrarFotoGuardada(imagen);
-
-                /* Guardar para el usuario y también como respaldo general. */
-                if (usuario) {
-                    localStorage.setItem("fotoPerfil_" + usuario, imagen);
-                }
-                localStorage.setItem("fotoPerfil", imagen);
-
-                /* Comprobar que realmente quedó guardada. */
-                const comprobacion = usuario
-                    ? localStorage.getItem("fotoPerfil_" + usuario)
-                    : localStorage.getItem("fotoPerfil");
-
-                if (!comprobacion) {
-                    throw new Error("No se pudo guardar la foto");
-                }
-
-                event.target.value = "";
-                mostrarMensaje("✅ Foto guardada correctamente. Al recargar seguirá ahí.", "#29945a");
-            } catch (error) {
-                console.error(error);
-                mostrarMensaje("⚠️ La foto es demasiado grande. Probá con otra imagen.", "#d64545");
-            }
-        };
-
-        imagenOriginal.onerror = function () {
-            mostrarMensaje("⚠️ No se pudo cargar la imagen.", "#d64545");
-        };
-
-        imagenOriginal.src = e.target.result;
-    };
-
-    lector.readAsDataURL(archivo);
-
-}
-
-/* ==========================================
-   ELIMINAR FOTO
-========================================== */
-
-function eliminarFoto() {
-
-    const usuario =
-        localStorage.getItem("usuarioActivo");
-
-    // Borrar la foto guardada para que desaparezca de forma permanente.
-    if (usuario) {
-        localStorage.removeItem(
-            "fotoPerfil_" + usuario
-        );
-    }
-    localStorage.removeItem("fotoPerfil");
-
-    // Borrar la foto de la pantalla INMEDIATAMENTE.
-    mostrarPlaceholderFoto();
-
-    // Permitir volver a seleccionar la misma foto.
-    const input =
-        document.getElementById("inputFoto");
-
-    if (input) {
-        input.value = "";
-    }
-
-    mostrarMensaje(
-        "✅ Foto eliminada.",
-        "#29945a"
-    );
-
-}
-
-/* ==========================================
-   GUARDAR CAMBIOS
-========================================== */
-
-function guardar() {
-
-    const usuarioAnterior =
-        localStorage.getItem("usuarioActivo");
-
-
-    const nuevoUsuario =
-        document.getElementById("usuario").value.trim();
-
-
-    const nuevoCorreo =
-        document.getElementById("correo").value.trim();
-
-
-    const nuevaPassword =
-        document.getElementById("password").value;
-
-
-    /* Validaciones */
-
-    if (nuevoUsuario === "") {
-
-        mostrarMensaje(
-            "⚠️ Ingresá un nombre de usuario.",
-            "#d64545"
-        );
-
-        return;
-
-    }
-
-
-    if (nuevoCorreo === "") {
-
-        mostrarMensaje(
-            "⚠️ Ingresá un correo electrónico.",
-            "#d64545"
-        );
-
-        return;
-
-    }
-
-
-    if (
-        nuevaPassword !== "" &&
-        nuevaPassword.length < 6
-    ) {
-
-        mostrarMensaje(
-            "⚠️ La contraseña debe tener al menos 6 caracteres.",
-            "#d64545"
-        );
-
-        return;
-
-    }
-
-
-    /* Obtener datos anteriores */
-
-    const contraseñaAnterior =
-        localStorage.getItem(usuarioAnterior);
-
-
-    const correoAnterior =
-        localStorage.getItem(
-            "correo_" + usuarioAnterior
-        );
-
-
-    /* Si cambió el usuario */
-
-    if (
-        nuevoUsuario !== usuarioAnterior &&
-        localStorage.getItem(nuevoUsuario)
-    ) {
-
-        mostrarMensaje(
-            "⚠️ Ese nombre de usuario ya existe.",
-            "#d64545"
-        );
-
-        return;
-
-    }
-
-
-    /* Guardar usuario */
-
-    if (nuevoUsuario !== usuarioAnterior) {
-
-        if (contraseñaAnterior !== null) {
-
-            localStorage.setItem(
-                nuevoUsuario,
-                nuevaPassword !== ""
-                    ? nuevaPassword
-                    : contraseñaAnterior
-            );
-
-        }
-
-
-        if (correoAnterior !== null) {
-
-            localStorage.setItem(
-                "correo_" + nuevoUsuario,
-                nuevoCorreo
-            );
-
-        }
-
-
-        localStorage.removeItem(
-            usuarioAnterior
-        );
-
-
-        localStorage.removeItem(
-            "correo_" + usuarioAnterior
-        );
-
-
-        /* Mantener la foto de perfil al cambiar el usuario */
-        const fotoAnterior =
-            localStorage.getItem("fotoPerfil_" + usuarioAnterior);
-
-        if (fotoAnterior) {
-            localStorage.setItem(
-                "fotoPerfil_" + nuevoUsuario,
-                fotoAnterior
-            );
-
-            localStorage.removeItem(
-                "fotoPerfil_" + usuarioAnterior
-            );
-        }
-
-
-        /* Actualizar usuario activo */
-
-        localStorage.setItem(
-            "usuarioActivo",
-            nuevoUsuario
-        );
-
-    } else {
-
-        /* Guardar correo */
-
-        localStorage.setItem(
-            "correo_" + nuevoUsuario,
-            nuevoCorreo
-        );
-
-
-        /* Cambiar contraseña solamente si se escribió */
-
-        if (nuevaPassword !== "") {
-
-            localStorage.setItem(
-                nuevoUsuario,
-                nuevaPassword
-            );
-
-        }
-
-    }
-
-
-    /* Limpiar contraseña */
-
-    document.getElementById("password").value =
-        "";
-
-
-    mostrarMensaje(
-        "✅ Perfil actualizado correctamente.",
-        "#29945a"
-    );
-
-}
-
-
-/* ==========================================
-   MENSAJES
-========================================== */
-
-function mostrarMensaje(texto, color) {
-
-    const mensaje =
-        document.getElementById("mensaje");
-
-
-    mensaje.textContent =
-        texto;
-
-
-    mensaje.style.color =
-        color;
-
-
-    setTimeout(function () {
-
-        mensaje.textContent = "";
-
-    }, 3000);
-
-}
-
-
-/* ==========================================
-   CERRAR SESIÓN
-========================================== */
-
-function cerrarSesion() {
-
-    localStorage.removeItem(
-        "usuarioActivo"
-    );
-
-
-    localStorage.removeItem(
-        "logueado"
-    );
-
-}
-
-
-</script>
-
+      });
+    });
+
+    // Mostrar automáticamente la foto de perfil guardada.
+    window.addEventListener("DOMContentLoaded", function () {
+      const fotoGuardada = localStorage.getItem("fotoPerfil_" + localStorage.getItem("usuarioActivo"));
+
+      if (fotoGuardada) {
+        const avatar = document.getElementById("avatarPerfil");
+        const defecto = document.getElementById("avatarDefault");
+
+        avatar.src = fotoGuardada;
+        avatar.style.display = "block";
+        defecto.style.display = "none";
+      }
+    });
+
+    // Reserva de demostración.
+    document.getElementById("reservaForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const mensaje = document.getElementById("reservaMensaje");
+      mensaje.textContent = "✅ Solicitud enviada. ¡Gracias!";
+
+      this.reset();
+    });
+  </script>
 
 </body>
 </html>
