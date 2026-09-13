@@ -115,6 +115,15 @@
             font-weight: bold;
         }
 
+
+
+        /* NOMBRE DE LA CUENTA DEL JEFE: BLOQUEADO */
+        .campo-bloqueado {
+            background-color: #e9e9e9 !important;
+            color: #555 !important;
+            border: 1px solid #cfcfcf !important;
+            cursor: not-allowed;
+        }
     </style>
 
 </head>
@@ -126,7 +135,7 @@
         <h1>🍔 Delicious Food</h1>
 
         <a href="jefe.html" class="volver">
-            ← Volver al Panel de Jefes
+            ← Volver al Panel de Comida
         </a>
 
     </header>
@@ -190,6 +199,8 @@
                 <input
                     type="text"
                     value="Jefe"
+                    readonly
+                    class="campo-bloqueado"
                 >
 
             </div>
@@ -236,14 +247,56 @@
 </section>
 
 </main>
-<input
-    type="email"
-    value="gerencia.deliciousfood@gmail.com"
->
+
 <script>
-function guardarCambios() {
-    document.getElementById("mensajeGuardado").style.display = "block";
-}
+    const correoInput = document.querySelector('input[type="email"]');
+    const telefonoInput = document.querySelector('input[type="tel"]');
+    const inputFoto = document.getElementById("inputFoto");
+    const fotoPerfil = document.getElementById("fotoPerfil");
+
+    if (localStorage.getItem("rolActivo") !== "jefe" ||
+        !localStorage.getItem("usuarioActivo")) {
+        window.location.href = "index.html";
+    }
+
+    correoInput.value = localStorage.getItem("correoJefe") || "";
+    telefonoInput.value = localStorage.getItem("telefonoJefe") || "";
+
+    const fotoGuardada = localStorage.getItem("fotoJefe");
+    if (fotoGuardada) {
+        fotoPerfil.style.backgroundImage = `url("${fotoGuardada}")`;
+        fotoPerfil.style.backgroundSize = "cover";
+        fotoPerfil.style.backgroundPosition = "center";
+        fotoPerfil.textContent = "";
+    }
+
+    inputFoto.addEventListener("change", function () {
+        const archivo = this.files[0];
+        if (!archivo) return;
+
+        const lector = new FileReader();
+        lector.onload = function (evento) {
+            const foto = evento.target.result;
+            localStorage.setItem("fotoJefe", foto);
+            fotoPerfil.style.backgroundImage = `url("${foto}")`;
+            fotoPerfil.style.backgroundSize = "cover";
+            fotoPerfil.style.backgroundPosition = "center";
+            fotoPerfil.textContent = "";
+        };
+        lector.readAsDataURL(archivo);
+    });
+
+    function guardarCambios() {
+        localStorage.setItem("correoJefe", correoInput.value.trim());
+        localStorage.setItem("telefonoJefe", telefonoInput.value.trim());
+
+        const mensaje = document.getElementById("mensajeGuardado");
+        mensaje.style.display = "block";
+
+        setTimeout(function () {
+            mensaje.style.display = "none";
+        }, 3000);
+    }
 </script>
 
 </body>

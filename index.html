@@ -46,18 +46,11 @@
 
         .login-card {
             width: 410px;
-            max-width: 100%;
-
-            padding: 34px 32px 30px;
-
-            background: var(--crema);
-
+            max-width: 410px;
+            padding: 22px 32px 18px;
+                background: var(--crema);
             border-radius: 24px;
-
-            box-shadow:
-                0 25px 60px rgba(0, 0, 0, 0.35);
-
-            animation: aparecer 0.35s ease;
+            box-shadow:0 25px 60px rgba(0, 0, 0, 0.35);
         }
 
         @keyframes aparecer {
@@ -75,19 +68,19 @@
         /* LOGO */
 
         .logo {
-            width: 190px;
+            width: 155px;
             max-width: 80%;
 
             display: block;
 
-            margin: 0 auto 12px;
+            margin: 0 auto 6px;
         }
 
         /* TITULO */
 
         .encabezado {
             text-align: center;
-            margin-bottom: 28px;
+            margin-bottom: 12px;
         }
 
         .encabezado h1 {
@@ -100,7 +93,7 @@
         }
 
         .encabezado p {
-            margin: 7px 0 0;
+            margin: 4px 0 0;
 
             font-size: 14px;
             color: var(--gris);
@@ -110,7 +103,7 @@
             width: 55px;
             height: 4px;
 
-            margin: 12px auto 0;
+            margin: 7px auto 0;
 
             border-radius: 20px;
 
@@ -157,7 +150,7 @@
         .input-contenedor input {
             width: 100%;
 
-            height: 48px;
+            height: 44px;
 
             padding: 0 45px 0 43px;
 
@@ -226,7 +219,7 @@
         .btn-login {
             width: 100%;
 
-            height: 49px;
+            height: 46px;
 
             margin-top: 5px;
 
@@ -266,7 +259,7 @@
         #mensaje-login {
             min-height: 20px;
 
-            margin: 13px 0 0;
+            margin: 7px 0 0;
 
             text-align: center;
 
@@ -277,9 +270,9 @@
         /* REGISTRO */
 
         .registro {
-            margin-top: 24px;
+            margin-top: 15px;
 
-            padding-top: 20px;
+            padding-top: 12px;
 
             border-top: 1px solid var(--borde);
 
@@ -305,7 +298,7 @@
         /* PIE */
 
         .pie {
-            margin-top: 18px;
+            margin-top: 10px;
 
             text-align: center;
 
@@ -363,6 +356,169 @@
 
     border-radius: 2px;
 }
+    /* ===== HACER EL LOGIN MÁS PEQUEÑO ===== */
+
+.login-container {
+    padding: 15px 25px !important;
+}
+
+.logo {
+    width: 110px !important;
+    height: 110px !important;
+    margin-bottom: 5px !important;
+}
+
+.login-container h1 {
+    font-size: 23px !important;
+    margin-bottom: 5px !important;
+}
+
+.login-container .subtitulo {
+    font-size: 12px !important;
+    margin-bottom: 8px !important;
+}
+
+.decoracion {
+    margin: 5px auto 12px !important;
+}
+
+.form-group {
+    margin-bottom: 9px !important;
+}
+
+.form-group label {
+    font-size: 12px !important;
+    margin-bottom: 4px !important;
+}
+
+.form-group input {
+    height: 40px !important;
+    font-size: 13px !important;
+    padding: 8px 12px !important;
+}
+
+.login-button {
+    height: 44px !important;
+    font-size: 14px !important;
+    margin-top: 5px !important;
+}
+
+.recuperar {
+    margin-top: 7px !important;
+    font-size: 12px !important;
+}
+
+        /* ===== LOGIN COMPACTO ===== */
+        .login-card {
+            padding: 22px 32px 18px;
+        }
+
+        .logo {
+            width: 155px;
+            margin: 0 auto 6px;
+        }
+
+        .encabezado {
+            margin-bottom: 18px;
+        }
+
+        .encabezado p {
+            margin-top: 4px;
+        }
+
+        .decoracion {
+            margin-top: 7px;
+        }
+
+        .campo {
+            margin-bottom: 12px;
+        }
+
+        .campo label {
+            margin-bottom: 5px;
+        }
+
+        .input-contenedor input {
+            height: 44px;
+        }
+
+        .btn-login {
+            height: 46px;
+            margin-top: 3px;
+        }
+
+        #mensaje-login {
+            min-height: 16px;
+            margin: 7px 0 0;
+        }
+
+        .recuperar {
+            margin-top: 10px !important;
+        }
+
+        .registro {
+            margin-top: 15px;
+            padding-top: 12px;
+        }
+
+        .pie {
+            margin-top: 10px;
+        }
+
+        @media (max-height: 750px) {
+            body {
+                padding: 12px;
+            }
+
+            .login-card {
+                padding-top: 14px;
+                padding-bottom: 12px;
+            }
+
+            .logo {
+                width: 125px;
+                margin-bottom: 3px;
+            }
+
+            .encabezado {
+                margin-bottom: 12px;
+            }
+
+            .encabezado h1 {
+                font-size: 23px;
+            }
+
+            .campo {
+                margin-bottom: 9px;
+            }
+
+            .campo label {
+                margin-bottom: 3px;
+            }
+
+            .input-contenedor input {
+                height: 40px;
+            }
+
+            .btn-login {
+                height: 44px;
+            }
+
+            .registro {
+                margin-top: 11px;
+                padding-top: 9px;
+            }
+
+            .pie {
+                margin-top: 7px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 18px 22px 15px;
+            }
+        }
 
     </style>
 </head>
@@ -488,8 +644,8 @@
 
 
         <!-- RECUPERAR CONTRASEÑA -->
-        <div class="recuperar">
-            <a href="restaurar.html">¿Olvidaste tu contraseña?</a>
+      <div class="recuperar" style="text-align: center;">
+            <a href="restaurar.html">¿Olvidaste tu contraseña?</a> 
         </div>
 
         <!-- REGISTRO -->

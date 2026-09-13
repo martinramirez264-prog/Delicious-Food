@@ -174,6 +174,7 @@
       align-items:center;
       justify-content:space-between;
       gap:15px;
+      position:relative;
     }
 
     .brand{
@@ -186,11 +187,16 @@
     .brand span{color:var(--naranja)}
 
     .nav-links{
+      position:absolute;
+      left:50%;
+      top:50%;
+      transform:translate(-50%,-50%);
       display:flex;
       align-items:center;
       justify-content:center;
       gap:4px;
-      flex-wrap:wrap;
+      flex-wrap:nowrap;
+      white-space:nowrap;
     }
 
     .nav-links a{
@@ -243,9 +249,15 @@
 
 
     /* ---------- MENÚ DE PERFIL ---------- */
+    /* ---------- PERFIL ARRIBA ---------- */
     .perfil-menu{
-      position:relative;
-      flex:0 0 42px;
+      position:fixed !important;
+      top:18px !important;
+      right:22px !important;
+      left:auto !important;
+      bottom:auto !important;
+      z-index:99999 !important;
+      transform:none !important;
     }
 
     .perfil-dropdown{
@@ -673,6 +685,9 @@
     }
 
     @media(max-width:620px){
+      .perfil-menu{top:12px;right:12px}
+      .perfil-btn{width:40px;height:40px}
+      .perfil-dropdown{top:48px}
       .hero{min-height:510px}
       .nav{position:relative}
       .nav-links{display:none}
@@ -735,10 +750,56 @@
   .food-info h3 { font-size: 1.08rem; }
 }
 
-</style>
+
+    @media (max-width: 900px){
+      .nav-links{
+        position:static;
+        transform:none;
+        flex-wrap:wrap;
+        white-space:normal;
+        justify-content:center;
+      }
+
+      .nav-inner{
+        flex-direction:column;
+        justify-content:center;
+        padding:10px 0;
+      }
+
+      .brand{
+        margin-bottom:2px;
+      }
+    }
+
+    @media (max-width: 620px){
+      .perfil-menu{
+        position:fixed !important;
+        top:12px !important;
+        right:12px !important;
+        left:auto !important;
+        bottom:auto !important;
+        z-index:99999 !important;
+        transform:none !important;
+      }
+    }
+
+  </style>
 </head>
 
 <body>
+
+  <!-- PERFIL: arriba a la derecha, fuera de la navegación -->
+  <div class="perfil-menu" id="perfilMenu">
+    <button class="perfil-btn" id="perfilBtn" type="button" title="Mi perfil" aria-label="Abrir menú de usuario" aria-expanded="false" aria-controls="perfilDropdown">
+      <div id="avatarDefault" class="avatar-default">👤</div>
+      <img id="avatarPerfil" src="" alt="Foto de perfil" style="display:none">
+    </button>
+
+    <div id="perfilDropdown" class="perfil-dropdown" aria-hidden="true">
+      <a href="perfil.html">👤 Mi perfil</a>
+      <a href="index.html" class="cerrar-sesion">🚪 Cerrar sesión</a>
+    </div>
+  </div>
 
   <!-- PORTADA -->
   <header class="hero">
@@ -775,17 +836,6 @@
         <a href="#contacto">Contacto</a>
       </div>
 
-      <div class="perfil-menu" id="perfilMenu">
-        <button class="perfil-btn" id="perfilBtn" type="button" title="Mi perfil" aria-label="Abrir menú de usuario" aria-expanded="false" aria-controls="perfilDropdown">
-          <div id="avatarDefault" class="avatar-default">👤</div>
-          <img id="avatarPerfil" src="" alt="Foto de perfil" style="display:none">
-        </button>
-
-        <div id="perfilDropdown" class="perfil-dropdown" aria-hidden="true">
-          <a href="perfil.html">👤 Mi perfil</a>
-          <a href="index.html" class="cerrar-sesion">🚪 Cerrar sesión</a>
-        </div>
-      </div>
     </div>
   </nav>
 

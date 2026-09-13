@@ -15,7 +15,7 @@
 
         body {
             background: #f5f5f5;
-            color: #1d3b6b;
+            color: #ffffff;
         }
 
         .contenedor {
@@ -93,7 +93,7 @@
         }
 
         .usuario {
-            background: white;
+            background: #f28a00;
             padding: 10px 16px;
             border-radius: 25px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
@@ -365,7 +365,7 @@
             <li><a href="pedidos.html">📦 Pedidos</a></li>
             <li><a href="#">🍔 Comidas</a></li>
             <li><a href="#">📋 Menú</a></li>
-            <li><a href="#">🖼️ Imágenes</a></li>
+            <li><a href="imagenes.html">🖼️ Imágenes</a></li>
             <li><a href="#">👥 Empleados</a></li>
             <li><a href="#">🏪 Local</a></li>
             <li><a href="#">⚙️ Configuración</a></li>
@@ -383,11 +383,11 @@
             </div>
 
             <div class="usuario" id="botonJefe">
-                👨‍💼 Jefe
+                👨‍💼 <span class="texto-jefe">Jefe</span>
                 <div class="menu-jefe" id="menuJefe">
                     <a href="cuenta-jefe.html">👤 Mi cuenta</a>
-              <a href="#" id="enlaceNotificaciones">🔔 Notificaciones</a>
-              <a href="index.html" id="enlaceCerrarSesion">🚪 Cerrar sesión</a>
+              <a href="#">🔔 Notificaciones</a>
+              <a href="index.html">🚪 Cerrar sesión</a>
             </div>
         </div>
         </header>
@@ -474,12 +474,7 @@
 </div>
 
 <script>
-    const botonJefe = document.getElementById("botonJefe");
-    const menuJefe = document.getElementById("menuJefe");
-    const enlaceNotificaciones = document.getElementById("enlaceNotificaciones");
-    const enlaceCerrarSesion = document.getElementById("enlaceCerrarSesion");
-
-    // Protección básica del panel.
+    // Protección del panel: solo puede acceder el jefe.
     const rolActivo = localStorage.getItem("rolActivo");
     const usuarioActivo = localStorage.getItem("usuarioActivo");
 
@@ -487,57 +482,39 @@
         window.location.href = "index.html";
     }
 
-    // Menú del jefe.
-    botonJefe.addEventListener("click", function (event) {
+    const botonJefe = document.getElementById("botonJefe");
+    const menuJefe = document.getElementById("menuJefe");
+
+    // Abrir/cerrar el menú del jefe.
+    botonJefe.addEventListener("click", function(event) {
         event.stopPropagation();
         menuJefe.classList.toggle("mostrar");
     });
 
-    menuJefe.addEventListener("click", function (event) {
+    // No cerrar al hacer clic dentro del menú.
+    menuJefe.addEventListener("click", function(event) {
         event.stopPropagation();
     });
 
-    document.addEventListener("click", function () {
+    // Cerrar al hacer clic fuera.
+    document.addEventListener("click", function() {
         menuJefe.classList.remove("mostrar");
     });
 
-    // Cerrar sesión y volver al login.
-    enlaceCerrarSesion.addEventListener("click", function (event) {
-        event.preventDefault();
+    // Cerrar sesión correctamente.
+    const enlaceCerrarSesion = menuJefe.querySelector('a[href="index.html"]');
 
-        localStorage.removeItem("usuarioActivo");
-        localStorage.removeItem("rolActivo");
-        localStorage.removeItem("logueado");
+    if (enlaceCerrarSesion) {
+        enlaceCerrarSesion.addEventListener("click", function(event) {
+            event.preventDefault();
 
-        window.location.href = "index.html";
-    });
+            localStorage.removeItem("usuarioActivo");
+            localStorage.removeItem("rolActivo");
+            localStorage.removeItem("logueado");
 
-    // Notificaciones de pedidos.
-    function revisarNotificaciones() {
-        const notificacion = localStorage.getItem("notificacionPedido");
-
-        if (notificacion) {
-            enlaceNotificaciones.textContent = "🔔 Notificaciones (1)";
-            enlaceNotificaciones.title = "Hay un pedido nuevo";
-        } else {
-            enlaceNotificaciones.textContent = "🔔 Notificaciones";
-            enlaceNotificaciones.title = "No hay notificaciones nuevas";
-        }
+            window.location.href = "index.html";
+        });
     }
-
-    enlaceNotificaciones.addEventListener("click", function (event) {
-        event.preventDefault();
-
-        if (localStorage.getItem("notificacionPedido")) {
-            alert("🔔 Hay un pedido nuevo pendiente de revisar.");
-        } else {
-            alert("🔔 No hay notificaciones nuevas.");
-        }
-
-        menuJefe.classList.remove("mostrar");
-    });
-
-    revisarNotificaciones();
 </script>
 </body>
 </html>
