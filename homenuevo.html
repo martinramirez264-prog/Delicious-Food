@@ -174,6 +174,7 @@
       align-items:center;
       justify-content:space-between;
       gap:15px;
+      position:relative;
     }
 
     .brand{
@@ -186,11 +187,16 @@
     .brand span{color:var(--naranja)}
 
     .nav-links{
+      position:absolute;
+      left:50%;
+      top:50%;
+      transform:translate(-50%,-50%);
       display:flex;
       align-items:center;
       justify-content:center;
       gap:4px;
-      flex-wrap:wrap;
+      flex-wrap:nowrap;
+      white-space:nowrap;
     }
 
     .nav-links a{
@@ -243,9 +249,15 @@
 
 
     /* ---------- MENÚ DE PERFIL ---------- */
+    /* ---------- PERFIL ARRIBA ---------- */
     .perfil-menu{
-      position:relative;
-      flex:0 0 42px;
+      position:fixed !important;
+      top:18px !important;
+      right:22px !important;
+      left:auto !important;
+      bottom:auto !important;
+      z-index:99999 !important;
+      transform:none !important;
     }
 
     .perfil-dropdown{
@@ -673,6 +685,9 @@
     }
 
     @media(max-width:620px){
+      .perfil-menu{top:12px;right:12px}
+      .perfil-btn{width:40px;height:40px}
+      .perfil-dropdown{top:48px}
       .hero{min-height:510px}
       .nav{position:relative}
       .nav-links{display:none}
@@ -687,58 +702,114 @@
     }
   
 
-/* ===== GALERÍA GASTRONÓMICA MEJORADA ===== */
+/* ===== GALERÍA GASTRONÓMICA COMPACTA ===== */
 .food-gallery {
   display: grid;
   grid-template-columns: 2fr 1fr 1fr;
-  grid-auto-rows: 250px;
-  gap: 16px;
-  margin-top: 25px;
+  grid-auto-rows: 125px;
+  gap: 10px;
+  margin-top: 15px;
+  max-width: 920px;
+  margin-left: auto;
+  margin-right: auto;
 }
 .food-card {
   position: relative;
   overflow: hidden;
-  min-height: 250px;
-  border-radius: 20px;
+  min-height: 125px;
+  border-radius: 12px;
   background: #ddd;
-  box-shadow: 0 10px 30px rgba(18,45,82,.12);
+  box-shadow: 0 6px 18px rgba(18,45,82,.12);
   cursor: pointer;
   isolation: isolate;
 }
 .food-card-grande { grid-row: span 2; }
 .food-card img {
   width: 100%; height: 100%; object-fit: cover; display: block;
-  transition: transform .5s ease;
+  transition: transform .4s ease;
 }
 .food-overlay {
   position: absolute; inset: 0; z-index: 1;
-  background: linear-gradient(to top, rgba(0,0,0,.80) 0%, rgba(0,0,0,.25) 48%, rgba(0,0,0,0) 78%);
+  background: linear-gradient(to top, rgba(0,0,0,.80) 0%, rgba(0,0,0,.22) 52%, rgba(0,0,0,0) 80%);
   transition: background .3s ease;
 }
-.food-info { position: absolute; left: 20px; right: 20px; bottom: 18px; z-index: 2; color: white; }
+.food-info { position: absolute; left: 10px; right: 10px; bottom: 9px; z-index: 2; color: white; }
 .food-country {
-  display: inline-block; padding: 5px 10px; margin-bottom: 7px; border-radius: 999px;
-  background: rgba(243,154,18,.95); color: white; font-size: .72rem; font-weight: 800;
+  display: inline-block; padding: 2px 7px; margin-bottom: 3px; border-radius: 999px;
+  background: rgba(243,154,18,.95); color: white; font-size: .52rem; font-weight: 800;
 }
-.food-info h3 { margin: 0 0 4px; color: white; font-size: 1.22rem; text-shadow: 0 2px 8px rgba(0,0,0,.45); }
-.food-info p { margin: 0; color: #f3f5f8; font-size: .82rem; }
-.food-card:hover img { transform: scale(1.08); }
-.food-card:hover .food-overlay { background: linear-gradient(to top, rgba(0,0,0,.88), rgba(0,0,0,.30)); }
-.food-card:hover { box-shadow: 0 18px 40px rgba(18,45,82,.22); }
+.food-info h3 {
+  margin: 0 0 2px; color: white; font-size: .82rem;
+  text-shadow: 0 2px 6px rgba(0,0,0,.45);
+}
+.food-info p { margin: 0; color: #f3f5f8; font-size: .58rem; line-height: 1.2; }
+.food-card:hover img { transform: scale(1.06); }
+.food-card:hover .food-overlay { background: linear-gradient(to top, rgba(0,0,0,.88), rgba(0,0,0,.28)); }
+.food-card:hover { box-shadow: 0 10px 24px rgba(18,45,82,.20); }
+
 @media (max-width: 900px) {
-  .food-gallery { grid-template-columns: 1fr 1fr; grid-auto-rows: 230px; }
+  .food-gallery { grid-template-columns: 1fr 1fr; grid-auto-rows: 115px; }
+  .food-card { min-height: 115px; }
   .food-card-grande { grid-row: span 1; }
 }
 @media (max-width: 620px) {
-  .food-gallery { grid-template-columns: 1fr; grid-auto-rows: 240px; }
+  .food-gallery { grid-template-columns: 1fr; grid-auto-rows: 160px; }
+  .food-card { min-height: 160px; }
   .food-card-grande { grid-row: span 1; }
-  .food-info h3 { font-size: 1.08rem; }
+  .food-info h3 { font-size: .9rem; }
+  .food-info p { font-size: .65rem; }
 }
 
-</style>
+
+    @media (max-width: 900px){
+      .nav-links{
+        position:static;
+        transform:none;
+        flex-wrap:wrap;
+        white-space:normal;
+        justify-content:center;
+      }
+
+      .nav-inner{
+        flex-direction:column;
+        justify-content:center;
+        padding:10px 0;
+      }
+
+      .brand{
+        margin-bottom:2px;
+      }
+    }
+
+    @media (max-width: 620px){
+      .perfil-menu{
+        position:fixed !important;
+        top:12px !important;
+        right:12px !important;
+        left:auto !important;
+        bottom:auto !important;
+        z-index:99999 !important;
+        transform:none !important;
+      }
+    }
+
+  </style>
 </head>
 
 <body>
+
+  <!-- PERFIL: arriba a la derecha, fuera de la navegación -->
+  <div class="perfil-menu" id="perfilMenu">
+    <button class="perfil-btn" id="perfilBtn" type="button" title="Mi perfil" aria-label="Abrir menú de usuario" aria-expanded="false" aria-controls="perfilDropdown">
+      <div id="avatarDefault" class="avatar-default">👤</div>
+      <img id="avatarPerfil" src="" alt="Foto de perfil" style="display:none">
+    </button>
+
+    <div id="perfilDropdown" class="perfil-dropdown" aria-hidden="true">
+      <a href="perfil.html">👤 Mi perfil</a>
+      <a href="index.html" class="cerrar-sesion">🚪 Cerrar sesión</a>
+    </div>
+  </div>
 
   <!-- PORTADA -->
   <header class="hero">
@@ -775,17 +846,6 @@
         <a href="#contacto">Contacto</a>
       </div>
 
-      <div class="perfil-menu" id="perfilMenu">
-        <button class="perfil-btn" id="perfilBtn" type="button" title="Mi perfil" aria-label="Abrir menú de usuario" aria-expanded="false" aria-controls="perfilDropdown">
-          <div id="avatarDefault" class="avatar-default">👤</div>
-          <img id="avatarPerfil" src="" alt="Foto de perfil" style="display:none">
-        </button>
-
-        <div id="perfilDropdown" class="perfil-dropdown" aria-hidden="true">
-          <a href="perfil.html">👤 Mi perfil</a>
-          <a href="index.html" class="cerrar-sesion">🚪 Cerrar sesión</a>
-        </div>
-      </div>
     </div>
   </nav>
 
