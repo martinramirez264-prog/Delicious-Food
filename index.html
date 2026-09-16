@@ -669,10 +669,8 @@
 
 
     <script>
-
-        /* MOSTRAR / OCULTAR CONTRASEÑA */
-
-        function togglePass() {
+/* MOSTRAR / OCULTAR CONTRASEÑA */
+function togglePass() {
     const password = document.getElementById("pass");
     const ojo = document.querySelector(".ojo");
 
@@ -685,173 +683,60 @@
     }
 }
 
+/* INICIAR SESIÓN CONTRA MYSQL A TRAVÉS DE PHP */
+async function iniciarSesion() {
+    const dato = document.getElementById("user").value.trim();
+    const clave = document.getElementById("pass").value;
+    const mensaje = document.getElementById("mensaje-login");
 
-        /* BUSCAR USUARIO */
+    if (dato === "" || clave === "") {
+        mensaje.textContent = "⚠️ Completá usuario y contraseña.";
+        mensaje.style.color = "#d64545";
+        return;
+    }
 
-        function buscarUsuario(dato) {
+    mensaje.textContent = "⏳ Verificando...";
+    mensaje.style.color = "#777";
 
-            // Primero intenta buscar directamente por usuario
-            const contraseña = localStorage.getItem(dato);
+    const datos = new URLSearchParams();
+    datos.append("usuario", dato);
+    datos.append("clave", clave);
 
-            if (contraseña !== null) {
+    try {
+        const respuesta = await fetch("api/login.php", {
+            method: "POST",
+            headers: {"Content-Type": "application/x-www-form-urlencoded"},
+            body: datos.toString(),
+            credentials: "same-origin"
+        });
 
-                return {
-                    usuario: dato,
-                    contraseña: contraseña
-                };
+        const resultado = await respuesta.json();
 
-            }
-
-
-            // Si no encontró usuario,
-            // busca por correo electrónico
-
-            for (let i = 0; i < localStorage.length; i++) {
-
-                const clave = localStorage.key(i);
-
-                if (clave && clave.startsWith("correo_")) {
-
-                    const usuario = clave.substring(7);
-
-                    const correoGuardado =
-                        localStorage.getItem(clave);
-
-                    if (
-                        correoGuardado &&
-                        correoGuardado.toLowerCase() === dato.toLowerCase()
-                    ) {
-
-                        return {
-                            usuario: usuario,
-                            contraseña: localStorage.getItem(usuario)
-                        };
-
-                    }
-                }
-            }
-
-
-            return null;
+        if (!respuesta.ok || !resultado.ok) {
+            mensaje.textContent = "❌ " + (resultado.mensaje || "No se pudo iniciar sesión.");
+            mensaje.style.color = "#d64545";
+            return;
         }
 
+        mensaje.textContent = "✅ Inicio de sesión correcto.";
+        mensaje.style.color = "#29945a";
 
-        /* INICIAR SESIÓN */
+        // Solo guardamos datos no sensibles para la interfaz.
+        // La autenticación real queda en la sesión PHP.
+        sessionStorage.setItem("usuarioActivo", resultado.usuario.usuario);
+        sessionStorage.setItem("rolActivo", resultado.usuario.rol);
 
-        function iniciarSesion() {
+        setTimeout(function () {
+            window.location.href = resultado.redirect.replace("../", "");
+        }, 700);
 
-            const dato =
-                document.getElementById("user").value.trim();
-
-            const clave =
-                document.getElementById("pass").value;
-
-            const mensaje =
-                document.getElementById("mensaje-login");
-
-
-            /* CAMPOS VACÍOS */
-
-            if (dato === "" || clave === "") {
-
-                mensaje.textContent =
-                    "⚠️ Completá usuario y contraseña.";
-
-                mensaje.style.color = "#d64545";
-
-                return;
-            }
-
-
-            /* CUENTA ESPECIAL DEL JEFE */
-
-            const correoJefe = "jefedeliciousfood2106@gmail.com";
-            const contraseñaJefe = "Jefe2106";
-
-            if (
-                dato.toLowerCase() === correoJefe.toLowerCase() &&
-                clave === contraseñaJefe
-            ) {
-                mensaje.textContent = "✅ Inicio de sesión correcto.";
-                mensaje.style.color = "#29945a";
-
-                localStorage.setItem("usuarioActivo", "jefe");
-                localStorage.setItem("rolActivo", "jefe");
-                localStorage.setItem("logueado", "si");
-
-                setTimeout(function () {
-                    window.location.href = "jefe.html";
-                }, 700);
-
-                return;
-            }
-
-            /* BUSCAR CUENTA */
-
-            const cuenta = buscarUsuario(dato);
-
-
-            if (cuenta === null) {
-
-                mensaje.textContent =
-                    "❌ Usuario o correo no encontrado.";
-
-                mensaje.style.color = "#d64545";
-
-                return;
-            }
-
-
-            /* COMPROBAR CONTRASEÑA */
-
-            if (clave !== cuenta.contraseña) {
-
-                mensaje.textContent =
-                    "❌ Contraseña incorrecta.";
-
-                mensaje.style.color = "#d64545";
-
-                return;
-            }
-
-
-            /* LOGIN CORRECTO */
-
-            mensaje.textContent =
-                "✅ Inicio de sesión correcto.";
-
-            mensaje.style.color = "#29945a";
-
-
-            /* GUARDAR USUARIO ACTIVO */
-
-            localStorage.setItem(
-                "usuarioActivo",
-                cuenta.usuario
-            );
-
-
-            /* IR AL HOME */
-
-            setTimeout(function () {
-
-                const correoCuenta = localStorage.getItem("correo_" + cuenta.usuario);
-                const correoJefe = "jefedeliciousfood2106@gmail.com";
-
-                if (correoCuenta && correoCuenta.toLowerCase() === correoJefe.toLowerCase()) {
-                    localStorage.setItem("rolActivo", "jefe");
-                    window.location.href = "jefe.html";
-                } else {
-                    localStorage.setItem("rolActivo", "cliente");
-                    window.location.href = "homenuevo.html";
-                }
-
-            }, 700);
-
-        }
-
-    </script>
-
+    } catch (error) {
+        console.error(error);
+        mensaje.textContent =
+            "❌ No se pudo conectar con el servidor. ¿Apache y MySQL están encendidos?";
+        mensaje.style.color = "#d64545";
+    }
+}
+</script>
 </body>
-
 </html>

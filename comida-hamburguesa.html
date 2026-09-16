@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Hamburguesa Especial - Delicious Food</title>
+<title>Detalle de comida - Delicious Food</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
 body{background:#f5f5f5;color:#193965}
 .layout{min-height:100vh}
 .sidebar{position:fixed;left:0;top:0;bottom:0;width:250px;background:#193965;padding:24px 18px;color:white}
-.logo{text-align:center;margin-bottom:28px} .logo h1{font-size:24px} .logo p{color:#f28a00;font-size:11px;font-weight:bold;margin-top:5px}
+.logo{text-align:center;margin-bottom:28px}.logo h1{font-size:24px}.logo p{color:#f28a00;font-size:11px;font-weight:bold;margin-top:5px}
 nav a{display:block;color:white;text-decoration:none;padding:13px 15px;border-radius:8px;margin:5px 0}
 nav a:hover,nav a.active{background:#f28a00}
 main{margin-left:250px;padding:30px;min-height:100vh}
@@ -25,20 +25,22 @@ main{margin-left:250px;padding:30px;min-height:100vh}
 .content{display:grid;grid-template-columns:1fr 1.5fr;gap:30px;padding:32px;border-top:1px solid #eee}
 .box{background:#fafafa;border-radius:12px;padding:24px}
 .box h2{font-size:21px;margin-bottom:16px}
-.ingredients{list-style:none}
-.ingredients li{padding:10px 0;border-bottom:1px solid #eee;color:#555}
+.ingredients{list-style:none}.ingredients li{padding:10px 0;border-bottom:1px solid #eee;color:#555}
 .ingredients li:last-child{border-bottom:none}
-.steps{counter-reset:paso;list-style:none}
-.steps li{counter-increment:paso;display:flex;gap:12px;margin-bottom:15px;color:#555;line-height:1.5}
+.steps{counter-reset:paso;list-style:none}.steps li{counter-increment:paso;display:flex;gap:12px;margin-bottom:15px;color:#555;line-height:1.5}
 .steps li::before{content:counter(paso);min-width:30px;height:30px;border-radius:50%;background:#f28a00;color:white;font-weight:bold;display:flex;align-items:center;justify-content:center}
-.info{padding:0 32px 32px}
-.info h2{margin-bottom:10px}
-.info p{color:#666;line-height:1.6}
+.info{padding:0 32px 32px}.info h2{margin-bottom:10px}.info p{color:#666;line-height:1.6}
+.order-box{margin:0 32px 32px;background:#fff7ed;border:1px solid #f28a00;border-radius:12px;padding:20px}
+.order-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.qty{width:70px;padding:10px;border:1px solid #ddd;border-radius:8px}
+.btn{border:0;border-radius:9px;padding:11px 16px;font-weight:bold;cursor:pointer}
+.btn-primary{background:#f28a00;color:white}.btn-secondary{background:#193965;color:white}
+#mensaje{margin-top:10px;font-weight:bold;color:#193965}
 @media(max-width:800px){
-.sidebar{width:195px} main{margin-left:195px;padding:18px}
-.hero{grid-template-columns:1fr} .hero img{height:280px;min-height:280px}
-.content{grid-template-columns:1fr;padding:20px} .info{padding:0 20px 20px}
-.hero-info{padding:25px} .hero-info h1{font-size:28px}
+.sidebar{width:195px}main{margin-left:195px;padding:18px}
+.hero{grid-template-columns:1fr}.hero img{height:280px;min-height:280px}
+.content{grid-template-columns:1fr;padding:20px}.info{padding:0 20px 20px}
+.hero-info{padding:25px}.hero-info h1{font-size:28px}.order-box{margin:0 20px 20px}
 }
 </style>
 </head>
@@ -61,30 +63,111 @@ main{margin-left:250px;padding:30px;min-height:100vh}
 <a class="back" href="menu.html">← Volver al menú</a>
 <section class="detail">
 <div class="hero">
-<img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=900&q=85" alt="Hamburguesa Especial">
+<img id="imagen" src="imgs/Hamburguesa.jpg" alt="Comida">
 <div class="hero-info">
-<h1>Hamburguesa Especial</h1>
-<div class="price">$12.500</div>
-<p class="description">Hamburguesa casera preparada con carne, queso y vegetales frescos, servida en pan tostado.</p>
-<span class="time">⏱️ Tiempo: 20 - 25 minutos</span>
+<h1 id="nombre">Cargando...</h1>
+<div class="price" id="precio"></div>
+<p class="description" id="descripcion"></p>
+<span class="time">⏱️ Preparación en aproximadamente 15 - 30 minutos</span>
 </div>
 </div>
 <div class="content">
 <div class="box">
 <h2>🥗 Ingredientes</h2>
-<ul class="ingredients"><li>• Pan de hamburguesa</li><li>• Carne de res</li><li>• Queso</li><li>• Lechuga</li><li>• Tomate</li><li>• Cebolla</li><li>• Salsa especial</li></ul>
+<ul class="ingredients" id="ingredientes"><li>Cargando...</li></ul>
 </div>
 <div class="box">
 <h2>👨‍🍳 Cómo se hace</h2>
-<ol class="steps"><li>Preparar y condimentar la carne.</li><li>Cocinar la carne hasta alcanzar el punto deseado.</li><li>Tostar ligeramente el pan.</li><li>Colocar la carne, queso y vegetales.</li><li>Agregar la salsa especial y cerrar la hamburguesa.</li><li>Servir caliente.</li></ol>
+<ol class="steps" id="preparacion"><li>Cargando...</li></ol>
 </div>
 </div>
 <div class="info">
 <h2>📝 Información de la comida</h2>
-<p>Hamburguesa casera preparada con carne, queso y vegetales frescos, servida en pan tostado.</p>
+<p id="info">Cargando...</p>
+</div>
+<div class="order-box">
+<h2>🛒 Agregar al pedido</h2>
+<div class="order-row" style="margin-top:12px">
+<label for="cantidad">Cantidad:</label>
+<input id="cantidad" class="qty" type="number" min="1" max="99" value="1">
+<button class="btn btn-primary" onclick="agregarAlPedido()">Agregar al pedido</button>
+<a class="btn btn-secondary" href="pedidos.html">Ver pedido</a>
+</div>
+<div id="mensaje"></div>
 </div>
 </section>
 </main>
 </div>
+<script>
+const ID_COMIDA = 1;
+
+function escapeHtml(valor) {
+  return String(valor ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
+}
+
+function listaTexto(texto) {
+  return String(texto || "")
+    .split(/\r?\n|[,;]+/)
+    .map(x => x.trim())
+    .filter(Boolean);
+}
+
+function cargarDetalle() {
+  fetch("api/comida.php?id=" + ID_COMIDA, {credentials:"same-origin", cache:"no-store"})
+    .then(r => r.json().then(data => ({ok:r.ok, data})))
+    .then(resultado => {
+      if (!resultado.ok || !resultado.data.ok) throw new Error(resultado.data.mensaje || "No se pudo cargar la comida.");
+      const c = resultado.data.comida;
+      document.title = c.nombre + " - Delicious Food";
+      document.getElementById("nombre").textContent = c.nombre;
+      document.getElementById("precio").textContent = "$" + Number(c.precio).toLocaleString("es-AR");
+      document.getElementById("descripcion").textContent = c.descripcion || "";
+      document.getElementById("info").textContent = c.descripcion || "";
+      document.getElementById("imagen").src = c.imagen || "imgs/Hamburguesa.jpg";
+      document.getElementById("imagen").alt = c.nombre;
+
+      const ingredientes = listaTexto(c.ingredientes);
+      document.getElementById("ingredientes").innerHTML =
+        ingredientes.map(x => "<li>• " + escapeHtml(x) + "</li>").join("") ||
+        "<li>Información no disponible.</li>";
+
+      const pasos = listaTexto(c.preparacion);
+      document.getElementById("preparacion").innerHTML =
+        pasos.map(x => "<li>" + escapeHtml(x) + "</li>").join("") ||
+        "<li>Información no disponible.</li>";
+
+      window.comidaActual = c;
+    })
+    .catch(error => {
+      document.getElementById("nombre").textContent = "No se pudo cargar";
+      document.getElementById("mensaje").textContent = error.message;
+      console.error(error);
+    });
+}
+
+function agregarAlPedido() {
+  if (!window.comidaActual) return;
+  const cantidad = Math.max(1, Math.min(99, Number(document.getElementById("cantidad").value) || 1));
+  const carrito = JSON.parse(sessionStorage.getItem("carritoDeliciousFood") || "[]");
+  const existente = carrito.find(x => Number(x.id_comida) === Number(window.comidaActual.id_comida));
+
+  if (existente) {
+    existente.cantidad = Math.min(99, Number(existente.cantidad) + cantidad);
+  } else {
+    carrito.push({
+      id_comida: Number(window.comidaActual.id_comida),
+      nombre: window.comidaActual.nombre,
+      precio: Number(window.comidaActual.precio),
+      imagen: window.comidaActual.imagen,
+      cantidad
+    });
+  }
+
+  sessionStorage.setItem("carritoDeliciousFood", JSON.stringify(carrito));
+  document.getElementById("mensaje").textContent = "✅ Agregado al pedido.";
+}
+
+cargarDetalle();
+</script>
 </body>
 </html>

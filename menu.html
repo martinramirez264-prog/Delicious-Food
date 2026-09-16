@@ -12,7 +12,7 @@ main{margin-left:250px;padding:30px;min-height:100vh}h2{font-size:28px;margin-bo
 .badge{display:inline-block;padding:6px 10px;border-radius:15px;font-size:12px;font-weight:bold;background:#fff0d9;color:#d97900}
 .blue{background:#e8f0ff;color:#245da8}.green{background:#e6f7eb;color:#23833d}.red{background:#ffe7e7;color:#b42318}
 table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:13px;border-bottom:1px solid #eee}
-.foodgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:18px}.food{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 3px 12px #0001;text-decoration:none;color:#193965}.food img{width:100%;height:130px;object-fit:cover}.food div{padding:13px}.food h3{cursor:pointer}.food:hover{transform:translateY(-3px);box-shadow:0 6px 18px #0002}.price{color:#f28a00;font-weight:bold;margin-top:6px}
+.foodgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:18px}.food{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 3px 12px #0001;text-decoration:none;color:#193965}.food img{width:100%;height:130px;object-fit:cover}.food div{padding:13px}.food h3{cursor:pointer}.food{transition:transform .2s,box-shadow .2s}.food:hover{transform:translateY(-3px);box-shadow:0 6px 18px #0002}.price{color:#f28a00;font-weight:bold;margin-top:6px}
 .notice{padding:15px;border-radius:9px;background:#fafafa;margin:8px 0;border-left:5px solid #f28a00}.notice strong{display:block;margin-bottom:4px}
 @media(max-width:700px){.sidebar{width:195px}main{margin-left:195px;padding:18px}}
 </style>
@@ -27,4 +27,75 @@ table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:13px;bor
 <a href="imagenes.html">🖼️ Imágenes</a>
 <a href="#">👥 Empleados</a><a href="#">🏪 Local</a><a href="#">⚙️ Configuración</a>
 </nav></aside>
-<main><h2>📋 Menú</h2><p class="sub">Carta de Delicious Food.</p><section class="foodgrid"><a class="food" href="comida-hamburguesa.html"><img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80"><div><h3>Hamburguesa Especial</h3><p class="price">$12.500</p></div></a><a class="food" href="comida-pizza.html"><img src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=600&q=80"><div><h3>Pizza Especial</h3><p class="price">$15.000</p></div></a><a class="food" href="comida-papas.html"><img src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=600&q=80"><div><h3>Papas Fritas</h3><p class="price">$7.500</p></div></a><a class="food" href="comida-sandwich.html"><img src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=600&q=80"><div><h3>Sándwich Especial</h3><p class="price">$10.000</p></div></a></section></main></div></body></html>
+<main><h2>📋 Menú</h2><p class="sub">Carta de Delicious Food.</p><section class="foodgrid" id="foodgrid">
+  <div class="notice" id="cargando">Cargando comidas desde la base de datos...</div>
+</section>
+
+<script>
+async function cargarComidas() {
+  const grid = document.getElementById("foodgrid");
+
+  try {
+    const respuesta = await fetch("api/comidas.php", {
+      method: "GET",
+      credentials: "same-origin",
+      cache: "no-store"
+    });
+
+    const datos = await respuesta.json();
+
+    if (!respuesta.ok || !datos.ok) {
+      throw new Error(datos.mensaje || "No se pudieron cargar las comidas.");
+    }
+
+    if (!datos.comidas || datos.comidas.length === 0) {
+      grid.innerHTML = '<div class="notice"><strong>Sin comidas</strong>No hay comidas disponibles en la base de datos.</div>';
+      return;
+    }
+
+    grid.innerHTML = datos.comidas.map(comida => {
+      const imagen = comida.imagen && comida.imagen.trim()
+        ? comida.imagen
+        : "imgs/Hamburguesa.jpg";
+
+      const precio = Number(comida.precio || 0).toLocaleString("es-AR", {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2
+      });
+
+      return `
+        <a class="food" href="${({1:"comida-hamburguesa.html",2:"comida-pizza.html",3:"comida-papas.html",4:"comida-sandwich.html"}[Number(comida.id_comida)] || "pedidos.html")}">
+          <img src="${escapeHtml(imagen)}"
+               alt="${escapeHtml(comida.nombre)}"
+               onerror="this.src='imgs/Hamburguesa.jpg'">
+          <div>
+            <h3>${escapeHtml(comida.nombre)}</h3>
+            ${comida.categoria ? `<span class="badge">${escapeHtml(comida.categoria)}</span>` : ""}
+            <p class="price">$${precio}</p>
+          </div>
+        </a>
+      `;
+    }).join("");
+
+  } catch (error) {
+    grid.innerHTML = `
+      <div class="notice">
+        <strong>No se pudieron cargar las comidas</strong>
+        ${escapeHtml(error.message)}
+      </div>`;
+    console.error(error);
+  }
+}
+
+function escapeHtml(valor) {
+  return String(valor ?? "").replace(/[&<>"']/g, caracter => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#039;"
+  }[caracter]));
+}
+
+cargarComidas();
+</script></main></div></body></html>

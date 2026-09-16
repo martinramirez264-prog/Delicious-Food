@@ -1,48 +1,187 @@
-<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Pedidos - Delicious Food</title>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pedidos - Delicious Food</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
-body{background:#f5f5f5;color:#193965}.layout{min-height:100vh}
+body{background:#f5f5f5;color:#193965}
+.layout{min-height:100vh}
 .sidebar{position:fixed;left:0;top:0;bottom:0;width:250px;background:#193965;padding:24px 18px;color:white}
 .logo{text-align:center;margin-bottom:28px}.logo h1{font-size:24px}.logo p{color:#f28a00;font-size:11px;font-weight:bold;margin-top:5px}
 nav a{display:block;color:white;text-decoration:none;padding:13px 15px;border-radius:8px;margin:5px 0}nav a:hover,nav a.active{background:#f28a00}
-main{margin-left:250px;padding:30px;min-height:100vh}h2{font-size:28px;margin-bottom:7px}.sub{color:#666;margin-bottom:25px}
+main{margin-left:250px;padding:30px;min-height:100vh}
+h2{font-size:28px;margin-bottom:7px}.sub{color:#666;margin-bottom:25px}
 .panel{background:white;border-radius:12px;padding:22px;margin-bottom:20px;box-shadow:0 3px 12px #0001}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px}
-.card{background:white;border-radius:12px;padding:18px;box-shadow:0 3px 12px #0001}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.cart-item{display:grid;grid-template-columns:72px 1fr auto;gap:14px;align-items:center;border-bottom:1px solid #eee;padding:12px 0}
+.cart-item:last-child{border-bottom:0}.cart-item img{width:72px;height:60px;object-fit:cover;border-radius:9px}
+.price{color:#f28a00;font-weight:bold}.muted{color:#777;font-size:14px}
+.btn{border:0;border-radius:9px;padding:11px 16px;font-weight:bold;cursor:pointer}.primary{background:#f28a00;color:white}.dark{background:#193965;color:white}.danger{background:#ffe7e7;color:#b42318}
+input,textarea,select{width:100%;padding:11px 12px;border:1px solid #ddd;border-radius:8px;outline:none;background:white}
+input:focus,textarea:focus,select:focus{border-color:#f28a00;box-shadow:0 0 0 2px rgba(242,138,0,.12)}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field label{display:block;font-weight:bold;font-size:13px;margin-bottom:6px}.field.full{grid-column:1/-1}
+.total{display:flex;justify-content:space-between;align-items:center;font-size:19px;font-weight:bold;padding-top:15px;border-top:1px solid #eee;margin-top:10px}
+.order-card{border:1px solid #eee;border-radius:10px;padding:16px;margin:10px 0}
+.order-head{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
 .badge{display:inline-block;padding:6px 10px;border-radius:15px;font-size:12px;font-weight:bold;background:#fff0d9;color:#d97900}
-.blue{background:#e8f0ff;color:#245da8}.green{background:#e6f7eb;color:#23833d}.red{background:#ffe7e7;color:#b42318}
-table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:13px;border-bottom:1px solid #eee}
-.foodgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:18px}.food{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 3px 12px #0001;text-decoration:none;color:#193965}.food img{width:100%;height:130px;object-fit:cover}.food div{padding:13px}.price{color:#f28a00;font-weight:bold;margin-top:6px}
-.notice{padding:15px;border-radius:9px;background:#fafafa;margin:8px 0;border-left:5px solid #f28a00}.notice strong{display:block;margin-bottom:4px}
-@media(max-width:700px){.sidebar{width:195px}main{margin-left:195px;padding:18px}}
+.estado-confirmado{background:#e8f0ff;color:#245da8}.estado-listo,.estado-entregado{background:#e6f7eb;color:#23833d}.estado-cancelado{background:#ffe7e7;color:#b42318}
+.order-items{margin-top:10px;padding-left:18px;color:#555}
+#mensaje{margin-top:10px;font-weight:bold}
+@media(max-width:700px){.sidebar{width:195px}main{margin-left:195px;padding:18px}.form-grid{grid-template-columns:1fr}}
 </style>
-</head><body><div class="layout">
+</head>
+<body>
+<div class="layout">
 <aside class="sidebar">
-<div class="logo"><h1>🍔 Delicious Food</h1><p>PANEL DE JEFES</p></div>
+<div class="logo"><h1>🍔 Delicious Food</h1><p id="rolPanel">PEDIDOS</p></div>
 <nav>
-<a href="jefe.html">📊 Inicio</a>
-<a href="pedidos.html">📦 Pedidos</a>
-<a href="comidas.html">🍔 Comidas</a>
+<a href="homenuevo.html">🏠 Inicio</a>
 <a href="menu.html">📋 Menú</a>
+<a href="pedidos.html" class="active">📦 Pedidos</a>
+<a href="jefe.html">👨‍💼 Panel de jefe</a>
 <a href="imagenes.html">🖼️ Imágenes</a>
-<a href="#">👥 Empleados</a><a href="#">🏪 Local</a><a href="#">⚙️ Configuración</a>
-</nav></aside>
+</nav>
+</aside>
 <main>
-<h2>📦 Pedidos</h2><p class="sub">Todos los pedidos realizados y los que están en proceso.</p>
-<section class="panel"><h3>📋 Todos los pedidos</h3>
-<table>
-    <tr><th>N.º de pedido</th><th>Cliente</th><th>Total</th><th>Estado</th></tr>
-    <tr><td>#0001</td><td>Cliente</td><td>$12.500</td><td><span class="badge">Pedido en Proceso</span></td></tr>
-    <tr><td>#0002</td><td>Cliente</td><td>$18.000</td><td><span class="badge blue">Pedido enviado</span></td></tr>
-    <tr><td>#0003</td><td>Cliente</td><td>$9.500</td><td><span class="badge green">Pedido entregado</span></td></tr>
-    <tr><td>#0004</td><td>Cliente</td><td>$22.000</td><td><span class="badge black">Pedido no entregado</span></td></tr>
-    <tr><td>#0005</td><td>Cliente</td><td>$15.000</td><td><span class="badge red">Pedido cancelado</span></td></tr>
-</table>
+<h2 id="titulo">📦 Mis pedidos</h2>
+<p class="sub" id="subtitulo">Revisá tu pedido y consultá tu historial.</p>
 
+<section class="panel" id="carritoPanel">
+<h3>🛒 Pedido actual</h3>
+<div id="carrito"></div>
+<div class="total"><span>Total</span><span id="total">$0</span></div>
+</section>
+
+<section class="panel" id="formPanel">
+<h3>📍 Datos de entrega</h3>
+<div class="form-grid" style="margin-top:15px">
+<div class="field"><label>Dirección</label><input id="direccion" placeholder="Ej. Av. Principal 123"></div>
+<div class="field"><label>Teléfono</label><input id="telefono" placeholder="Ej. 11 1234-5678"></div>
+<div class="field full"><label>Observaciones</label><textarea id="observaciones" rows="3" placeholder="Sin cebolla, tocar timbre, etc."></textarea></div>
+</div>
+<div style="margin-top:15px"><button class="btn primary" onclick="crearPedido()">✅ Confirmar pedido</button></div>
+<div id="mensaje"></div>
+</section>
+
+<section class="panel">
+<h3 id="historialTitulo">📜 Historial de pedidos</h3>
+<div id="pedidos"><p class="muted">Cargando...</p></div>
 </section>
 </main>
-
 </div>
 
+<script>
+let rol = "";
+
+function money(v){ return "$" + Number(v || 0).toLocaleString("es-AR"); }
+function escapeHtml(v){ return String(v ?? "").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c])); }
+function carritoActual(){ return JSON.parse(sessionStorage.getItem("carritoDeliciousFood") || "[]"); }
+
+async function obtenerSesion(){
+  const r = await fetch("api/session.php",{credentials:"same-origin",cache:"no-store"});
+  const d = await r.json();
+  if(!r.ok || !d.ok) throw new Error(d.mensaje || "Sesión no iniciada.");
+  rol = d.usuario.rol;
+  return d.usuario;
+}
+
+function renderCarrito(){
+  const c = carritoActual(), el = document.getElementById("carrito");
+  if(!c.length){
+    el.innerHTML='<p class="muted" style="padding:15px 0">Todavía no agregaste comidas. Volvé al menú para elegir.</p>';
+    document.getElementById("total").textContent="$0";
+    return;
+  }
+  let total=0;
+  el.innerHTML=c.map((x,i)=>{
+    const sub=Number(x.precio)*Number(x.cantidad); total+=sub;
+    return `<div class="cart-item">
+      <img src="${escapeHtml(x.imagen || "imgs/Hamburguesa.jpg")}" alt="">
+      <div><strong>${escapeHtml(x.nombre)}</strong><div class="muted">${x.cantidad} × ${money(x.precio)}</div></div>
+      <div style="text-align:right"><strong class="price">${money(sub)}</strong><br><button class="btn danger" style="padding:7px 10px;margin-top:5px" onclick="quitar(${i})">Quitar</button></div>
+    </div>`;
+  }).join("");
+  document.getElementById("total").textContent=money(total);
+}
+
+function quitar(i){
+  const c=carritoActual(); c.splice(i,1); sessionStorage.setItem("carritoDeliciousFood",JSON.stringify(c)); renderCarrito();
+}
+
+async function crearPedido(){
+  const items=carritoActual();
+  if(!items.length){document.getElementById("mensaje").textContent="Agregá al menos una comida.";return;}
+  const fd=new FormData();
+  fd.append("items",JSON.stringify(items.map(x=>({id_comida:x.id_comida,cantidad:x.cantidad}))));
+  fd.append("direccion",document.getElementById("direccion").value);
+  fd.append("telefono",document.getElementById("telefono").value);
+  fd.append("observaciones",document.getElementById("observaciones").value);
+
+  try{
+    const r=await fetch("api/pedidos.php",{method:"POST",body:fd,credentials:"same-origin"});
+    const d=await r.json();
+    if(!r.ok || !d.ok) throw new Error(d.mensaje || "No se pudo crear el pedido.");
+    sessionStorage.removeItem("carritoDeliciousFood");
+    document.getElementById("mensaje").textContent="✅ Pedido #"+d.id_pedido+" creado correctamente.";
+    renderCarrito();
+    cargarPedidos();
+  }catch(e){document.getElementById("mensaje").textContent="❌ "+e.message;}
+}
+
+function estadoClass(e){return "estado-"+String(e||"").toLowerCase().replaceAll(" ","-").replace("ó","o");}
+
+async function cargarPedidos(){
+  const el=document.getElementById("pedidos");
+  try{
+    const r=await fetch("api/pedidos.php",{credentials:"same-origin",cache:"no-store"});
+    const d=await r.json();
+    if(!r.ok || !d.ok) throw new Error(d.mensaje || "No se pudieron cargar los pedidos.");
+    if(!d.pedidos.length){el.innerHTML='<p class="muted">No hay pedidos todavía.</p>';return;}
+    el.innerHTML=d.pedidos.map(p=>{
+      const items=(p.items||[]).map(i=>`<li>${escapeHtml(i.nombre)} — ${i.cantidad} × ${money(i.precio_unitario)}</li>`).join("");
+      const select=rol==="jefe"?`<select onchange="cambiarEstado(${p.id_pedido},this.value)" style="max-width:190px">
+        ${["pendiente","confirmado","en preparación","listo","entregado","cancelado"].map(e=>`<option ${e===p.estado?"selected":""}>${e}</option>`).join("")}
+      </select>`:"";
+      return `<div class="order-card">
+        <div class="order-head">
+          <div><strong>Pedido #${p.id_pedido}</strong><div class="muted">${escapeHtml(p.fecha_pedido||"")}${rol==="jefe" && p.usuario?" · Cliente: "+escapeHtml(p.usuario):""}</div></div>
+          <div><span class="badge ${estadoClass(p.estado)}">${escapeHtml(p.estado)}</span> ${select}</div>
+        </div>
+        <ul class="order-items">${items || "<li>Sin detalle</li>"}</ul>
+        <div class="total"><span>Total</span><span>${money(p.total)}</span></div>
+      </div>`;
+    }).join("");
+  }catch(e){el.innerHTML='<p style="color:#b42318">'+escapeHtml(e.message)+'</p>';}
+}
+
+async function cambiarEstado(id,estado){
+  const fd=new FormData(); fd.append("accion","cambiar_estado"); fd.append("id_pedido",id); fd.append("estado",estado);
+  const r=await fetch("api/pedidos.php",{method:"POST",body:fd,credentials:"same-origin"});
+  const d=await r.json();
+  if(!r.ok || !d.ok){alert(d.mensaje || "No se pudo actualizar.");return;}
+  cargarPedidos();
+}
+
+(async()=>{
+  try{
+    const u=await obtenerSesion();
+    if(u.rol==="jefe"){
+      document.getElementById("titulo").textContent="📦 Gestión de pedidos";
+      document.getElementById("subtitulo").textContent="Revisá todos los pedidos y actualizá su estado.";
+      document.getElementById("rolPanel").textContent="PANEL DE JEFES";
+      document.getElementById("formPanel").style.display="none";
+      document.getElementById("carritoPanel").style.display="none";
+      document.getElementById("historialTitulo").textContent="📦 Todos los pedidos";
+    }
+    renderCarrito();
+    cargarPedidos();
+  }catch(e){
+    document.getElementById("pedidos").innerHTML='<p style="color:#b42318">Debés iniciar sesión para ver los pedidos.</p>';
+    document.getElementById("formPanel").style.display="none";
+  }
+})();
+</script>
 </body>
 </html>

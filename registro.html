@@ -29,12 +29,12 @@
 
         .registro-container {
             width: 100%;
-            max-width: 410px;
-              padding: 22px 32px 18px;   
+            max-width: 430px;
             background: rgba(255, 255, 255, 0.97);
-            border-radius: 24px;                                                                                                                                                           
-            border-radius: 0 15px 40px rgba(0, 0, 0, 0.35);
-            animation: none; 
+            border-radius: 22px;
+            padding: 35px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+            animation: none;
         }
 
         @keyframes aparecer {
@@ -51,43 +51,43 @@
 
         .logo-container {
             text-align: center;
-            margin-bottom: 6px;
+            margin-bottom: 10px;
         }
 
         .logo-container img {
-            width: 145px;
-            height: 145px;
+            width: 110px;
+            height: 110px;
             object-fit: contain;
         }
 
         .titulo {
             text-align: center;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
         }
 
         .titulo h1 {
             margin: 0;
-            color: #193965;
-            font-size: 23px;
+            color: #222;
+            font-size: 30px;
         }
 
         .titulo p {
-            margin: 5px 0 16px;
+            margin: 10px 0 25px;
             color: #777;
-            font-size: 14px;
-            line-height: 1.35;
+            font-size: 15px;
+            line-height: 1.5;
         }
 
         .campo {
-            margin-bottom: 11px;
+            margin-bottom: 18px;
         }
 
         .campo label {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 7px;
             color: #333;
             font-weight: bold;
-            font-size: 13px;
+            font-size: 14px;
         }
 
         .input-box {
@@ -96,11 +96,10 @@
 
         .input-box input {
             width: 100%;
-            height: 43px;
-            padding: 0 13px;
+            padding: 14px 15px;
             border: 1px solid #d5d5d5;
-            border-radius: 25px;
-            font-size: 14px;
+            border-radius: 10px;
+            font-size: 15px;
             outline: none;
             transition: 0.3s;
             background: #fafafa;
@@ -165,7 +164,7 @@
             display: flex;
             align-items: flex-start;
             gap: 9px;
-            margin: 5px 0 10px;
+            margin: 5px 0 20px;
             font-size: 13px;
             color: #666;
             line-height: 1.4;
@@ -191,7 +190,7 @@
             width: 100%;
             padding: 14px;
             border: none;
-            border-radius: 25px;
+            border-radius: 10px;
             background: linear-gradient(135deg, #f39c12, #e67e22);
             color: white;
             font-size: 16px;
@@ -211,16 +210,16 @@
         }
 
         .mensaje {
-            min-height: 10px;
+            min-height: 20px;
             text-align: center;
-            margin-top: 7px;
+            margin-top: 15px;
             font-size: 13px;
             font-weight: bold;
         }
 
         .seguridad {
-            margin-top: 8px;
-            padding-top: 8px;
+            margin-top: 25px;
+            padding-top: 18px;
             border-top: 1px solid #eee;
             text-align: center;
             color: #999;
@@ -241,64 +240,6 @@
                 font-size: 26px;
             }
         }
-
-        /* ===== AJUSTE COMPACTO ===== */
-        .registro-container button[type="submit"] {
-            min-height: 45px;
-            margin-top: 2px;
-        }
-
-        @media (max-height: 760px) {
-            body {
-                padding: 12px 15px;
-            }
-
-            .registro-container {
-                padding: 14px 28px 12px;
-            }
-
-            .logo-container img {
-                width: 125px;
-                height: 125px;
-            }
-
-            .logo-container {
-                margin-bottom: 3px;
-            }
-
-            .titulo h1 {
-                font-size: 21px;
-            }
-
-            .titulo p {
-                margin: 4px 0 11px;
-            }
-
-            .campo {
-                margin-bottom: 8px;
-            }
-
-            .campo label {
-                margin-bottom: 3px;
-                font-size: 12px;
-            }
-
-            .input-box input {
-                height: 39px;
-            }
-
-            .registro-container button[type="submit"] {
-                min-height: 42px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .registro-container {
-                padding-left: 22px;
-                padding-right: 22px;
-            }
-        }
-
     </style>
 </head>
 
@@ -392,125 +333,114 @@
 
         <div class="seguridad">
             🔐 <span>Registro seguro</span><br>
-            Tus datos se guardan de forma local en este proyecto.
+            Tus datos se guardan de forma segura en la base de datos.
         </div>
 
     </div>
 
 
     <script>
+function registrar(event) {
+    event.preventDefault();
 
-        function registrar(event) {
-            event.preventDefault();
+    const usuarioInput = document.getElementById("usuario");
+    const correoInput = document.getElementById("correo");
+    const claveInput = document.getElementById("clave");
+    const terminosInput = document.getElementById("terminos");
+    const mensaje = document.getElementById("mensaje");
 
-            const usuarioInput = document.getElementById("usuario");
-            const correoInput = document.getElementById("correo");
-            const claveInput = document.getElementById("clave");
-            const terminosInput = document.getElementById("terminos");
-            const mensaje = document.getElementById("mensaje");
+    const usuario = usuarioInput.value.trim();
+    const correo = correoInput.value.trim().toLowerCase();
+    const clave = claveInput.value;
 
-            const usuario = usuarioInput.value.trim();
-            const correo = correoInput.value.trim().toLowerCase();
-            const clave = claveInput.value;
+    mensaje.textContent = "";
+    mensaje.style.color = "#e74c3c";
 
-            mensaje.textContent = "";
-            mensaje.style.color = "#e74c3c";
+    if (usuario === "") {
+        mensaje.textContent = "⚠️ Ingresa un nombre de usuario.";
+        usuarioInput.focus();
+        return;
+    }
 
-            if (usuario === "") {
-                mensaje.textContent = "⚠️ Ingresa un nombre de usuario.";
-                usuarioInput.focus();
-                return;
-            }
+    if (!/^[a-zA-Z0-9._-]{3,30}$/.test(usuario)) {
+        mensaje.textContent =
+            "⚠️ El usuario debe tener entre 3 y 30 caracteres y solo puede usar letras, números, punto, guion y guion bajo.";
+        usuarioInput.focus();
+        return;
+    }
 
-            if (!/^[a-zA-Z0-9._-]{3,30}$/.test(usuario)) {
-                mensaje.textContent =
-                    "⚠️ El usuario debe tener entre 3 y 30 caracteres y solo puede usar letras, números, punto, guion y guion bajo.";
-                usuarioInput.focus();
-                return;
-            }
+    if (correo === "") {
+        mensaje.textContent = "⚠️ Ingresa tu correo electrónico.";
+        correoInput.focus();
+        return;
+    }
 
-            if (correo === "") {
-                mensaje.textContent = "⚠️ Ingresa tu correo electrónico.";
-                correoInput.focus();
-                return;
-            }
+    if (clave === "") {
+        mensaje.textContent = "⚠️ Ingresa una contraseña.";
+        claveInput.focus();
+        return;
+    }
 
-            if (clave === "") {
-                mensaje.textContent = "⚠️ Ingresa una contraseña.";
-                claveInput.focus();
-                return;
-            }
+    if (clave.length < 6) {
+        mensaje.textContent = "⚠️ La contraseña debe tener al menos 6 caracteres.";
+        claveInput.focus();
+        return;
+    }
 
-            if (clave.length < 6) {
-                mensaje.textContent =
-                    "⚠️ La contraseña debe tener al menos 6 caracteres.";
-                claveInput.focus();
-                return;
-            }
+    if (!terminosInput.checked) {
+        mensaje.textContent = "⚠️ Debes aceptar los términos y condiciones.";
+        return;
+    }
 
-            if (!terminosInput.checked) {
-                mensaje.textContent =
-                    "⚠️ Debes aceptar los términos y condiciones.";
-                return;
-            }
+    const datos = new URLSearchParams();
+    datos.append("usuario", usuario);
+    datos.append("correo", correo);
+    datos.append("clave", clave);
+    datos.append("terminos", "1");
 
-            if (localStorage.getItem(usuario) !== null) {
-                mensaje.textContent =
-                    "⚠️ Ese nombre de usuario ya está registrado.";
-                usuarioInput.focus();
-                return;
-            }
+    mensaje.textContent = "⏳ Creando cuenta...";
+    mensaje.style.color = "#777";
 
-            for (let i = 0; i < localStorage.length; i++) {
-                const claveLocal = localStorage.key(i);
-
-                if (claveLocal && claveLocal.startsWith("correo_")) {
-                    const correoGuardado = localStorage.getItem(claveLocal);
-
-                    if (
-                        correoGuardado &&
-                        correoGuardado.toLowerCase() === correo
-                    ) {
-                        mensaje.textContent =
-                            "⚠️ Ese correo electrónico ya está registrado.";
-                        correoInput.focus();
-                        return;
-                    }
-                }
-            }
-
-            // Formato compatible con index.html.
-            localStorage.setItem(usuario, clave);
-            localStorage.setItem("correo_" + usuario, correo);
-
-            mensaje.style.color = "#27ae60";
-            mensaje.textContent = "✅ ¡Cuenta creada correctamente!";
-
-            setTimeout(function () {
-                window.location.href = "index.html";
-            }, 1200);
+    fetch("api/registrar.php", {
+        method: "POST",
+        headers: {"Content-Type": "application/x-www-form-urlencoded"},
+        body: datos.toString(),
+        credentials: "same-origin"
+    })
+    .then(async respuesta => {
+        const resultado = await respuesta.json();
+        if (!respuesta.ok || !resultado.ok) {
+            throw new Error(resultado.mensaje || "No se pudo crear la cuenta.");
         }
+        return resultado;
+    })
+    .then(resultado => {
+        mensaje.style.color = "#27ae60";
+        mensaje.textContent = "✅ ¡Cuenta creada correctamente!";
 
+        // No se guarda la contraseña ni el correo en localStorage.
+        setTimeout(function () {
+            window.location.href = "index.html";
+        }, 1200);
+    })
+    .catch(error => {
+        mensaje.style.color = "#e74c3c";
+        mensaje.textContent = "⚠️ " + error.message;
+    });
+}
 
-        function mostrarContraseña() {
-
-    let clave = document.getElementById("clave");
-    let ojo = document.querySelector(".ojo");
+function mostrarContraseña() {
+    const clave = document.getElementById("clave");
+    const ojo = document.querySelector(".ojo");
 
     if (clave.type === "password") {
-
         clave.type = "text";
         ojo.classList.remove("tachado");
-
     } else {
-
         clave.type = "password";
         ojo.classList.add("tachado");
-
     }
 }
-    </script>
-
+</script>
 </body>
-
 </html>
