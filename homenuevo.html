@@ -214,6 +214,10 @@
       color:#fff;
     }
 
+    .nav-toggle{
+      display:none;
+    }
+
     .perfil-btn{
       width:42px;
       height:42px;
@@ -690,8 +694,50 @@
       .perfil-dropdown{top:48px}
       .hero{min-height:510px}
       .nav{position:relative}
-      .nav-links{display:none}
-      .nav-inner{justify-content:flex-end}
+      .nav-inner{
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        flex-wrap:wrap;
+        padding:8px 14px;
+        min-height:56px;
+      }
+      .nav-toggle{
+        display:inline-flex;
+        align-items:center;
+        justify-content:center;
+        background:rgba(255,255,255,.08);
+        border:1px solid rgba(255,255,255,.2);
+        color:#fff;
+        font-size:1.35rem;
+        width:38px;
+        height:38px;
+        border-radius:9px;
+        cursor:pointer;
+        transition:.2s;
+      }
+      .nav-toggle:hover{
+        background:rgba(255,255,255,.18);
+      }
+      .nav-links{
+        display:none;
+        width:100%;
+        flex-direction:column;
+        align-items:stretch;
+        gap:4px;
+        padding:10px 0 4px;
+        border-top:1px solid rgba(255,255,255,.1);
+      }
+      .nav-links.mostrar{
+        display:flex;
+      }
+      .nav-links a{
+        display:block;
+        padding:9px 12px;
+        text-align:center;
+        background:rgba(255,255,255,.05);
+        border-radius:8px;
+      }
       main{width:94%}
       section{padding:40px 0}
       .panel,.weekly{padding:23px}
@@ -835,13 +881,17 @@
     <div class="nav-inner">
       <a class="brand" href="#inicio">Delicious <span>Food</span></a>
 
-      <div class="nav-links">
+      <button class="nav-toggle" id="navToggle" type="button" aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="navLinks">
+        ☰
+      </button>
+
+      <div class="nav-links" id="navLinks">
         <a href="#inicio">Inicio</a>
         <a href="#proyecto">Proyecto</a>
         <a href="#menu">Menú</a>
         <a href="#experiencia">Experiencia</a>
         <a href="#equipo">Equipo</a>
-        <a href="#reseñas">Reseñas</a>
+        <a href="#resenas">Reseñas</a>
         <a href="#galeria">Galería</a>
         <a href="#contacto">Contacto</a>
       </div>
@@ -988,7 +1038,7 @@
     </section>
 
     <!-- RESEÑAS -->
-    <section id="reseñas">
+    <section id="resenas">
       <div class="section-title">
         <span class="tag">Lo que dicen nuestros clientes</span>
         <h2>⭐ Opiniones</h2>
@@ -1172,6 +1222,34 @@
           dropdown.classList.remove("mostrar");
           boton.setAttribute("aria-expanded", "false");
           dropdown.setAttribute("aria-hidden", "true");
+        }
+      });
+    });
+
+    // Menú hamburguesa móvil accesible.
+    document.addEventListener("DOMContentLoaded", function () {
+      const toggle = document.getElementById("navToggle");
+      const navLinks = document.getElementById("navLinks");
+
+      if (!toggle || !navLinks) return;
+
+      toggle.addEventListener("click", function (event) {
+        event.stopPropagation();
+        const abierto = navLinks.classList.toggle("mostrar");
+        toggle.setAttribute("aria-expanded", abierto ? "true" : "false");
+      });
+
+      navLinks.querySelectorAll("a").forEach(function (enlace) {
+        enlace.addEventListener("click", function () {
+          navLinks.classList.remove("mostrar");
+          toggle.setAttribute("aria-expanded", "false");
+        });
+      });
+
+      document.addEventListener("click", function (event) {
+        if (!toggle.contains(event.target) && !navLinks.contains(event.target)) {
+          navLinks.classList.remove("mostrar");
+          toggle.setAttribute("aria-expanded", "false");
         }
       });
     });

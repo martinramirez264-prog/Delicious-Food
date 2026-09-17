@@ -254,11 +254,6 @@
     const inputFoto = document.getElementById("inputFoto");
     const fotoPerfil = document.getElementById("fotoPerfil");
 
-    if (localStorage.getItem("rolActivo") !== "jefe" ||
-        !localStorage.getItem("usuarioActivo")) {
-        window.location.href = "cuenta-jefe.html";
-    }
-
     correoInput.value = localStorage.getItem("correoJefe") || "";
     telefonoInput.value = localStorage.getItem("telefonoJefe") || "";
 
