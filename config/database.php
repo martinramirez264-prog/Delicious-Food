@@ -1,8 +1,8 @@
 <?php
-$host = 'localhost';
-$db   = 'delicious_food';
-$user = 'root';
-$pass = ''; // Cambialo si tu MySQL tiene contraseña.
+$host = 'sql309.infinityfree.com';
+$db   = 'if0_42960890_deliciousfood';
+$user = 'if0_42960890';
+$pass = 's3GUuJ3QRN0u';
 $charset = 'utf8mb4';
 
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
