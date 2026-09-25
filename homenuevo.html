@@ -800,6 +800,45 @@
     .order-add:hover{
       background:#df7900;
     }
+
+    .order-cancel{
+      display:none;
+      align-items:center;
+      gap:7px;
+      flex-wrap:wrap;
+      margin-top:9px;
+      padding:8px 9px;
+      border-radius:9px;
+      background:#fff4f4;
+      border:1px solid #f2caca;
+    }
+
+    .order-cancel.visible{
+      display:flex;
+    }
+
+    .order-cancel-text{
+      color:#9b2c2c;
+      font-size:12px;
+      font-weight:700;
+      line-height:1.25;
+    }
+
+    .order-cancel-btn{
+      border:0;
+      border-radius:8px;
+      background:#d64545;
+      color:#fff;
+      padding:7px 9px;
+      font-size:12px;
+      font-weight:800;
+      cursor:pointer;
+      white-space:nowrap;
+    }
+
+    .order-cancel-btn:hover{
+      background:#b83232;
+    }
     .order-message{
       margin-top:16px;
       min-height:22px;
@@ -1420,7 +1459,12 @@
                 <input class="order-qty" type="number" min="1" max="99" value="1" aria-label="Cantidad de Hamburguesa">
                 <button class="order-add" type="button">Agregar</button><button class="order-view" type="button" onclick="abrirDetallePlato(1)">Ver plato</button>
               </div>
-            </div>
+            
+              <div class="order-cancel" aria-hidden="true">
+                <span class="order-cancel-text">¿Querés cancelar el pedido?</span>
+                <button class="order-cancel-btn" type="button">Cancelar</button>
+              </div>
+</div>
           </article>
 
           <article class="order-card" data-id="2">
@@ -1433,7 +1477,12 @@
                 <input class="order-qty" type="number" min="1" max="99" value="1" aria-label="Cantidad de Pizza">
                 <button class="order-add" type="button">Agregar</button><button class="order-view" type="button" onclick="abrirDetallePlato(2)">Ver plato</button>
               </div>
-            </div>
+            
+              <div class="order-cancel" aria-hidden="true">
+                <span class="order-cancel-text">¿Querés cancelar el pedido?</span>
+                <button class="order-cancel-btn" type="button">Cancelar</button>
+              </div>
+</div>
           </article>
 
           <article class="order-card" data-id="3">
@@ -1446,7 +1495,12 @@
                 <input class="order-qty" type="number" min="1" max="99" value="1" aria-label="Cantidad de Papas Fritas">
                 <button class="order-add" type="button">Agregar</button><button class="order-view" type="button" onclick="abrirDetallePlato(3)">Ver plato</button>
               </div>
-            </div>
+            
+              <div class="order-cancel" aria-hidden="true">
+                <span class="order-cancel-text">¿Querés cancelar el pedido?</span>
+                <button class="order-cancel-btn" type="button">Cancelar</button>
+              </div>
+</div>
           </article>
 
           <article class="order-card" data-id="4">
@@ -1459,7 +1513,12 @@
                 <input class="order-qty" type="number" min="1" max="99" value="1" aria-label="Cantidad de Croque Monsieur">
                 <button class="order-add" type="button">Agregar</button><button class="order-view" type="button" onclick="abrirDetallePlato(4)">Ver plato</button>
               </div>
-            </div>
+            
+              <div class="order-cancel" aria-hidden="true">
+                <span class="order-cancel-text">¿Querés cancelar el pedido?</span>
+                <button class="order-cancel-btn" type="button">Cancelar</button>
+              </div>
+</div>
           </article>
         </div>
 
@@ -1641,26 +1700,55 @@
       const cards = document.querySelectorAll(".order-card");
       const mensaje = document.getElementById("pedidoMensaje");
 
+      function leerCarrito() {
+        try {
+          const carrito = JSON.parse(sessionStorage.getItem("carritoDeliciousFood") || "[]");
+          return Array.isArray(carrito) ? carrito : [];
+        } catch (_) {
+          return [];
+        }
+      }
+
+      function guardarCarrito(carrito) {
+        sessionStorage.setItem("carritoDeliciousFood", JSON.stringify(carrito));
+      }
+
+      function actualizarEstadoTarjeta(card) {
+        const idComida = Number(card.dataset.id);
+        const cancelBox = card.querySelector(".order-cancel");
+        const botonAgregar = card.querySelector(".order-add");
+        const carrito = leerCarrito();
+
+        const agregado = carrito.some(function (item) {
+          return Number(item.id_comida) === idComida;
+        });
+
+        if (cancelBox) {
+          cancelBox.classList.toggle("visible", agregado);
+          cancelBox.setAttribute("aria-hidden", agregado ? "false" : "true");
+        }
+
+        if (botonAgregar) {
+          botonAgregar.textContent = agregado ? "Agregado ✓" : "Agregar";
+        }
+      }
+
       cards.forEach(function (card) {
         const boton = card.querySelector(".order-add");
+        const botonCancelar = card.querySelector(".order-cancel-btn");
         const cantidadInput = card.querySelector(".order-qty");
         const idComida = Number(card.dataset.id);
 
-        boton.addEventListener("click", async function () {
+        actualizarEstadoTarjeta(card);
+
+        boton.addEventListener("click", function () {
           const cantidad = Math.max(1, Math.min(99, Number(cantidadInput.value) || 1));
           const nombre = card.querySelector("h3").textContent.replace(/^[^\wÁÉÍÓÚÜÑ]+/u, "").trim();
           const precioTexto = card.querySelector(".order-price").textContent.replace(/[^\d]/g, "");
           const precio = Number(precioTexto) || 0;
           const imagen = card.querySelector("img").getAttribute("src");
 
-          let carrito = [];
-          try {
-            carrito = JSON.parse(sessionStorage.getItem("carritoDeliciousFood") || "[]");
-            if (!Array.isArray(carrito)) carrito = [];
-          } catch (_) {
-            carrito = [];
-          }
-
+          const carrito = leerCarrito();
           const existente = carrito.find(function (item) {
             return Number(item.id_comida) === idComida;
           });
@@ -1677,9 +1765,29 @@
             });
           }
 
-          sessionStorage.setItem("carritoDeliciousFood", JSON.stringify(carrito));
+          guardarCarrito(carrito);
+          actualizarEstadoTarjeta(card);
+
           mensaje.textContent = "✅ " + nombre + " agregado al pedido.";
           cantidadInput.value = 1;
+
+          setTimeout(function () {
+            if (mensaje.textContent.includes(nombre)) {
+              mensaje.textContent = "";
+            }
+          }, 3000);
+        });
+
+        botonCancelar.addEventListener("click", function () {
+          const nombre = card.querySelector("h3").textContent.replace(/^[^\wÁÉÍÓÚÜÑ]+/u, "").trim();
+          const carrito = leerCarrito().filter(function (item) {
+            return Number(item.id_comida) !== idComida;
+          });
+
+          guardarCarrito(carrito);
+          actualizarEstadoTarjeta(card);
+
+          mensaje.textContent = "❌ " + nombre + " fue quitado del pedido.";
 
           setTimeout(function () {
             if (mensaje.textContent.includes(nombre)) {
