@@ -53,13 +53,13 @@ input:focus,textarea:focus,select:focus{border-color:#f28a00;box-shadow:0 0 0 2p
 <h2 id="titulo">📦 Mis pedidos</h2>
 <p class="sub" id="subtitulo">Revisá tu pedido y consultá tu historial.</p>
 
-<section class="panel" id="carritoPanel">
+<section class="panel" id="carritoPanel" style="display:none">
 <h3>🛒 Pedido actual</h3>
 <div id="carrito"></div>
 <div class="total"><span>Total</span><span id="total">$0</span></div>
 </section>
 
-<section class="panel" id="formPanel">
+<section class="panel" id="formPanel" style="display:none">
 <h3>📍 Datos de entrega</h3>
 <div class="form-grid" style="margin-top:15px">
 <div class="field"><label>Dirección</label><input id="direccion" placeholder="Ej. Av. Principal 123"></div>
@@ -75,20 +75,10 @@ input:focus,textarea:focus,select:focus{border-color:#f28a00;box-shadow:0 0 0 2p
   <h3 id="historialTitulo">📜 Historial de pedidos</h3>
   <div id="filtrosPedidos" style="display:none;gap:8px;flex-wrap:wrap">
     <input id="buscarPedido" type="search" placeholder="🔎 Buscar pedido..." style="max-width:210px">
-    <select id="filtroEstado" style="max-width:170px">
-      <option value="">Todos los estados</option>
-      <option value="pendiente">Pendiente</option>
-      <option value="confirmado">Confirmado</option>
-      <option value="en preparación">En preparación</option>
-      <option value="listo">Listo</option>
-      <option value="entregado">Entregado</option>
-      <option value="cancelado">Cancelado</option>
-    </select>
     <button class="btn dark" type="button" onclick="cargarPedidos()">↻ Actualizar</button>
   </div>
 </div>
 <div id="ultimaActualizacion" class="muted" style="margin:7px 0 12px"></div>
-<div id="pedidos"><p class="muted">Cargando...</p></div>
 <div id="pedidos"><p class="muted">Cargando...</p></div>
 </section>
 </main>
@@ -204,9 +194,14 @@ function renderListaPedidos(pedidos){
 
   el.innerHTML=filtrados.map(p=>{
     const items=(p.items||[]).map(i=>`<li>${escapeHtml(i.nombre)} — ${i.cantidad} × ${money(i.precio_unitario)}</li>`).join("");
-    const select=rol==="jefe"?`<select onchange="cambiarEstado(${p.id_pedido},this.value)" style="max-width:190px">
-      ${["pendiente","confirmado","en preparación","listo","entregado","cancelado"].map(e=>`<option ${e===p.estado?"selected":""}>${e}</option>`).join("")}
-    </select>`:"";
+    const select="";
+    const puedeCancelar = rol!=="jefe" && String(p.estado||"").toLowerCase()==="pendiente";
+    const cancelar = puedeCancelar
+      ? `<div style="margin-top:14px;padding-top:12px;border-top:1px solid #eee;text-align:right">
+          <span class="muted" style="margin-right:8px">¿Querés cancelar el pedido?</span>
+          <button class="btn danger" type="button" onclick="cancelarPedido(${p.id_pedido})">Cancelar pedido</button>
+        </div>`
+      : "";
 
     return `<div class="order-card">
       <div class="order-head">
@@ -218,16 +213,38 @@ function renderListaPedidos(pedidos){
       </div>
       <ul class="order-items">${items || "<li>Sin detalle</li>"}</ul>
       <div class="total"><span>Total</span><span>${money(p.total)}</span></div>
+      ${cancelar}
     </div>`;
   }).join("");
 }
 
-async function cambiarEstado(id,estado){
-  const fd=new FormData(); fd.append("accion","cambiar_estado"); fd.append("id_pedido",id); fd.append("estado",estado);
-  const r=await fetch("api/pedidos.php",{method:"POST",body:fd,credentials:"same-origin"});
-  const d=await r.json();
-  if(!r.ok || !d.ok){alert(d.mensaje || "No se pudo actualizar.");return;}
-  cargarPedidos();
+
+async function cancelarPedido(id){
+  if(!confirm("¿Querés cancelar el pedido #"+id+"?")) return;
+
+  try{
+    const fd=new FormData();
+    fd.append("accion","cancelar_pedido");
+    fd.append("id_pedido",id);
+
+    const r=await fetch("api/pedidos.php",{
+      method:"POST",
+      body:fd,
+      credentials:"same-origin",
+      cache:"no-store"
+    });
+    const d=await r.json();
+
+    if(!r.ok || !d.ok){
+      alert(d.mensaje || "No se pudo cancelar el pedido.");
+      return;
+    }
+
+    alert("✅ El pedido #"+id+" fue cancelado correctamente.");
+    cargarPedidos();
+  }catch(e){
+    alert("No se pudo cancelar el pedido.");
+  }
 }
 
 (async()=>{
@@ -240,20 +257,25 @@ async function cambiarEstado(id,estado){
       document.getElementById("formPanel").style.display="none";
       document.getElementById("carritoPanel").style.display="none";
       document.getElementById("historialTitulo").textContent="📦 Todos los pedidos";
+      document.getElementById("filtrosPedidos").style.display="flex";
+    } else {
+      document.getElementById("titulo").textContent="📦 Mis pedidos";
+      document.getElementById("subtitulo").textContent="Revisá tu pedido y consultá tu historial.";
+      document.getElementById("formPanel").style.display="block";
+      document.getElementById("carritoPanel").style.display="block";
+      document.getElementById("historialTitulo").textContent="📜 Historial de pedidos";
+      renderCarrito();
     }
-    renderCarrito();
     cargarPedidos();
   }catch(e){
     document.getElementById("pedidos").innerHTML='<p style="color:#b42318">Debés iniciar sesión para ver los pedidos.</p>';
     document.getElementById("formPanel").style.display="none";
+    document.getElementById("carritoPanel").style.display="none";
   }
 })();
 
 document.addEventListener("input",function(e){
   if(e.target.id==="buscarPedido") renderListaPedidos(pedidosCargados);
-});
-document.addEventListener("change",function(e){
-  if(e.target.id==="filtroEstado") renderListaPedidos(pedidosCargados);
 });
 
 </script>

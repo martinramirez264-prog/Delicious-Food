@@ -560,6 +560,271 @@
       font-style:italic;
     }
 
+
+    /* ---------- HACER UN PEDIDO ---------- */
+    #pedido{
+      scroll-margin-top:90px;
+    }
+    .order-section{
+      background:linear-gradient(180deg,#fffaf3 0%,#fff 100%);
+      border:1px solid #f2c98f;
+      border-radius:20px;
+      padding:28px;
+      box-shadow:0 10px 28px rgba(25,57,101,.07);
+    }
+    .order-section .section-title{
+      margin-bottom:20px;
+    }
+    .order-grid{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:16px;
+    }
+    .order-card{
+      background:#fff;
+      border:1px solid #e7ebf0;
+      border-radius:16px;
+      overflow:hidden;
+      box-shadow:0 5px 16px rgba(25,57,101,.06);
+      transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease;
+    }
+    .order-card:hover{
+      transform:translateY(-4px);
+      box-shadow:0 10px 24px rgba(25,57,101,.11);
+      border-color:#f28a00;
+    }
+    .order-card img{
+      width:100%;
+      height:155px;
+      object-fit:cover;
+      display:block;
+    }
+    .order-card-body{
+      padding:15px;
+    }
+    .order-card-body h3{
+      color:#193965;
+      margin:0 0 6px;
+      font-size:19px;
+    }
+    .order-card-body p{
+      color:#6f7781;
+      font-size:13px;
+      min-height:38px;
+      margin:0 0 12px;
+    }
+    .order-price{
+      font-weight:800;
+      color:#193965;
+      font-size:17px;
+      margin-bottom:12px;
+    }
+    .order-actions{
+      display:flex;
+      gap:8px;
+      align-items:center;
+    }
+    .order-qty{
+      width:58px;
+      padding:9px 7px;
+      border:1px solid #d9dee5;
+      border-radius:9px;
+      font:inherit;
+      text-align:center;
+    }
+
+    /* ---------- DETALLE DEL PLATO EN LA MISMA PÁGINA ---------- */
+    .plato-modal{
+      position:fixed;
+      inset:0;
+      z-index:9999;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+      background:rgba(10,25,45,.68);
+      backdrop-filter:blur(4px);
+    }
+    .plato-modal.abierto{display:flex;}
+    .plato-modal-box{
+      width:min(1050px,96vw);
+      max-height:92vh;
+      overflow:auto;
+      background:#fff;
+      border-radius:22px;
+      box-shadow:0 25px 70px rgba(0,0,0,.28);
+      position:relative;
+    }
+    .plato-modal-close{
+      position:absolute;
+      top:16px;
+      right:16px;
+      z-index:2;
+      width:42px;
+      height:42px;
+      border:0;
+      border-radius:50%;
+      background:#fff;
+      color:#193965;
+      font-size:25px;
+      cursor:pointer;
+      box-shadow:0 4px 14px rgba(0,0,0,.15);
+    }
+    .plato-modal-close:hover{color:#f28a00;}
+    .plato-hero{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      min-height:330px;
+    }
+    .plato-hero img{
+      width:100%;
+      height:100%;
+      min-height:330px;
+      object-fit:cover;
+    }
+    .plato-info{
+      padding:48px 40px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
+    .plato-info h2{
+      margin:0 0 10px;
+      color:#193965;
+      font-size:36px;
+    }
+    .plato-precio{
+      color:#f28a00;
+      font-size:23px;
+      font-weight:800;
+      margin-bottom:22px;
+    }
+    .plato-info p{
+      color:#6f7781;
+      line-height:1.6;
+      margin:0 0 18px;
+    }
+    .plato-tiempo{
+      display:inline-block;
+      width:max-content;
+      max-width:100%;
+      background:#fff1dc;
+      color:#d87500;
+      border-radius:24px;
+      padding:10px 15px;
+      font-weight:700;
+    }
+    .plato-detalles{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:28px;
+      padding:32px;
+      border-top:1px solid #e7ebf0;
+    }
+    .plato-detalle-card{
+      background:#fafafa;
+      border-radius:16px;
+      padding:24px;
+    }
+    .plato-detalle-card h3{
+      color:#193965;
+      margin:0 0 16px;
+      font-size:22px;
+    }
+    .plato-detalle-card ul{
+      margin:0;
+      padding:0;
+      list-style:none;
+    }
+    .plato-detalle-card li{
+      padding:10px 0;
+      border-bottom:1px solid #e5e5e5;
+      color:#666;
+    }
+    .plato-detalle-card li:last-child{border-bottom:0;}
+    .paso{
+      display:flex;
+      align-items:flex-start;
+      gap:12px;
+      margin:12px 0;
+      color:#666;
+      line-height:1.5;
+    }
+    .paso-num{
+      flex:0 0 32px;
+      height:32px;
+      border-radius:50%;
+      background:#f28a00;
+      color:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:800;
+    }
+    @media (max-width:700px){
+      .plato-modal{padding:10px;}
+      .plato-hero,.plato-detalles{grid-template-columns:1fr;}
+      .plato-info{padding:28px 24px;}
+      .plato-info h2{font-size:29px;}
+      .plato-detalles{padding:18px;}
+      .plato-hero img{min-height:230px;max-height:300px;}
+    }
+
+    .order-view{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border:0;
+      border-radius:9px;
+      background:#eaf0f7;
+      color:#193965;
+      padding:10px 12px;
+      font-weight:700;
+      text-decoration:none;
+      white-space:nowrap;
+    }
+    .order-view:hover{
+      background:#dce6f2;
+      color:#f28a00;
+    }
+    .order-add{
+      flex:1;
+      border:0;
+      border-radius:9px;
+      background:#f28a00;
+      color:#fff;
+      padding:10px 12px;
+      font-weight:700;
+      cursor:pointer;
+    }
+    .order-add:hover{
+      background:#df7900;
+    }
+    .order-message{
+      margin-top:16px;
+      min-height:22px;
+      color:#193965;
+      font-weight:700;
+      text-align:center;
+    }
+    .order-footer{
+      display:flex;
+      justify-content:center;
+      margin-top:18px;
+    }
+    .nav-order-link{
+      color:#f28a00 !important;
+      font-weight:800;
+    }
+    @media (max-width:1000px){
+      .order-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+    }
+    @media (max-width:600px){
+      .order-section{padding:20px 14px;}
+      .order-grid{grid-template-columns:1fr;}
+      .order-card img{height:190px;}
+    }
+
     /* ---------- CONTACTO / RESERVA ---------- */
     .contact-grid{
       display:grid;
@@ -885,16 +1150,17 @@
         ☰
       </button>
 
-      <div class="nav-links" id="navLinks">
-        <a href="#inicio">Inicio</a>
-        <a href="#proyecto">Proyecto</a>
-        <a href="#menu">Menú</a>
-        <a href="#experiencia">Experiencia</a>
-        <a href="#equipo">Equipo</a>
-        <a href="#resenas">Reseñas</a>
-        <a href="#galeria">Galería</a>
-        <a href="#contacto">Contacto</a>
-      </div>
+    <div class="nav-links" id="navLinks"> 
+      <a href="#inicio">Inicio</a> 
+      <a href="#proyecto">Proyecto</a> 
+      <a href="#menu">🍽️Menú</a> 
+      <a href="#experiencia">🎉Experiencia</a> 
+      <a href="#equipo">👨‍🍳Equipo</a> 
+      <a href="#resenas">⭐Reseñas</a> 
+      <a href="#galeria">🍽️Galería</a> 
+      <a href="#contacto">📱Contacto</a> 
+    <a href="#pedido" class="nav-order-link">🛒 Hacer un pedido</a>
+    </div>
 
     </div>
   </nav>
@@ -1133,6 +1399,107 @@
       </div>
     </section>
 
+
+    <!-- HACER UN PEDIDO -->
+    <section id="pedido">
+      <div class="section-title">
+        <span class="tag">Pedí tus platos favoritos</span>
+        <h2>🛒 Hacer un pedido</h2>
+        <p>Elegí una especialidad, indicá la cantidad y agregala a tu pedido.</p>
+      </div>
+
+      <div class="order-section">
+        <div id="pedidoCards" class="order-grid">
+          <article class="order-card" data-id="1">
+            <img src="imgs/Hamburguesa.jpg" alt="Hamburguesa">
+            <div class="order-card-body">
+              <h3>🍔 Hamburguesa</h3>
+              <p>Hamburguesa casera con carne, queso y vegetales frescos.</p>
+              <div class="order-price" data-price="$11.000">$11.000</div>
+              <div class="order-actions">
+                <input class="order-qty" type="number" min="1" max="99" value="1" aria-label="Cantidad de Hamburguesa">
+                <button class="order-add" type="button">Agregar</button><button class="order-view" type="button" onclick="abrirDetallePlato(1)">Ver plato</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="order-card" data-id="2">
+            <img src="imgs/Pizza.jpg" alt="Pizza">
+            <div class="order-card-body">
+              <h3>🍕 Pizza</h3>
+              <p>Pizza artesanal con masa horneada y queso fundido.</p>
+              <div class="order-price" data-price="$12.000">$12.000</div>
+              <div class="order-actions">
+                <input class="order-qty" type="number" min="1" max="99" value="1" aria-label="Cantidad de Pizza">
+                <button class="order-add" type="button">Agregar</button><button class="order-view" type="button" onclick="abrirDetallePlato(2)">Ver plato</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="order-card" data-id="3">
+            <img src="imgs/Papas Fritas.jpg" alt="Papas Fritas">
+            <div class="order-card-body">
+              <h3>🍟 Papas Fritas</h3>
+              <p>Papas fritas doradas y crocantes.</p>
+              <div class="order-price" data-price="$6.500">$6.500</div>
+              <div class="order-actions">
+                <input class="order-qty" type="number" min="1" max="99" value="1" aria-label="Cantidad de Papas Fritas">
+                <button class="order-add" type="button">Agregar</button><button class="order-view" type="button" onclick="abrirDetallePlato(3)">Ver plato</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="order-card" data-id="4">
+            <img src="imgs/Croque Monsieur.jpg" alt="Croque Monsieur">
+            <div class="order-card-body">
+              <h3>🥪 Croque Monsieur</h3>
+              <p>Clásico sándwich francés con jamón, queso y bechamel.</p>
+              <div class="order-price" data-price="$11.500">$11.500</div>
+              <div class="order-actions">
+                <input class="order-qty" type="number" min="1" max="99" value="1" aria-label="Cantidad de Croque Monsieur">
+                <button class="order-add" type="button">Agregar</button><button class="order-view" type="button" onclick="abrirDetallePlato(4)">Ver plato</button>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div id="pedidoMensaje" class="order-message" aria-live="polite"></div>
+
+        <div class="order-footer">
+          <a class="btn btn-primary" href="pedidos.html">📦 Ver mi pedido</a>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- DETALLE DE PLATO -->
+    <div id="platoModal" class="plato-modal" aria-hidden="true">
+      <div class="plato-modal-box" role="dialog" aria-modal="true" aria-labelledby="platoModalTitulo">
+        <button class="plato-modal-close" type="button" onclick="cerrarDetallePlato()" aria-label="Cerrar">×</button>
+
+        <div class="plato-hero">
+          <img id="platoModalImagen" src="" alt="">
+          <div class="plato-info">
+            <h2 id="platoModalTitulo"></h2>
+            <div id="platoModalPrecio" class="plato-precio"></div>
+            <p id="platoModalDescripcion"></p>
+            <div id="platoModalTiempo" class="plato-tiempo">⏱️ Preparación en aproximadamente 15 - 30 minutos</div>
+          </div>
+        </div>
+
+        <div class="plato-detalles">
+          <div class="plato-detalle-card">
+            <h3>🥗 Ingredientes</h3>
+            <ul id="platoModalIngredientes"></ul>
+          </div>
+          <div class="plato-detalle-card">
+            <h3>👨‍🍳 Cómo se hace</h3>
+            <div id="platoModalPasos"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- CONTACTO Y RESERVA -->
     <section id="contacto">
       <div class="section-title">
@@ -1154,7 +1521,7 @@
         </article>
 
         <article class="panel" id="reservas">
-          <h3>📅 Reservá tu mesa</h3>
+          <h3>📅 Reserva tu mesa</h3>
           <p>Completá tus datos y te contactaremos para confirmar.</p>
 
           <form id="reservaForm">
@@ -1266,6 +1633,136 @@
         avatar.style.display = "block";
         defecto.style.display = "none";
       }
+    });
+
+
+    // Carrito de "Hacer un pedido" en la página principal.
+    document.addEventListener("DOMContentLoaded", function () {
+      const cards = document.querySelectorAll(".order-card");
+      const mensaje = document.getElementById("pedidoMensaje");
+
+      cards.forEach(function (card) {
+        const boton = card.querySelector(".order-add");
+        const cantidadInput = card.querySelector(".order-qty");
+        const idComida = Number(card.dataset.id);
+
+        boton.addEventListener("click", async function () {
+          const cantidad = Math.max(1, Math.min(99, Number(cantidadInput.value) || 1));
+          const nombre = card.querySelector("h3").textContent.replace(/^[^\wÁÉÍÓÚÜÑ]+/u, "").trim();
+          const precioTexto = card.querySelector(".order-price").textContent.replace(/[^\d]/g, "");
+          const precio = Number(precioTexto) || 0;
+          const imagen = card.querySelector("img").getAttribute("src");
+
+          let carrito = [];
+          try {
+            carrito = JSON.parse(sessionStorage.getItem("carritoDeliciousFood") || "[]");
+            if (!Array.isArray(carrito)) carrito = [];
+          } catch (_) {
+            carrito = [];
+          }
+
+          const existente = carrito.find(function (item) {
+            return Number(item.id_comida) === idComida;
+          });
+
+          if (existente) {
+            existente.cantidad = Math.min(99, Number(existente.cantidad || 0) + cantidad);
+          } else {
+            carrito.push({
+              id_comida: idComida,
+              nombre: nombre,
+              precio: precio,
+              imagen: imagen,
+              cantidad: cantidad
+            });
+          }
+
+          sessionStorage.setItem("carritoDeliciousFood", JSON.stringify(carrito));
+          mensaje.textContent = "✅ " + nombre + " agregado al pedido.";
+          cantidadInput.value = 1;
+
+          setTimeout(function () {
+            if (mensaje.textContent.includes(nombre)) {
+              mensaje.textContent = "";
+            }
+          }, 3000);
+        });
+      });
+    });
+
+
+    const detallesPlatos = {
+      1: {
+        titulo: "Hamburguesa",
+        precio: "$11.000",
+        imagen: "imgs/Hamburguesa.jpg",
+        descripcion: "Hamburguesa casera con carne, queso y vegetales frescos.",
+        ingredientes: ["Pan", "carne", "queso", "lechuga", "tomate y condimentos."],
+        pasos: ["Cocinar la carne", "tostar el pan y armar con queso y vegetales."]
+      },
+      2: {
+        titulo: "Pizza",
+        precio: "$12.000",
+        imagen: "imgs/Pizza.jpg",
+        descripcion: "Pizza artesanal con masa horneada y queso fundido.",
+        ingredientes: ["Masa", "salsa de tomate", "queso", "orégano"],
+        pasos: ["Preparar la masa", "agregar salsa y queso y hornear hasta dorar."]
+      },
+      3: {
+        titulo: "Papas Fritas",
+        precio: "$6.500",
+        imagen: "imgs/Papas Fritas.jpg",
+        descripcion: "Papas fritas doradas y crocantes, ideales para acompañar nuestros platos.",
+        ingredientes: ["Papas", "aceite", "sal"],
+        pasos: ["Cortar las papas", "freír hasta que estén doradas y condimentar."]
+      },
+      4: {
+        titulo: "Croque Monsieur",
+        precio: "$11.500",
+        imagen: "imgs/Croque Monsieur.jpg",
+        descripcion: "Clásico sándwich francés con jamón, queso y salsa bechamel gratinado.",
+        ingredientes: ["Pan", "jamón cocido", "Gruyère o Emmental", "bechamel y nuez moscada."],
+        pasos: ["Armar con jamón y queso", "cubrir con bechamel y gratinar hasta dorar."]
+      }
+    };
+
+    function abrirDetallePlato(id){
+      const p = detallesPlatos[id];
+      if(!p) return;
+
+      document.getElementById("platoModalImagen").src = p.imagen;
+      document.getElementById("platoModalImagen").alt = p.titulo;
+      document.getElementById("platoModalTitulo").textContent = p.titulo;
+      document.getElementById("platoModalPrecio").textContent = p.precio;
+      document.getElementById("platoModalDescripcion").textContent = p.descripcion;
+
+      document.getElementById("platoModalIngredientes").innerHTML =
+        p.ingredientes.map(i => `<li>• ${i}</li>`).join("");
+
+      document.getElementById("platoModalPasos").innerHTML =
+        p.pasos.map((paso, i) =>
+          `<div class="paso"><span class="paso-num">${i+1}</span><span>${paso}</span></div>`
+        ).join("");
+
+      const modal = document.getElementById("platoModal");
+      modal.classList.add("abierto");
+      modal.setAttribute("aria-hidden","false");
+      document.body.style.overflow = "hidden";
+    }
+
+    function cerrarDetallePlato(){
+      const modal = document.getElementById("platoModal");
+      modal.classList.remove("abierto");
+      modal.setAttribute("aria-hidden","true");
+      document.body.style.overflow = "";
+    }
+
+    document.getElementById("platoModal").addEventListener("click", function(e){
+      if(e.target === this) cerrarDetallePlato();
+    });
+
+    document.addEventListener("keydown", function(e){
+      if(e.key === "Escape") cerrarDetallePlato();
     });
 
     // Reserva de demostración.

@@ -36,14 +36,14 @@ body{background:#f5f7fa;color:#193965}
 <aside class="sidebar">
   <div class="logo"><h1>🍔 Delicious Food</h1><p>PANEL DE ADMINISTRACIÓN</p></div>
   <ul class="menu">
-    <li><a href="jefe.html">🏠 Inicio</a></li>
+    <li><a href="jefe.html">📊 Inicio</a></li>
     <li><a href="pedidos.html">📦 Pedidos</a></li>
-    <li><a href="administrar-comidas.html">🍔 Comidas</a></li>
+    <li><a href="comidas.html">🍔 Comidas</a></li>
     <li><a href="menu.html">📋 Menú</a></li>
     <li><a href="imagenes.html">🖼️ Imágenes</a></li>
-    <li><a href="empleados.html">👥 Empleados</a></li>
-    <li><a href="local.html">🏪 Local</a></li>
-    <li><a href="configuracion.html">⚙️ Configuración</a></li>
+    <li><a href="#">👥 Empleados</a></li>
+    <li><a href="#">🏪 Local</a></li>
+    <li><a href="#">⚙️ Configuración</a></li>
   </ul>
 </aside>
 
@@ -68,19 +68,19 @@ body{background:#f5f7fa;color:#193965}
     <div class="galeria-grid" id="galeria">
       <article class="imagen-card" data-nombre="hamburguesa especial">
         <div class="foto" onclick="abrir(this.querySelector('img').src,'Hamburguesa Especial')"><img src="imgs/Hamburguesa.jpg" alt="Hamburguesa Especial"><span class="ver-foto">🔍 Ver grande</span></div>
-        <div class="imagen-info"><span class="pais">🇺🇸 Estados Unidos</span><h4>🍔 Hamburguesa Especial</h4><p>Una de las opciones principales de Delicious Food.</p><div class="acciones"><button class="boton boton-ver" onclick="abrir(this.closest('.imagen-card').querySelector('img').src,'Hamburguesa Especial')">🔍 Ver imagen</button><a class="boton boton-menu" href="comida-hamburguesa.html">Ver plato</a></div></div>
+        <div class="imagen-info"><span class="pais">🇺🇸 Estados Unidos</span><h4>🍔 Hamburguesa Especial</h4><p>Una de las opciones principales de Delicious Food.</p><div class="acciones"><button class="boton boton-ver" onclick="abrir(this.closest('.imagen-card').querySelector('img').src,'Hamburguesa Especial')">🔍 Ver imagen</button></div></div>
       </article>
       <article class="imagen-card" data-nombre="pizza especial">
         <div class="foto" onclick="abrir(this.querySelector('img').src,'Pizza Especial')"><img src="imgs/Pizza.jpg" alt="Pizza Especial"><span class="ver-foto">🔍 Ver grande</span></div>
-        <div class="imagen-info"><span class="pais">🇮🇹 Italia</span><h4>🍕 Pizza Especial</h4><p>Una presentación de nuestra pizza para disfrutar y compartir.</p><div class="acciones"><button class="boton boton-ver" onclick="abrir(this.closest('.imagen-card').querySelector('img').src,'Pizza Especial')">🔍 Ver imagen</button><a class="boton boton-menu" href="comida-pizza.html">Ver plato</a></div></div>
+        <div class="imagen-info"><span class="pais">🇮🇹 Italia</span><h4>🍕 Pizza Especial</h4><p>Una presentación de nuestra pizza para disfrutar y compartir.</p><div class="acciones"><button class="boton boton-ver" onclick="abrir(this.closest('.imagen-card').querySelector('img').src,'Pizza Especial')">🔍 Ver imagen</button></div></div>
       </article>
       <article class="imagen-card" data-nombre="papas fritas">
         <div class="foto" onclick="abrir(this.querySelector('img').src,'Papas Fritas')"><img src="imgs/Papas Fritas.jpg" alt="Papas Fritas"><span class="ver-foto">🔍 Ver grande</span></div>
-        <div class="imagen-info"><span class="pais">🇫🇷 Francia</span><h4>🍟 Papas Fritas</h4><p>El acompañamiento clásico para disfrutar con nuestros platos.</p><div class="acciones"><button class="boton boton-ver" onclick="abrir(this.closest('.imagen-card').querySelector('img').src,'Papas Fritas')">🔍 Ver imagen</button><a class="boton boton-menu" href="comida-papas.html">Ver plato</a></div></div>
+        <div class="imagen-info"><span class="pais">🇫🇷 Francia</span><h4>🍟 Papas Fritas</h4><p>El acompañamiento clásico para disfrutar con nuestros platos.</p><div class="acciones"><button class="boton boton-ver" onclick="abrir(this.closest('.imagen-card').querySelector('img').src,'Papas Fritas')">🔍 Ver imagen</button></div></div>
       </article>
       <article class="imagen-card" data-nombre="croque monsieur sandwich frances sándwich francés">
-        <div class="foto" onclick="abrir(this.querySelector('img').src,'Croque Monsieur')"><img src="imgs/Croque Monsieur.jpg" alt="Croque Monsieur"><span class="ver-foto">🔍 Ver grande</span></div>
-        <div class="imagen-info"><span class="pais">🇫🇷 Francia</span><h4>🥪 Croque Monsieur</h4><p>Clásico francés con jamón cocido, queso fundido y salsa bechamel, gratinado hasta quedar dorado y crujiente.</p><div class="acciones"><button class="boton boton-ver" onclick="abrir(this.closest('.imagen-card').querySelector('img').src,'Croque Monsieur')">🔍 Ver imagen</button><a class="boton boton-menu" href="comida-sandwich.html">Ver plato</a></div></div>
+        <div class="foto" onclick="abrir(this.querySelector('img').src,'Croque Monsieur')"><img src="/imgs/Croque Monsieur.jpg" alt="Croque Monsieur"><span class="ver-foto">🔍 Ver grande</span></div>
+        <div class="imagen-info"><span class="pais">🇫🇷 Francia</span><h4>🥪 Croque Monsieur</h4><p>Clásico francés con jamón cocido, queso fundido y salsa bechamel, gratinado hasta quedar dorado y crujiente.</p><div class="acciones"><button class="boton boton-ver" onclick="abrir(this.closest('.imagen-card').querySelector('img').src,'Croque Monsieur')">🔍 Ver imagen</button></div></div>
       </article>
     </div>
     <div class="vacio" id="vacio"><strong>No encontramos ese plato.</strong><span>Probá con otro nombre.</span></div>

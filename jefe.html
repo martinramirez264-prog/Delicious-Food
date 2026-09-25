@@ -313,12 +313,14 @@
     background: #f28a00;
     color: white;
     border-radius: 50%;
-    width: 20px;
+    min-width: 20px;
     height: 20px;
+    padding: 0 5px;
     text-align: center;
     line-height: 20px;
     font-size: 11px;
     margin-left: 5px;
+    vertical-align: middle;
 }
 
 /* NOTIFICACIÓN PARPADEANDO */
@@ -386,7 +388,12 @@
                 👨‍💼 Jefe
                 <div class="menu-jefe" id="menuJefe">
                     <a href="cuenta-jefe.html">👤 Mi cuenta</a>
-              <a href="#">🔔 Notificaciones</a>
+              <a href="pedidos.html" id="enlaceNotificaciones">
+                  🔔 Notificaciones <span id="contadorNotificaciones">0</span>
+              </a>
+              <div id="avisoNotificacion" style="display:none; padding:10px 12px; margin:4px 0 8px; background:#fff7eb; border-radius:8px; color:#193965; font-size:13px; line-height:1.4;">
+                  🛎️ Un cliente ha realizado un pedido.
+              </div>
               <a href="index.html">🚪 Cerrar sesión</a>
             </div>
         </div>
@@ -518,6 +525,30 @@
 
             const pedidosNumero = document.querySelector(".tarjeta:nth-child(1) .numero");
             if (pedidosNumero) pedidosNumero.textContent = pedidos.length;
+
+            // Notificación exclusiva para el jefe:
+            // si hay pedidos pendientes, se muestra el aviso y el contador.
+            const pedidosPendientes = pedidos.filter(p =>
+                String(p.estado || "").toLowerCase() === "pendiente"
+            ).length;
+
+            const contadorNotificaciones = document.getElementById("contadorNotificaciones");
+            const avisoNotificacion = document.getElementById("avisoNotificacion");
+
+            if (contadorNotificaciones) {
+                if (pedidosPendientes > 0) {
+                    contadorNotificaciones.textContent = pedidosPendientes;
+                    contadorNotificaciones.style.display = "inline-block";
+                    contadorNotificaciones.classList.add("notificacion-nueva");
+                } else {
+                    contadorNotificaciones.style.display = "none";
+                    contadorNotificaciones.classList.remove("notificacion-nueva");
+                }
+            }
+
+            if (avisoNotificacion) {
+                avisoNotificacion.style.display = pedidosPendientes > 0 ? "block" : "none";
+            }
         }
 
         const respuestaComidas = await fetch("api/comidas.php", {
