@@ -177,7 +177,8 @@ input:focus,textarea:focus,select:focus{
     </div>
   </div>
 
-  <section class="panel" id="carritoPanel" style="display:none">
+  <div id="seccionCliente" style="display:none">
+  <section class="panel" id="confirmar-pedido" style="display:none">
     <div class="panel-head">
       <div>
         <h3>🛒 Pedido actual</h3>
@@ -192,8 +193,8 @@ input:focus,textarea:focus,select:focus{
   <section class="panel" id="formPanel" style="display:none">
     <div class="panel-head">
       <div>
-        <h3>📍 Datos de entrega</h3>
-        <p class="panel-description">Completá los datos para recibir tu pedido.</p>
+        <h3>📍 Datos de entrega y confirmación</h3>
+        <p class="panel-description">Revisá tus comidas, completá los datos y confirmá el pedido.</p>
       </div>
       <div class="panel-icon">📍</div>
     </div>
@@ -216,6 +217,8 @@ input:focus,textarea:focus,select:focus{
     </div>
     <div id="mensaje"></div>
   </section>
+
+  </div>
 
   <section class="panel">
     <div class="panel-head">
@@ -497,18 +500,24 @@ async function cambiarEstado(id,estado){
   try{
     const u=await obtenerSesion();
 
+    const seccionCliente = document.getElementById("seccionCliente");
+    const adminSummary = document.getElementById("adminSummary");
+
     if(u.rol==="jefe"){
+      // JEFE: solamente puede ver la gestión / Todos los pedidos.
+      seccionCliente.style.display="none";
+      adminSummary.style.display="grid";
       document.getElementById("titulo").textContent="📦 Gestión de pedidos";
       document.getElementById("subtitulo").textContent="Revisá todos los pedidos y actualizá su estado.";
       document.getElementById("rolPanel").textContent="PEDIDOS";
-      document.getElementById("adminSummary").style.display="grid";
       document.getElementById("historialTitulo").textContent="📦 Todos los pedidos";
       document.getElementById("historialDescripcion").textContent="Consultá cada pedido y actualizá su estado.";
     }else{
+      // CLIENTE: puede ver su pedido actual, datos de entrega y confirmación.
+      seccionCliente.style.display="block";
+      adminSummary.style.display="none";
       document.getElementById("titulo").textContent="📦 Mis pedidos";
       document.getElementById("subtitulo").textContent="Revisá tu pedido y consultá tu historial.";
-      document.getElementById("carritoPanel").style.display="block";
-      document.getElementById("formPanel").style.display="block";
       document.getElementById("historialTitulo").textContent="📜 Historial de pedidos";
       document.getElementById("historialDescripcion").textContent="Consultá el estado y el detalle de tus pedidos.";
       renderCarrito();
