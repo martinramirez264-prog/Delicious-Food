@@ -727,7 +727,10 @@ async function iniciarSesion() {
         sessionStorage.setItem("rolActivo", resultado.usuario.rol);
 
         setTimeout(function () {
-            window.location.href = resultado.redirect.replace("../", "");
+            // Redirección según el rol devuelto por PHP.
+            // Jefe → jefe.html | Cliente/empleado → homenuevo.html
+            const destino = resultado.redirect || "../homenuevo.html";
+            window.location.href = destino.replace(/^\.\.\//, "");
         }, 700);
 
     } catch (error) {
