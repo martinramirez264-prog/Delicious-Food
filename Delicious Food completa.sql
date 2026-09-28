@@ -1,0 +1,1 @@
+SELECT * FROM delicious_food.usuarios;
