@@ -85,19 +85,52 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 18px;
             margin-bottom: 30px;
+        }
+
+        /* Encabezado naranja, a juego con el botón Jefe */
+        .encabezado > div:first-child {
+            background: #f79400;
+            color: #193965;
+            padding: 18px 24px;
+            border-radius: 14px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.10);
         }
 
         .encabezado h2 {
             font-size: 28px;
+            color: #193965;
+            margin-bottom: 4px;
+        }
+
+        .encabezado p {
+            color: #193965;
         }
 
         .usuario {
-            background: white;
-            padding: 10px 16px;
+            background: #f79400;
+            color: #193965;
+            padding: 12px 18px;
             border-radius: 25px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.12);
             font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .usuario:hover {
+            background: #ffab1a;
+        }
+
+        body.modo-oscuro .encabezado > div:first-child,
+        body.modo-oscuro .usuario {
+            background: #f79400;
+            color: #193965;
+        }
+
+        body.modo-oscuro .encabezado h2,
+        body.modo-oscuro .encabezado p {
+            color: #193965;
         }
 
         /* TARJETAS */
@@ -109,27 +142,62 @@
         }
 
         .tarjeta {
-            background: white;
-            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(145deg, #ffffff 0%, #fffaf2 100%);
+            border: 1px solid #f3dfc4;
+            border-top: 4px solid #f28a00;
+            border-radius: 14px;
             padding: 22px;
-            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+            box-shadow: 0 5px 16px rgba(25, 57, 101, 0.09);
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
+
+        .tarjeta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 9px 22px rgba(25, 57, 101, 0.14);
         }
 
         .tarjeta .icono {
-            font-size: 30px;
-            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: auto;
+            height: auto;
+            background: transparent;
+            border: none;
+            border-radius: 0;
+            font-size: 28px;
+            margin-bottom: 14px;
         }
 
         .tarjeta h3 {
             font-size: 14px;
-            color: #777;
+            color: #c66a00;
             margin-bottom: 8px;
+            font-weight: 700;
         }
 
         .tarjeta .numero {
             font-size: 28px;
             font-weight: bold;
             color: #193965;
+            line-height: 1.3;
+        }
+
+        body.modo-oscuro .tarjeta {
+            background: linear-gradient(145deg, #273449 0%, #1f2937 100%);
+            border-color: #374151;
+            border-top-color: #f79400;
+            box-shadow: 0 5px 18px rgba(0,0,0,.18);
+        }
+
+        body.modo-oscuro .tarjeta h3 {
+            color: #ffb347;
+        }
+
+        body.modo-oscuro .tarjeta .numero {
+            color: #f9fafb;
         }
 
         /* SECCIONES */
@@ -207,32 +275,177 @@
             font-weight: bold;
         }
 
+        /* DETALLES VISUALES */
+        .barra-lateral {
+            overflow-y: auto;
+            z-index: 20;
+        }
+
+        .menu a:focus-visible,
+        .menu-jefe a:focus-visible,
+        .menu-jefe button:focus-visible,
+        .boton:focus-visible,
+        #botonJefe:focus-visible {
+            outline: 3px solid #ffbf66;
+            outline-offset: 3px;
+        }
+
+        .menu a:hover {
+            transform: translateX(3px);
+        }
+
+        .tarjeta,
+        .panel {
+            min-width: 0;
+            transition: box-shadow .2s ease, transform .2s ease;
+        }
+
+        .tarjeta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(0,0,0,.10);
+        }
+
+        .tabla-contenedor {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .tabla-contenedor table {
+            min-width: 520px;
+        }
+
+        .subtitulo-panel {
+            color: #6b7280;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-top: -10px;
+            margin-bottom: 18px;
+        }
+
+        .estado {
+            display: inline-block;
+            white-space: nowrap;
+        }
+
         /* RESPONSIVE */
-        @media (max-width: 1000px) {
+        @media (max-width: 1100px) {
             .tarjetas {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(2, minmax(0, 1fr));
             }
 
+            .fila {
+                grid-template-columns: minmax(0, 1.5fr) minmax(260px, 1fr);
+            }
+
+            .contenido {
+                padding: 24px;
+            }
+        }
+
+        @media (max-width: 850px) {
             .fila {
                 grid-template-columns: 1fr;
             }
         }
 
         @media (max-width: 700px) {
+            .contenedor {
+                display: block;
+            }
+
             .barra-lateral {
-                width: 200px;
+                position: relative;
+                inset: auto;
+                width: 100%;
+                padding: 18px;
+            }
+
+            .logo {
+                margin-bottom: 18px;
+            }
+
+            .logo h1 {
+                font-size: 23px;
+            }
+
+            .menu {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 8px;
+            }
+
+            .menu li {
+                margin: 0;
+            }
+
+            .menu a {
+                height: 100%;
+                padding: 11px 10px;
+                font-size: 13px;
             }
 
             .contenido {
-                margin-left: 200px;
-                width: calc(100% - 200px);
-                padding: 20px;
+                width: 100%;
+                margin-left: 0;
+                padding: 20px 16px;
+            }
+
+            .encabezado {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 14px;
+                margin-bottom: 22px;
+            }
+
+            .encabezado h2 {
+                font-size: 24px;
+                line-height: 1.25;
+            }
+
+            .usuario {
+                align-self: flex-start;
             }
 
             .tarjetas {
-                grid-template-columns: 1fr;
+                gap: 12px;
+                margin-bottom: 20px;
+            }
+
+            .tarjeta {
+                padding: 16px;
+            }
+
+            .tarjeta .icono {
+                font-size: 26px;
+                margin-bottom: 8px;
+            }
+
+            .tarjeta .numero {
+                font-size: 24px;
+                overflow-wrap: anywhere;
+            }
+
+            .panel {
+                padding: 18px;
             }
         }
+
+        @media (max-width: 380px) {
+            .menu,
+            .tarjetas {
+                grid-template-columns: 1fr;
+            }
+
+            .contenido {
+                padding: 14px 12px;
+            }
+
+            .panel {
+                padding: 15px;
+            }
+        }
+
         .menu-jefe {
     display: none;
     position: absolute;
@@ -313,14 +526,12 @@
     background: #f28a00;
     color: white;
     border-radius: 50%;
-    min-width: 20px;
+    width: 20px;
     height: 20px;
-    padding: 0 5px;
     text-align: center;
     line-height: 20px;
     font-size: 11px;
     margin-left: 5px;
-    vertical-align: middle;
 }
 
 /* NOTIFICACIÓN PARPADEANDO */
@@ -347,7 +558,115 @@
     }
 
 }
-    </style>
+
+        .formulario-panel { display:grid; gap:10px; margin-top:18px; }
+        .formulario-panel label { font-weight:600; font-size:.92rem; }
+        .formulario-panel input, .formulario-panel textarea { width:100%; box-sizing:border-box; border:1px solid #d6dbe2; border-radius:9px; padding:11px 12px; font:inherit; background:#fff; color:#222; }
+        .formulario-panel textarea { resize:vertical; }
+        .campos-dobles { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+        .campos-dobles > div { display:grid; gap:10px; min-width:0; }
+        .acciones-formulario { display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+        #mensajeLocal { color:#18794e; font-size:.9rem; }
+        .opcion-configuracion { display:flex; justify-content:space-between; align-items:center; gap:16px; padding:16px 0; border-bottom:1px solid #e5e7eb; }
+        .opcion-configuracion:last-child { border-bottom:0; }
+        .opcion-configuracion p { margin:5px 0 0; color:#6b7280; font-size:.9rem; }
+        .selector-tema { display:flex; align-items:center; gap:8px; white-space:nowrap; }
+        .boton-secundario { background:#475569; }
+        body.modo-oscuro { background:#111827; color:#e5e7eb; }
+        body.modo-oscuro .contenido, body.modo-oscuro .panel, body.modo-oscuro .tarjeta { background:#1f2937; color:#e5e7eb; }
+        body.modo-oscuro .encabezado p, body.modo-oscuro .subtitulo-panel, body.modo-oscuro .opcion-configuracion p { color:#cbd5e1; }
+        body.modo-oscuro .formulario-panel input, body.modo-oscuro .formulario-panel textarea { background:#111827; color:#f9fafb; border-color:#4b5563; }
+        body.modo-oscuro .opcion-configuracion { border-color:#374151; }
+        html { scroll-behavior:smooth; }
+        #local, #configuracion { scroll-margin-top:20px; }
+        @media (max-width:650px) { .campos-dobles { grid-template-columns:1fr; } .opcion-configuracion { align-items:flex-start; flex-direction:column; } }
+
+
+        /* CONTRASTE Y COLORES PARA LOS PANELES */
+        .panel h3 {
+            color: #f28a00;
+        }
+
+        th {
+            color: #f28a00;
+            font-weight: 700;
+        }
+
+        .lista li {
+            border-bottom-color: #e6e8ec;
+        }
+
+        .lista a {
+            color: #193965 !important;
+            border-radius: 8px;
+            padding: 10px 12px;
+            transition: background .2s ease, color .2s ease;
+        }
+
+        .lista a:hover {
+            background: #fff0d9;
+            color: #a95700 !important;
+        }
+
+        body.modo-oscuro .panel {
+            background: #273449;
+            border: 1px solid #34445b;
+            box-shadow: 0 8px 22px rgba(0,0,0,.18);
+        }
+
+        body.modo-oscuro .panel h3,
+        body.modo-oscuro th {
+            color: #ffab2e;
+        }
+
+        body.modo-oscuro td {
+            color: #e2e8f0;
+            border-bottom-color: #42516a;
+        }
+
+        body.modo-oscuro th {
+            border-bottom-color: #f28a00;
+        }
+
+        body.modo-oscuro .lista li {
+            border-bottom-color: #42516a;
+        }
+
+        body.modo-oscuro .lista a {
+            color: #e5e7eb !important;
+        }
+
+        body.modo-oscuro .lista a:hover {
+            background: #3a4658;
+            color: #ffbd59 !important;
+        }
+
+        body.modo-oscuro .estado {
+            background: #fff0d9;
+            color: #c96b00;
+        }
+
+
+        .opciones-tema { display: grid; gap: 8px; margin-top: 8px; }
+        .opciones-tema .boton-tema { width: 100%; text-align: left; padding: 9px 12px; border: 1px solid #d8dee8; border-radius: 9px; background: #fff; color: #1d3b65; cursor: pointer; font: inherit; }
+        .opciones-tema .boton-tema[aria-pressed="true"] { background: #fff0d9; border-color: #ff9800; color: #8a4600; font-weight: 700; }
+        body.modo-oscuro .opciones-tema .boton-tema { background: #182334; color: #edf2f8; border-color: #465365; }
+        body.modo-oscuro .opciones-tema .boton-tema[aria-pressed="true"] { background: #573710; border-color: #ffab28; color: #ffd18a; }
+    
+        /* Corrección definitiva: eliminar cualquier recuadro detrás de los emojis de las tarjetas */
+        .tarjetas .tarjeta .icono,
+        .tarjetas .tarjeta .icono::before,
+        .tarjetas .tarjeta .icono::after {
+            background: transparent !important;
+            background-color: transparent !important;
+            background-image: none !important;
+            border: 0 !important;
+            box-shadow: none !important;
+            outline: 0 !important;
+            border-radius: 0 !important;
+            padding: 0 !important;
+        }
+</style>
 </head>
 
 <body>
@@ -363,14 +682,12 @@
         </div>
 
         <ul class="menu">
-            <li><a href="#" class="activo">🏠 Inicio</a></li>
+            <li><a href="#inicio" class="activo">🏠 Inicio</a></li>
             <li><a href="pedidos.html">📦 Pedidos</a></li>
             <li><a href="administrar-comidas.html">🍔 Comidas</a></li>
             <li><a href="menu.html">📋 Menú</a></li>
             <li><a href="imagenes.html">🖼️ Imágenes</a></li>
-            <li><a href="">👥 Empleados</a></li>
-            <li><a href="">🏪 Local</a></li>
-            <li><a href="">⚙️ Configuración</a></li>
+            <li><a href="#local">🏪 Local</a></li>
         </ul>
 
     </aside>
@@ -384,23 +701,26 @@
                 <p>Bienvenido al sistema de Delicious Food.</p>
             </div>
 
-            <div class="usuario" id="botonJefe">
+            <div class="usuario" id="botonJefe" role="button" tabindex="0" aria-haspopup="true" aria-expanded="false">
                 👨‍💼 Jefe
                 <div class="menu-jefe" id="menuJefe">
                     <a href="cuenta-jefe.html">👤 Mi cuenta</a>
-              <a href="pedidos.html" id="enlaceNotificaciones">
-                  🔔 Notificaciones <span id="contadorNotificaciones">0</span>
-              </a>
-              <div id="avisoNotificacion" style="display:none; padding:10px 12px; margin:4px 0 8px; background:#fff7eb; border-radius:8px; color:#193965; font-size:13px; line-height:1.4;">
-                  🛎️ Un cliente ha realizado un pedido.
-              </div>
-              <a href="index.html">🚪 Cerrar sesión</a>
+                    <button type="button" id="abrirConfiguracion" aria-expanded="false">⚙️ Configuración</button>
+                    <div id="panelConfiguracion" class="configuracion-plegable" hidden>
+                        <div class="configuracion-titulo">Preferencias</div>
+                        <div class="opciones-tema" role="group" aria-label="Modo de visualización">
+                            <button type="button" id="modoClaro" class="boton-tema">☀️ Modo claro</button>
+                            <button type="button" id="modoOscuro" class="boton-tema">🌙 Modo oscuro</button>
+                        </div>
+                    </div>
+                    <a href="#">🔔 Notificaciones</a>
+                    <a href="index.html">🚪 Cerrar sesión</a>
             </div>
         </div>
         </header>
 
         <!-- RESUMEN -->
-        <section class="tarjetas">
+        <section class="tarjetas" id="inicio">
 
             <div class="tarjeta">
                 <div class="icono">📦</div>
@@ -415,15 +735,15 @@
             </div>
 
             <div class="tarjeta">
-                <div class="icono">👥</div>
-                <h3>Empleados</h3>
-                <div class="numero">0</div>
+                <div class="icono">🌎</div>
+                <h3>Experiencia internacional</h3>
+                <div class="numero" style="font-size:1rem">Sabores del mundo</div>
             </div>
 
             <div class="tarjeta">
-                <div class="icono">💰</div>
-                <h3>Ventas</h3>
-                <div class="numero">$0</div>
+                <div class="icono">🏪</div>
+                <h3>Estado del proyecto</h3>
+                <div class="numero" style="font-size:1rem">Demo académica</div>
             </div>
 
         </section>
@@ -434,6 +754,7 @@
             <section class="panel">
                 <h3>📦 Últimos pedidos</h3>
 
+                <div class="tabla-contenedor">
                 <table>
                     <thead>
                         <tr>
@@ -445,14 +766,13 @@
                     </thead>
 
                     <tbody>
-                        <tr>
-                            <td>#0001</td>
-                            <td>Sin pedidos todavía</td>
-                            <td>$0</td>
-                            <td><span class="estado">Pendiente</span></td>
-                        </tr>
+                        <tr><td>#0004</td><td>Martin264</td><td>$23.000</td><td><span class="estado">cancelado</span></td></tr>
+                        <tr><td>#0003</td><td>Martin264</td><td>$22.000</td><td><span class="estado">cancelado</span></td></tr>
+                        <tr><td>#0002</td><td>Martin264</td><td>$22.000</td><td><span class="estado">cancelado</span></td></tr>
+                        <tr><td>#0001</td><td>Martin264</td><td>$18.500</td><td><span class="estado">cancelado</span></td></tr>
                     </tbody>
                 </table>
+                </div>
             </section>
 
             <!-- ACCIONES -->
@@ -461,20 +781,35 @@
 
                 <ul class="lista">
                     <li><a href="administrar-comidas.html" style="color:inherit;text-decoration:none;display:block;">🍔 Administrar comidas</a></li>
-                    <li>📋 Editar menú</li>
-                    <li>👥 Administrar empleados</li>
-                    <li>🖼️ Administrar imágenes</li>
+                    <li><a href="menu.html" style="color:inherit;text-decoration:none;display:block;">📋 Consultar menú</a></li>
+                    <li><a href="imagenes.html" style="color:inherit;text-decoration:none;display:block;">🖼️ Administrar imágenes</a></li>
+                    <li><a href="#local" style="color:inherit;text-decoration:none;display:block;">🏪 Ver información del local</a></li>
                 </ul>
             </section>
 
         </div>
 
-        <section class="panel">
+        <section class="panel" id="local">
             <h3>🏪 Información del local</h3>
-            <p>Desde este panel podremos administrar toda la información de Delicious Food.</p>
-            <br>
-            <button class="boton">Administrar local</button>
+            <p class="subtitulo-panel">Datos de presentación del restaurante temático. Como Delicious Food es un proyecto académico, podés usar información ficticia de ejemplo.</p>
+            <form id="formLocal" class="formulario-panel">
+                <label for="nombreLocal">Nombre del proyecto</label>
+                <input id="nombreLocal" name="nombreLocal" type="text" value="Delicious Food" required>
+
+                <label for="descripcionLocal">Descripción</label>
+                <textarea id="descripcionLocal" name="descripcionLocal" rows="3">Un recorrido gastronómico por los sabores del mundo, una experiencia en cada plato.</textarea>
+
+                <div class="campos-dobles">
+                    <div><label for="direccionLocal">Ubicación de ejemplo</label><input id="direccionLocal" name="direccionLocal" type="text" placeholder="Ej.: Lanús, Buenos Aires (ficticio)"></div>
+                    <div><label for="horarioLocal">Horario propuesto</label><input id="horarioLocal" name="horarioLocal" type="text" placeholder="Ej.: Martes a domingo, 12 a 23 h"></div>
+                </div>
+                <label for="contactoLocal">Contacto de ejemplo</label>
+                <input id="contactoLocal" name="contactoLocal" type="text" placeholder="Correo o teléfono ficticio">
+                <div class="acciones-formulario"><button class="boton" type="submit">Guardar información</button><span id="mensajeLocal" role="status" aria-live="polite"></span></div>
+            </form>
         </section>
+
+
 
     </main>
 
@@ -525,30 +860,6 @@
 
             const pedidosNumero = document.querySelector(".tarjeta:nth-child(1) .numero");
             if (pedidosNumero) pedidosNumero.textContent = pedidos.length;
-
-            // Notificación exclusiva para el jefe:
-            // si hay pedidos pendientes, se muestra el aviso y el contador.
-            const pedidosPendientes = pedidos.filter(p =>
-                String(p.estado || "").toLowerCase() === "pendiente"
-            ).length;
-
-            const contadorNotificaciones = document.getElementById("contadorNotificaciones");
-            const avisoNotificacion = document.getElementById("avisoNotificacion");
-
-            if (contadorNotificaciones) {
-                if (pedidosPendientes > 0) {
-                    contadorNotificaciones.textContent = pedidosPendientes;
-                    contadorNotificaciones.style.display = "inline-block";
-                    contadorNotificaciones.classList.add("notificacion-nueva");
-                } else {
-                    contadorNotificaciones.style.display = "none";
-                    contadorNotificaciones.classList.remove("notificacion-nueva");
-                }
-            }
-
-            if (avisoNotificacion) {
-                avisoNotificacion.style.display = pedidosPendientes > 0 ? "block" : "none";
-            }
         }
 
         const respuestaComidas = await fetch("api/comidas.php", {
@@ -567,9 +878,26 @@
         const botonJefe = document.getElementById("botonJefe");
         const menuJefe = document.getElementById("menuJefe");
 
+        function alternarMenuJefe() {
+            if (!menuJefe || !botonJefe) return;
+            const abierto = menuJefe.classList.toggle("mostrar");
+            botonJefe.setAttribute("aria-expanded", String(abierto));
+        }
+
         botonJefe?.addEventListener("click", function (event) {
             event.stopPropagation();
-            menuJefe?.classList.toggle("mostrar");
+            alternarMenuJefe();
+        });
+
+        botonJefe?.addEventListener("keydown", function (event) {
+            if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                alternarMenuJefe();
+            }
+            if (event.key === "Escape") {
+                menuJefe?.classList.remove("mostrar");
+                botonJefe.setAttribute("aria-expanded", "false");
+            }
         });
 
         menuJefe?.addEventListener("click", function (event) {
@@ -578,6 +906,7 @@
 
         document.addEventListener("click", function () {
             menuJefe?.classList.remove("mostrar");
+            botonJefe?.setAttribute("aria-expanded", "false");
         });
 
         const enlaceCerrarSesion = menuJefe?.querySelector('a[href="index.html"]');
@@ -599,6 +928,68 @@
         console.error(error);
         window.location.href = "index.html";
     }
+})();
+
+
+// Información local editable para la demostración: se guarda solo en este navegador.
+(function configurarPanelDemo() {
+    const claveLocal = "deliciousFoodLocalDemo";
+    const formulario = document.getElementById("formLocal");
+    const campos = ["nombreLocal", "descripcionLocal", "direccionLocal", "horarioLocal", "contactoLocal"];
+    const valoresIniciales = {
+        nombreLocal: "Delicious Food",
+        descripcionLocal: "Un recorrido gastronómico por los sabores del mundo, una experiencia en cada plato.",
+        direccionLocal: "",
+        horarioLocal: "",
+        contactoLocal: ""
+    };
+    function cargarLocal(datos) {
+        campos.forEach(id => { const campo = document.getElementById(id); if (campo) campo.value = datos[id] ?? valoresIniciales[id]; });
+    }
+    try {
+        const guardado = localStorage.getItem(claveLocal);
+        cargarLocal(guardado ? JSON.parse(guardado) : valoresIniciales);
+    } catch (error) { cargarLocal(valoresIniciales); }
+    formulario?.addEventListener("submit", function(event) {
+        event.preventDefault();
+        const datos = Object.fromEntries(campos.map(id => [id, document.getElementById(id).value.trim()]));
+        try {
+            localStorage.setItem(claveLocal, JSON.stringify(datos));
+            document.getElementById("mensajeLocal").textContent = "Información guardada en este navegador.";
+        } catch (error) {
+            document.getElementById("mensajeLocal").textContent = "No se pudo guardar. Revisá la configuración del navegador.";
+        }
+    });
+    const botonClaro = document.getElementById("modoClaro");
+    const botonOscuro = document.getElementById("modoOscuro");
+    let temaOscuro = false;
+    try { temaOscuro = localStorage.getItem("deliciousFoodTemaOscuro") === "true"; } catch (error) {}
+    function actualizarTema() {
+        document.body.classList.toggle("modo-oscuro", temaOscuro);
+        if (botonClaro) botonClaro.setAttribute("aria-pressed", String(!temaOscuro));
+        if (botonOscuro) botonOscuro.setAttribute("aria-pressed", String(temaOscuro));
+    }
+    actualizarTema();
+    function guardarTema() {
+        actualizarTema();
+        try { localStorage.setItem("deliciousFoodTemaOscuro", String(temaOscuro)); } catch (error) {}
+    }
+    botonClaro?.addEventListener("click", function() { temaOscuro = false; guardarTema(); });
+    botonOscuro?.addEventListener("click", function() { temaOscuro = true; guardarTema(); });
+    const abrirConfiguracion = document.getElementById("abrirConfiguracion");
+    const panelConfiguracion = document.getElementById("panelConfiguracion");
+    abrirConfiguracion?.addEventListener("click", function(event) {
+        event.stopPropagation();
+        const abierto = panelConfiguracion.hidden;
+        panelConfiguracion.hidden = !abierto;
+        abrirConfiguracion.setAttribute("aria-expanded", String(abierto));
+    });
+    document.querySelectorAll('.menu a[href^="#"]').forEach(enlace => {
+        enlace.addEventListener("click", function() {
+            document.querySelectorAll('.menu a').forEach(item => item.classList.remove("activo"));
+            enlace.classList.add("activo");
+        });
+    });
 })();
 
 function escapeHtml(valor) {
