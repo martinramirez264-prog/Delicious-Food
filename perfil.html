@@ -845,7 +845,7 @@
         <button
             class="boton volver"
             type="button"
-            onclick="window.location.href='http://127.0.0.1:5500/homenuevo.html'"
+            onclick="window.location.href='homenuevo.html'"
         >
             ← Volver al inicio
         </button>
@@ -856,7 +856,7 @@
         <button
                 class="boton cerrar"
                 type="button"
-                onclick="window.location.href='http://127.0.0.1:5500/index.html';"
+                onclick="cerrarSesion()"
             >
                 Cerrar sesión
             </button>
@@ -1317,7 +1317,10 @@ function mostrarMensaje(texto, color) {
 ========================================== */
 
 function cerrarSesion() {
-        window.location.href = "http://127.0.0.1:5500/index.html";
+    try { sessionStorage.clear(); } catch (e) {}
+    fetch("api/logout.php", { method: "POST", credentials: "same-origin" })
+        .catch(function () {})
+        .then(function () { window.location.href = "index.html"; });
     }
 
 

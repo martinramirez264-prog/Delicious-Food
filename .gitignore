@@ -1,0 +1,7 @@
+# Credenciales y configuracion local
+config/database.local.php
+.env
+
+# Archivos temporales del sistema/editor
+.DS_Store
+Thumbs.db

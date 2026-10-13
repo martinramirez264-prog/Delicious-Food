@@ -1,0 +1,7 @@
+<?php
+// Copia este archivo como database.local.php y completa tus datos reales.
+// No subas database.local.php a GitHub.
+$host = 'localhost';
+$db   = 'NOMBRE_DE_TU_BASE';
+$user = 'TU_USUARIO_MYSQL';
+$pass = 'TU_CONTRASENA_MYSQL';

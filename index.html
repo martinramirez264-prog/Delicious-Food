@@ -727,18 +727,15 @@ async function iniciarSesion() {
         sessionStorage.setItem("rolActivo", resultado.usuario.rol);
 
         setTimeout(function () {
-            // Redirección según el rol devuelto por PHP.
-            // Jefe → jefe.html | Cliente/empleado → homenuevo.html
-            const destino = resultado.redirect || "../homenuevo.html";
-            window.location.href = destino.replace(/^\.\.\//, "");
+            window.location.href = resultado.redirect.replace("../", "");
         }, 700);
 
     } catch (error) {
-        console.error(error);
-        mensaje.textContent =
-            "❌ No se pudo conectar con el servidor. ¿Apache y MySQL están encendidos?";
+        console.error("Error real al iniciar sesión:", error);
+        mensaje.textContent = "❌ Error: " + error.message
         mensaje.style.color = "#d64545";
-    }
+
+}
 }
 </script>
 </body>

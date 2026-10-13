@@ -23,7 +23,7 @@ nav a{
   display:block;color:white;text-decoration:none;padding:13px 15px;border-radius:10px;
   margin:6px 0;transition:.2s;
 }
-nav a:hover,nav a.active{background:#f28a00;box-shadow:0 7px 16px rgba(242,138,0,.22)}
+nav a:hover,nav a.active{background:#b45f06;box-shadow:0 7px 16px rgba(242,138,0,.22)}
 main{margin-left:250px;padding:34px;min-height:100vh}
 .page-top{
   display:flex;justify-content:space-between;align-items:flex-start;gap:20px;
@@ -64,12 +64,12 @@ h2{font-size:32px;margin-bottom:7px;line-height:1.15}
 }
 .cart-item:last-child{border-bottom:0}
 .cart-item img{width:72px;height:60px;object-fit:cover;border-radius:10px}
-.price{color:#f28a00;font-weight:bold}
+.price{color:#a85900;font-weight:bold}
 .btn{
   border:0;border-radius:9px;padding:11px 16px;font-weight:bold;cursor:pointer;
   transition:.2s;
 }
-.primary{background:#f28a00;color:white}
+.primary{background:#b45f06;color:white}
 .primary:hover{filter:brightness(.96);transform:translateY(-1px)}
 .dark{background:#193965;color:white}
 .danger{background:#ffe7e7;color:#b42318}
@@ -107,7 +107,7 @@ input:focus,textarea:focus,select:focus{
 .order-number{font-size:17px}
 .badge{
   display:inline-block;padding:6px 10px;border-radius:15px;font-size:12px;
-  font-weight:bold;background:#fff0d9;color:#d97900;text-transform:capitalize;
+  font-weight:bold;background:#fff0d9;color:#8f4a04;text-transform:capitalize;
 }
 .estado-confirmado{background:#e8f0ff;color:#245da8}
 .estado-en-preparacion{background:#fff3d8;color:#b66a00}
@@ -141,7 +141,7 @@ input:focus,textarea:focus,select:focus{
     <h1>🍔 Delicious Food</h1>
     <p id="rolPanel">PEDIDOS</p>
   </div>
-  <nav>
+  <nav id="menuLateral">
     <a href="jefe.html">🏠 Inicio</a>
     <a href="pedidos.html" class="active">📦 Pedidos</a>
     <a href="comidas.html">🍔 Comidas</a>
@@ -178,7 +178,7 @@ input:focus,textarea:focus,select:focus{
   </div>
 
   <div id="seccionCliente" style="display:none">
-  <section class="panel" id="confirmar-pedido" style="display:none">
+  <section class="panel" id="confirmar-pedido">
     <div class="panel-head">
       <div>
         <h3>🛒 Pedido actual</h3>
@@ -190,7 +190,7 @@ input:focus,textarea:focus,select:focus{
     <div class="total"><span>Total</span><span id="total">$0</span></div>
   </section>
 
-  <section class="panel" id="formPanel" style="display:none">
+  <section class="panel" id="formPanel">
     <div class="panel-head">
       <div>
         <h3>📍 Datos de entrega y confirmación</h3>
@@ -200,22 +200,29 @@ input:focus,textarea:focus,select:focus{
     </div>
     <div class="form-grid" style="margin-top:15px">
       <div class="field">
-        <label>Dirección</label>
+        <label for="direccion">Dirección</label>
         <input id="direccion" placeholder="Ej. Av. Principal 123">
       </div>
       <div class="field">
-        <label>Teléfono</label>
+        <label for="telefono">Teléfono</label>
         <input id="telefono" placeholder="Ej. 11 1234-5678">
       </div>
       <div class="field full">
-        <label>Observaciones</label>
+        <label for="observaciones">Observaciones</label>
         <textarea id="observaciones" rows="3" placeholder="Sin cebolla, tocar timbre, etc."></textarea>
       </div>
     </div>
     <div style="margin-top:15px">
-      <button class="btn primary" onclick="crearPedido()">✅ Confirmar pedido</button>
-    </div>
-    <div id="mensaje"></div>
+  <button
+    class="btn primary"
+    id="btnConfirmarPedido"
+    type="button"
+    onclick="crearPedido()">
+    ✅ Confirmar pedido
+  </button>
+</div>
+
+<div id="mensaje" aria-live="polite"></div>
   </section>
 
   </div>
@@ -261,7 +268,7 @@ function carritoActual(){
 async function obtenerSesion(){
   const r = await fetch("api/session.php",{credentials:"same-origin",cache:"no-store"});
   const d = await r.json();
-  if(!r.ok || !d.ok) throw new Error(d.mensaje || "Sesión no iniciada.");
+  if(!r.ok || !d.ok || !d.logueado) throw new Error(d.mensaje || "Sesión no iniciada.");
   rol = d.usuario.rol;
   return d.usuario;
 }
@@ -288,7 +295,7 @@ function renderCarrito(){
       <img src="${escapeHtml(x.imagen || "imgs/Hamburguesa.jpg")}" alt="">
       <div>
         <strong>${escapeHtml(x.nombre)}</strong>
-        <div class="muted">${x.cantidad} × ${money(x.precio)}</div>
+        <div class="muted">${Number(x.cantidad)} × ${money(x.precio)}</div>
       </div>
       <div style="text-align:right">
         <strong class="price">${money(sub)}</strong><br>
@@ -314,6 +321,16 @@ async function crearPedido(){
     return;
   }
 
+  const direccion=document.getElementById("direccion").value.trim();
+  const telefono=document.getElementById("telefono").value.trim();
+  if(!direccion || !telefono){
+    document.getElementById("mensaje").textContent="Completá la dirección y el teléfono.";
+    return;
+  }
+
+  const btn=document.getElementById("btnConfirmarPedido");
+  btn.disabled=true;
+
   const fd=new FormData();
   fd.append("items",JSON.stringify(items.map(x=>({
     id_comida:x.id_comida,
@@ -338,6 +355,8 @@ async function crearPedido(){
     cargarPedidos();
   }catch(e){
     document.getElementById("mensaje").textContent="❌ "+e.message;
+  }finally{
+    btn.disabled=false;
   }
 }
 
@@ -513,14 +532,10 @@ async function cambiarEstado(id,estado){
       document.getElementById("historialTitulo").textContent="📦 Todos los pedidos";
       document.getElementById("historialDescripcion").textContent="Consultá cada pedido y actualizá su estado.";
     }else{
-      // CLIENTE: puede ver su pedido actual, datos de entrega y confirmación.
-      seccionCliente.style.display="block";
-      adminSummary.style.display="none";
-      document.getElementById("titulo").textContent="📦 Mis pedidos";
-      document.getElementById("subtitulo").textContent="Revisá tu pedido y consultá tu historial.";
-      document.getElementById("historialTitulo").textContent="📜 Historial de pedidos";
-      document.getElementById("historialDescripcion").textContent="Consultá el estado y el detalle de tus pedidos.";
-      renderCarrito();
+      // CLIENTE: esta página es solo para el jefe. El cliente hace y confirma
+      // su pedido desde la ventana "Ver mi pedido" de homenuevo.html.
+      window.location.replace("homenuevo.html");
+      return;
     }
 
     const buscar=document.getElementById("buscarPedido");

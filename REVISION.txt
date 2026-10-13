@@ -1,0 +1,17 @@
+DELICIOUS FOOD — NOTAS DE REVISION
+
+1) CONFIGURACION DE MYSQL
+- Por seguridad, config/database.php ya no contiene credenciales reales.
+- Copia config/database.local.php.example como config/database.local.php.
+- Completa host, nombre de base, usuario y contrasena segun tu entorno.
+- No subas database.local.php a GitHub. El archivo .gitignore ya lo excluye.
+- En hosting, configura las variables DB_HOST, DB_NAME, DB_USER y DB_PASS si no puedes usar el archivo local.
+- Como las credenciales anteriores estaban dentro del ZIP, cambia/rota esa contrasena en el panel de tu proveedor y actualiza la configuracion privada.
+
+2) GALERIA
+- Se corrigio la ruta de la imagen del sandwich para usar el archivo existente: imgs/Croque Monsieur.jpg.
+- En la navegacion de la galeria, Empleados y Configuracion aparecen como proximamente porque esas paginas no existen en este paquete.
+- El enlace Local se dirige a la seccion de administracion del local en jefe.html si existe; revisalo en tu navegador antes de publicar.
+
+3) IMPORTANTE
+Esta revision es estatica. No se ejecuto PHP ni se probo la conexion contra tu MySQL. Antes de publicar, verifica inicio de sesion, registro, pedidos y administracion en tu entorno local.
