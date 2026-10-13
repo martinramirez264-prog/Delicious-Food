@@ -106,8 +106,7 @@ function escapeHtml(valor) {
 
 function listaTexto(texto) {
   return String(texto || "")
-    .split(/?
-|[,;]+/)
+    .split(/[\r\n]+/)
     .map(x => x.trim())
     .filter(Boolean);
 }
