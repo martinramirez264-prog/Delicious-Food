@@ -1524,11 +1524,40 @@
         <div id="pedidoMensaje" class="order-message" aria-live="polite"></div>
 
         <div class="order-footer">
-          <a class="btn btn-primary" href="pedidos.html">📦 Ver mi pedido</a>
+          <button class="btn btn-primary" type="button" onclick="abrirModalPedido()">📦 Ver mi pedido</button>
         </div>
       </div>
     </section>
 
+
+    
+    <!-- MODAL DE VER MI PEDIDO -->
+    <div id="pedidoModal" class="plato-modal" aria-hidden="true">
+      <div class="plato-modal-box" style="padding:28px; max-width:650px;" role="dialog" aria-modal="true" aria-labelledby="pedidoModalTitulo">
+        <button class="plato-modal-close" type="button" onclick="cerrarModalPedido()" aria-label="Cerrar">×</button>
+        <h2 id="pedidoModalTitulo" style="color:#193965; font-size:24px; margin-bottom:16px;">🛒 Tu Pedido Actual</h2>
+        
+        <div id="contenidoCarritoModal">
+          <div id="listaProductosPedido"></div>
+          <div style="margin:18px 0;padding:15px;background:#eef5ff;border-radius:12px;">
+            <h3 style="color:#193965;margin-bottom:10px;">📋 Datos de entrega</h3>
+            <label for="nombrePedido">Usuario de la cuenta</label>
+            <input id="nombrePedido" type="text" readonly placeholder="Cuenta iniciada">
+            <label for="direccionPedido" style="display:block;margin-top:12px;">Dirección de entrega *</label>
+            <input id="direccionPedido" type="text" placeholder="Calle, número, localidad" required style="width:100%;box-sizing:border-box;">
+            <label for="telefonoPedido" style="display:block;margin-top:12px;">Teléfono *</label>
+            <input id="telefonoPedido" type="tel" placeholder="Tu teléfono de contacto" required style="width:100%;box-sizing:border-box;">
+            <label for="observacionesPedido" style="display:block;margin-top:12px;">Observaciones</label>
+            <textarea id="observacionesPedido" placeholder="Piso, departamento o indicaciones especiales" style="width:100%;box-sizing:border-box;"></textarea>
+          </div>
+          <div style="padding:15px;background:#fff4df;border-radius:12px;">
+            <strong style="font-size:20px;color:#193965;">Total: <span id="totalPedido">$0</span></strong>
+          </div>
+          <p id="mensajeConfirmacionPedido" role="status" style="margin-top:12px;"></p>
+          <button class="btn btn-primary" type="button" onclick="confirmarPedido()" style="width:100%;margin-top:14px;">✅ Confirmar pedido</button>
+        </div>
+      </div>
+    </div>
 
     <!-- DETALLE DE PLATO -->
     <div id="platoModal" class="plato-modal" aria-hidden="true">
@@ -1881,6 +1910,93 @@
 
       this.reset();
     });
+
+
+    // Modal del carrito y envío del pedido a la API.
+    function leerCarritoPedido() {
+      try {
+        const datos = JSON.parse(sessionStorage.getItem("carritoDeliciousFood") || "[]");
+        return Array.isArray(datos) ? datos : [];
+      } catch (_) { return []; }
+    }
+    function formatoPesosPedido(valor) {
+      return new Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS", maximumFractionDigits: 0 }).format(valor || 0);
+    }
+    function abrirModalPedido() {
+      const modal = document.getElementById("pedidoModal");
+      const carrito = leerCarritoPedido();
+      const lista = document.getElementById("listaProductosPedido");
+      const mensaje = document.getElementById("mensajeConfirmacionPedido");
+      mensaje.textContent = "";
+      const usuario = localStorage.getItem("usuarioActivo") || "Usuario con sesión iniciada";
+      document.getElementById("nombrePedido").value = usuario;
+      if (!carrito.length) {
+        lista.innerHTML = '<p style="padding:14px;background:#fff4df;border-radius:10px;">Tu carrito está vacío. Agregá algún plato antes de confirmar.</p>';
+        document.getElementById("totalPedido").textContent = formatoPesosPedido(0);
+        const boton = modal.querySelector('button[onclick="confirmarPedido()"]');
+        if (boton) boton.disabled = true;
+      } else {
+        let total = 0;
+        lista.innerHTML = carrito.map(function(item) {
+          const cantidad = Math.max(1, Number(item.cantidad) || 1);
+          const precio = Math.max(0, Number(item.precio) || 0);
+          const subtotal = cantidad * precio; total += subtotal;
+          return '<div style="display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid #ddd;">' +
+            (item.imagen ? '<img src="' + String(item.imagen).replace(/&/g,'&amp;').replace(/"/g,'&quot;') + '" alt="" style="width:64px;height:64px;object-fit:cover;border-radius:8px;">' : '') +
+            '<div style="flex:1;"><strong>' + String(item.nombre || 'Producto').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</strong><br><span>' + cantidad + ' × ' + formatoPesosPedido(precio) + '</span></div><strong>' + formatoPesosPedido(subtotal) + '</strong></div>';
+        }).join("");
+        document.getElementById("totalPedido").textContent = formatoPesosPedido(total);
+        const boton = modal.querySelector('button[onclick="confirmarPedido()"]');
+        if (boton) boton.disabled = false;
+      }
+      modal.style.display = "flex";
+      modal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    }
+    function cerrarModalPedido() {
+      const modal = document.getElementById("pedidoModal");
+      modal.style.display = "none";
+      modal.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
+    async function confirmarPedido() {
+      const carrito = leerCarritoPedido();
+      const direccion = document.getElementById("direccionPedido").value.trim();
+      const telefono = document.getElementById("telefonoPedido").value.trim();
+      const observaciones = document.getElementById("observacionesPedido").value.trim();
+      const mensaje = document.getElementById("mensajeConfirmacionPedido");
+      const boton = document.querySelector('#pedidoModal button[onclick="confirmarPedido()"]');
+      if (!carrito.length) { mensaje.textContent = "Agregá al menos un producto."; return; }
+      if (!direccion || !telefono) { mensaje.textContent = "Completá la dirección y el teléfono."; return; }
+      boton.disabled = true; mensaje.textContent = "Enviando pedido...";
+      const datos = new URLSearchParams();
+      datos.set("items", JSON.stringify(carrito.map(item => ({ id_comida: Number(item.id_comida), cantidad: Math.max(1, Number(item.cantidad) || 1) }))));
+      datos.set("direccion", direccion); datos.set("telefono", telefono); datos.set("observaciones", observaciones);
+      try {
+        const respuesta = await fetch("api/pedidos.php", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" }, body: datos.toString(), credentials: "same-origin" });
+        const resultado = await respuesta.json();
+        if (!respuesta.ok || !resultado.ok) throw new Error(resultado.mensaje || "No se pudo registrar el pedido.");
+        sessionStorage.removeItem("carritoDeliciousFood");
+        document.querySelectorAll(".order-card").forEach(card => {
+          const cancelBox = card.querySelector(".order-cancel");
+          const agregar = card.querySelector(".order-add");
+          if (cancelBox) { cancelBox.classList.remove("visible"); cancelBox.setAttribute("aria-hidden", "true"); }
+          if (agregar) agregar.textContent = "Agregar";
+        });
+        document.getElementById("listaProductosPedido").innerHTML = '<p style="padding:14px;background:#e7f8ec;border-radius:10px;">✅ ¡Pedido registrado correctamente! Número de pedido: ' + (resultado.id_pedido || resultado.pedido_id || 'confirmado') + '</p>';
+        document.getElementById("totalPedido").textContent = formatoPesosPedido(0);
+        mensaje.textContent = "Podés consultar el estado en la sección de pedidos.";
+        boton.textContent = "Pedido confirmado";
+      } catch (error) {
+        mensaje.textContent = error.message || "Ocurrió un error al enviar el pedido. Revisá que hayas iniciado sesión.";
+        boton.disabled = false;
+      }
+    }
+    document.addEventListener("click", function(event) {
+      const modal = document.getElementById("pedidoModal");
+      if (event.target === modal) cerrarModalPedido();
+    });
+
   </script>
 
 </body>

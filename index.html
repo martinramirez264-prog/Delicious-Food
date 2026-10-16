@@ -710,7 +710,14 @@ async function iniciarSesion() {
             credentials: "same-origin"
         });
 
-        const resultado = await respuesta.json();
+        const textoRespuesta = await respuesta.text();
+        let resultado;
+        try {
+            resultado = JSON.parse(textoRespuesta);
+        } catch (error) {
+            console.error("El servidor no devolvió JSON en api/login.php:", textoRespuesta);
+            throw new Error("El servidor devolvió una respuesta inesperada. Revisá api/login.php en InfinityFree.");
+        }
 
         if (!respuesta.ok || !resultado.ok) {
             mensaje.textContent = "❌ " + (resultado.mensaje || "No se pudo iniciar sesión.");
@@ -726,9 +733,13 @@ async function iniciarSesion() {
         sessionStorage.setItem("usuarioActivo", resultado.usuario.usuario);
         sessionStorage.setItem("rolActivo", resultado.usuario.rol);
 
-        setTimeout(function () {
-            window.location.href = resultado.redirect.replace("../", "");
-        }, 700);
+        // Usar el destino informado por PHP, con un valor seguro de respaldo.
+        const destino = resultado.redirect || "jefe.html";
+        mensaje.textContent = "Login correcto. Abriendo el panel del jefe...";
+        mensaje.style.color = "#16803c";
+        window.setTimeout(function () {
+            window.location.href = destino;
+        }, 500);
 
     } catch (error) {
         console.error("Error real al iniciar sesión:", error);

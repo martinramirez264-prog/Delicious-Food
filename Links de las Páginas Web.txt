@@ -1,3 +1,24 @@
 https://deliciousfoodet29.infinityfree.io/homenuevo.html
 
 https://martinramirez264-prog.github.io/Delicious-Food/
+
+
+aquí: 
+
+Cuando toque el botón de "Ver mi pedido" quiero que se vea como una cuadro o ventana dentro de homenuevo.html que diga: 
+
+Que comidas se han agregado para hacer el pedido, tipo: 2 hambuguesas y 3 pizzas se han agregado o no se como quedaria. 
+
+Cuanto costaria.
+
+Luego después de ver eso tiene que aparecer un apartado dentro de todo eso que diga.
+
+Completa los datos:
+
+El nombre del cliente ya estara puesto con el mismo nombre que se registro al entrar a la página web, pero que no se pueda modificar.
+
+Luego eatara dirección y la persona llenara en donde quiere que el pedido se entregue.
+
+Al completar eso, se vera el tiempo de cuanto se esta preparando y al terminar una notificación que le llegue al correo electronico diciendo: "Su pedido se esta llendo" tiene que estar la hora de entrega.
+
+algo asi.

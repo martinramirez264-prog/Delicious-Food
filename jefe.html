@@ -822,12 +822,24 @@
             credentials: "same-origin",
             cache: "no-store"
         });
-        const datos = await respuesta.json();
-
-        if (!respuesta.ok || !datos.ok || datos.usuario.rol !== "jefe") {
-            window.location.href = "index.html";
-            return;
+        const textoSesion = await respuesta.text();
+        let datos;
+        try {
+            datos = JSON.parse(textoSesion);
+        } catch (error) {
+            throw new Error("api/session.php no devolvió JSON válido. Respuesta: " + textoSesion.slice(0, 180));
         }
+
+        if (!respuesta.ok || !datos.ok || !datos.usuario || datos.usuario.rol !== "jefe") {
+    console.error("Error de sesión:", {
+        estadoHTTP: respuesta.status,
+        respuesta: datos
+    });
+
+    // Si el servidor confirma que no hay una sesión de jefe, volver al login.
+    window.location.replace("index.html");
+    return;
+}
 
         document.querySelector(".texto-jefe")?.replaceChildren(
             document.createTextNode(datos.usuario.usuario || "Jefe")
@@ -837,7 +849,14 @@
             credentials: "same-origin",
             cache: "no-store"
         });
-        const pedidosData = await respuestaPedidos.json();
+        const textoPedidos = await respuestaPedidos.text();
+        let pedidosData;
+        try {
+            pedidosData = JSON.parse(textoPedidos);
+        } catch (error) {
+            console.error("api/pedidos.php no devolvió JSON válido:", textoPedidos.slice(0, 180));
+            pedidosData = { ok: false, pedidos: [] };
+        }
 
         if (respuestaPedidos.ok && pedidosData.ok) {
             const pedidos = pedidosData.pedidos || [];
@@ -866,7 +885,14 @@
             credentials: "same-origin",
             cache: "no-store"
         });
-        const comidasData = await respuestaComidas.json();
+        const textoComidas = await respuestaComidas.text();
+        let comidasData;
+        try {
+            comidasData = JSON.parse(textoComidas);
+        } catch (error) {
+            console.error("api/comidas.php no devolvió JSON válido:", textoComidas.slice(0, 180));
+            comidasData = { ok: false, comidas: [] };
+        }
 
         if (respuestaComidas.ok && comidasData.ok) {
             const comidas = comidasData.comidas || [];
@@ -911,7 +937,8 @@
 
         const enlaceCerrarSesion = menuJefe?.querySelector('a[href="index.html"]');
         enlaceCerrarSesion?.addEventListener("click", async function (event) {
-            event.preventDefault();
+    console.log("DIAGNÓSTICO: se ejecutó el evento de cerrar sesión");
+    event.preventDefault();
             try {
                 await fetch("api/logout.php", {
                     method: "POST",
@@ -925,9 +952,12 @@
             }
         });
     } catch (error) {
-        console.error(error);
-        window.location.href = "index.html";
-    }
+        console.error("Error al cargar el panel del jefe:", error);
+        const aviso = document.createElement("div");
+        aviso.style.cssText = "margin:12px 0;padding:12px 16px;border-radius:8px;background:#fff0d9;color:#7c3f00";
+        aviso.textContent = "El panel se abrió, pero hubo un problema al cargar algunos datos. Revisá la consola (F12).";
+        document.querySelector(".contenido")?.prepend(aviso);
+}
 })();
 
 
